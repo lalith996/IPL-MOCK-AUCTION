@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "headshot_metadata",
+  "title": "HeadshotMetadata",
+  "description": "CDN asset metadata for a player headshot, including all size variants.",
+  "type": "object",
+  "required": ["player_id", "sizes", "blurhash", "source", "license", "fetched_at", "is_fallback"],
+  "additionalProperties": false,
+  "properties": {
+    "player_id": { "type": "string" },
+    "sizes": {
+      "type": "object",
+      "required": ["64", "256", "512"],
+      "additionalProperties": false,
+      "properties": {
+        "64":  { "$ref": "#/$defs/assetSet" },
+        "256": { "$ref": "#/$defs/assetSet" },
+        "512": { "$ref": "#/$defs/assetSet" }
+      }
+    },
+    "blurhash":    { "type": "string", "minLength": 6 },
+    "source":      { "type": "string" },
+    "license":     { "type": "string" },
+    "fetched_at":  { "type": "string", "format": "date-time" },
+    "is_fallback": { "type": "boolean" }
+  },
+  "$defs": {
+    "assetSet": {
+      "type": "object",
+      "required": ["webp", "jpeg"],
+      "additionalProperties": false,
+      "properties": {
+        "webp": { "type": "string", "format": "uri" },
+        "avif": { "type": "string", "format": "uri" },
+        "jpeg": { "type": "string", "format": "uri" }
+      }
+    }
+  }
+}

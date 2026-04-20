@@ -1,0 +1,24 @@
+{
+  "agent_id": "MI",
+  "timestamp": "2026-04-18T10:00:00Z",
+  "player_id": "P_0001",
+  "action": "bid",
+  "bid_amount": 20000000,
+  "confidence_score": 0.82,
+  "rationale": {
+    "score_breakdown": {
+      "form_score": 0.78,
+      "role_fit": 0.90,
+      "home_ground_fit": 0.65,
+      "career_score": 0.80,
+      "phase_fit": 0.72,
+      "injury_risk": 0.10,
+      "social_buzz": 0.55,
+      "price_elasticity": 0.30,
+      "total": 0.76
+    },
+    "reasoning_summary": "Role-fit strong for powerplay slot, form window high, low injury risk, fits Plan A slot 3.",
+    "is_cold_start": false
+  },
+  "chosen_plan": "A"
+}

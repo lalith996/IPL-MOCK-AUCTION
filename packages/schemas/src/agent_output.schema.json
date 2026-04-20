@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "agent_output",
+  "title": "AgentOutput",
+  "description": "Output produced by one team LLM agent per nomination.",
+  "type": "object",
+  "required": [
+    "agent_id",
+    "timestamp",
+    "player_id",
+    "action",
+    "confidence_score",
+    "rationale",
+    "chosen_plan"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "agent_id": {
+      "type": "string",
+      "enum": ["MI", "CSK", "RCB", "DC", "KKR", "RR", "PBKS", "SRH", "LSG", "GT"],
+      "description": "Franchise identifier."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp of when the agent produced this output."
+    },
+    "player_id": {
+      "type": "string",
+      "description": "Canonical player identifier from the feature store."
+    },
+    "action": {
+      "type": "string",
+      "enum": ["pass", "bid", "raise", "drop"],
+      "description": "Action the agent has chosen for this nomination cycle."
+    },
+    "bid_amount": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Bid amount in INR. Must be null when action is 'pass' or 'drop'."
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Confidence in the chosen action. Used to rank active bidders."
+    },
+    "rationale": {
+      "type": "object",
+      "required": ["score_breakdown", "reasoning_summary"],
+      "additionalProperties": false,
+      "properties": {
+        "score_breakdown": {
+          "type": "object",
+          "required": [
+            "form_score",
+            "role_fit",
+            "home_ground_fit",
+            "career_score",
+            "phase_fit",
+            "injury_risk",
+            "social_buzz",
+            "price_elasticity",
+            "total"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "form_score":       { "type": "number" },
+            "role_fit":         { "type": "number" },
+            "home_ground_fit":  { "type": "number" },
+            "career_score":     { "type": "number" },
+            "phase_fit":        { "type": "number" },
+            "injury_risk":      { "type": "number" },
+            "social_buzz":      { "type": "number" },
+            "price_elasticity": { "type": "number" },
+            "total":            { "type": "number" }
+          }
+        },
+        "reasoning_summary": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Human-readable summary (≤80 words)."
+        },
+        "is_cold_start": {
+          "type": "boolean",
+          "description": "True when data_coverage_score < 0.5 for this player (§16.1)."
+        }
+      }
+    },
+    "chosen_plan": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D"],
+      "description": "Which agent plan this action maps to."
+    }
+  }
+}

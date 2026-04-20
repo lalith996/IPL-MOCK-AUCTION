@@ -1,0 +1,46 @@
+[tool.uv.workspace]
+members = [
+    "services/sag",
+    "services/agent-orchestrator",
+    "services/ingestion",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "SIM"]
+ignore = ["E501", "E701", "E711", "SIM117"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+show_error_codes = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+pythonpath = [
+    ".",
+    "services/agent-orchestrator",
+    "services/ingestion",
+]
+
+[dependency-groups]
+dev = [
+    "anyio[trio]>=4.6.0",
+    "fakeredis>=2.26.0",
+    "httpx>=0.28.0",
+    "jsonschema>=4.26.0",
+    "prometheus-client>=0.25.0",
+    "pytest>=9.0.3",
+    "pytest-asyncio>=1.3.0",
+    "rapidfuzz>=3.14.5",
+]

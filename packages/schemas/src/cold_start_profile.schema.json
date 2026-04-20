@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "cold_start_profile",
+  "title": "ColdStartProfile",
+  "description": "Imputed feature vector for a player with data_coverage_score < 0.5.",
+  "type": "object",
+  "required": ["player_id", "cold_start_profile", "confidence", "provenance"],
+  "additionalProperties": false,
+  "properties": {
+    "player_id": { "type": "string" },
+    "cold_start_profile": {
+      "type": "object",
+      "required": [
+        "cohort_ids",
+        "cohort_size",
+        "imputed_metrics",
+        "source_signals",
+        "data_coverage_score",
+        "imputation_confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "cohort_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "cohort_size": { "type": "integer", "minimum": 1 },
+        "imputed_metrics": {
+          "type": "object",
+          "required": ["strike_rate", "economy", "role_fit"],
+          "additionalProperties": false,
+          "properties": {
+            "strike_rate": { "type": "number", "minimum": 0 },
+            "economy":     { "type": "number", "minimum": 0 },
+            "role_fit":    { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        "source_signals": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["domestic_scorecards", "scout_reports", "auction_history", "declared_role"]
+          },
+          "minItems": 1
+        },
+        "data_coverage_score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "imputation_confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "provenance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["source", "fetched_at", "type"],
+        "properties": {
+          "source":     { "type": "string" },
+          "fetched_at": { "type": "string", "format": "date-time" },
+          "type":       { "type": "string" }
+        }
+      }
+    }
+  }
+}

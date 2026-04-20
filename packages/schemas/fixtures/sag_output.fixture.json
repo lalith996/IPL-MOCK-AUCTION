@@ -1,0 +1,45 @@
+{
+  "player_id": "P_0001",
+  "player_summary": "Right-handed batter with strong powerplay record in T20 cricket.",
+  "last_12_innings_metrics": {
+    "runs": 380,
+    "strike_rate": 142.5,
+    "average": 31.6,
+    "boundary_pct": 22.4,
+    "dot_pct": 28.1,
+    "wickets": 0,
+    "economy": 0,
+    "bowling_sr": 0
+  },
+  "situational_metrics": {
+    "powerplay": { "sr": 158.3, "economy": 0 },
+    "middle":    { "sr": 130.1, "economy": 0 },
+    "death":     { "sr": 145.2, "economy": 0 }
+  },
+  "injury_status": {
+    "source": "mock-injury-feed",
+    "timestamp": "2026-04-18T09:00:00Z",
+    "severity": "none",
+    "expected_return": null
+  },
+  "social_buzz": {
+    "volume": 12400,
+    "sentiment": 0.62,
+    "top_sources": ["cricbuzz", "twitter-aggregated"]
+  },
+  "confidence": 0.91,
+  "provenance": [
+    {
+      "source": "cricsheet",
+      "fetched_at": "2026-04-18T00:00:00Z",
+      "type": "cricsheet",
+      "stale": false
+    },
+    {
+      "source": "mock-injury-feed",
+      "fetched_at": "2026-04-18T09:00:00Z",
+      "type": "injury",
+      "stale": false
+    }
+  ]
+}

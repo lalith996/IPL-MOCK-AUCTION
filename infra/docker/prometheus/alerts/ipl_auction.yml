@@ -1,0 +1,121 @@
+---
+# IPL 2026 Auction — Prometheus Alerting Rules
+# 5 required alerts per CLAUDE.md §Observability.
+# All alerts must be manually triggered and acknowledged in staging
+# before production traffic (Step 16 acceptance gate).
+
+groups:
+  - name: ipl_auction_critical
+    interval: 15s
+    rules:
+
+      # ──────────────────────────────────────────────────────────────────────
+      # Alert 1: Isolation Leak Detected
+      # Trigger: ANY agent observation contains another agent's private token.
+      # Action: Page on-call immediately. Halt auction session.
+      # SLO: 0 leaks in production at all times.
+      # Runbook: docs/runbooks/alert-isolation-leak.md
+      # ──────────────────────────────────────────────────────────────────────
+      - alert: IsolationLeakDetected
+        expr: increase(ipl_isolation_leak_total[5m]) > 0
+        for: 0m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "CRITICAL: Cross-agent isolation leak detected"
+          description: >
+            {{ $value }} isolation probe(s) leaked cross-agent data in the last 5 minutes.
+            Auction ID: {{ $labels.auction_id }}.
+            This is a non-negotiable invariant violation. Halt the auction immediately.
+          runbook_url: "https://docs.internal/runbooks/alert-isolation-leak"
+
+      # ──────────────────────────────────────────────────────────────────────
+      # Alert 2: LLM Model Down > 2 minutes
+      # Trigger: A model's circuit breaker has been OPEN for > 2 min.
+      # Action: Confirm fallback is active; notify on-call.
+      # SLO: Fallback cascade activates within 10s of circuit opening.
+      # Runbook: docs/runbooks/alert-model-down.md
+      # ──────────────────────────────────────────────────────────────────────
+      - alert: LLMModelDownTwoMinutes
+        expr: >
+          (ipl_llm_circuit_state == 2)
+          and on(model)
+          (time() - ipl_llm_circuit_opened_at > 120)
+        for: 0m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "LLM model {{ $labels.model }} circuit OPEN > 2 minutes"
+          description: >
+            Model {{ $labels.model }} (agent {{ $labels.agent_id }}) has had its circuit
+            breaker open for {{ $value | humanizeDuration }}.
+            Fallback should be active. Verify personality-preserving fallback is serving.
+          runbook_url: "https://docs.internal/runbooks/alert-model-down"
+
+      # ──────────────────────────────────────────────────────────────────────
+      # Alert 3: SAG Source Staleness > TTL × 3
+      # Trigger: Cached SAG signal is older than 3× its defined TTL.
+      # Action: Degrade confidence scores; notify on-call.
+      # SLO: p95 SAG retrieval ≤ 5s uncached, ≤ 1.5s cached.
+      # Runbook: docs/runbooks/alert-sag-stale.md
+      # ──────────────────────────────────────────────────────────────────────
+      - alert: SAGSourceStaleness
+        expr: >
+          (time() - ipl_sag_source_last_success_timestamp)
+          > (ipl_sag_source_ttl_seconds * 3)
+        for: 1m
+        labels:
+          severity: warning
+          team: data
+        annotations:
+          summary: "SAG source {{ $labels.source }} stale by > 3× TTL"
+          description: >
+            SAG source {{ $labels.source }} last succeeded
+            {{ $value | humanizeDuration }} ago (TTL {{ $labels.ttl }}s × 3).
+            Confidence scores are being degraded. Check adapter connectivity.
+          runbook_url: "https://docs.internal/runbooks/alert-sag-stale"
+
+      # ──────────────────────────────────────────────────────────────────────
+      # Alert 4: Auction Manager Leader Flap
+      # Trigger: More than 2 leader re-elections in 60 seconds.
+      # Action: Auto re-elect; alert if re-election fails or flapping persists.
+      # SLO: Leader stable for duration of auction session.
+      # Runbook: docs/runbooks/alert-leader-flap.md
+      # ──────────────────────────────────────────────────────────────────────
+      - alert: AuctionManagerLeaderFlap
+        expr: increase(ipl_auction_manager_leader_elections_total[60s]) > 2
+        for: 0m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Auction Manager leader flapping ({{ $value }} elections in 60s)"
+          description: >
+            Auction Manager for auction {{ $labels.auction_id }} has had
+            {{ $value }} leader elections in the past 60 seconds.
+            This indicates instability. Check Redis connectivity and pod health.
+          runbook_url: "https://docs.internal/runbooks/alert-leader-flap"
+
+      # ──────────────────────────────────────────────────────────────────────
+      # Alert 5: Per-Auction LLM Cost > 95% of Budget
+      # Trigger: LLM spend for an active auction has reached 95% of the cap.
+      # Action: Hard-stop future LLM calls for the auction; alert on-call.
+      # SLO: Per-auction LLM cost must not exceed the configured budget hard cap.
+      # Runbook: docs/runbooks/alert-cost-budget.md
+      # ──────────────────────────────────────────────────────────────────────
+      - alert: LLMCostBudgetNearExhausted
+        expr: >
+          (ipl_llm_cost_used_cents / ipl_llm_cost_budget_cents) > 0.95
+        for: 0m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Auction {{ $labels.auction_id }} LLM cost at {{ $value | humanizePercentage }} of budget"
+          description: >
+            Auction {{ $labels.auction_id }} has consumed {{ $value | humanizePercentage }}
+            of its per-auction LLM budget ({{ $labels.budget_cents }} cents).
+            Hard stop is imminent. Operator intervention required.
+          runbook_url: "https://docs.internal/runbooks/alert-cost-budget"

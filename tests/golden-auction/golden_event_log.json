@@ -1,0 +1,5371 @@
+[
+  {
+    "event_id": "bdd640fb-0667-1ad1-1c80-317fa3b1799d",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 1,
+    "type": "auction.started",
+    "payload": {
+      "seed": "42"
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:00:00+00:00"
+  },
+  {
+    "event_id": "a0ee89ae-d453-dd32-4b0d-bb418d5288f1",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 2,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-devdutt-padikkal",
+      "name": "Devdutt Padikkal",
+      "role": "batsman",
+      "base_price_lakhs": 75.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 1
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:00:02+00:00"
+  },
+  {
+    "event_id": "d58842de-a2bc-372f-7412-b29347294739",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 3,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-devdutt-padikkal",
+      "bidder": "CSK",
+      "amount_lakhs": 75.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:00:03+00:00"
+  },
+  {
+    "event_id": "efc89849-b3aa-7efe-4458-a885ab9099a4",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 4,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-devdutt-padikkal",
+      "bidder": "DC",
+      "amount_lakhs": 80.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:00:04.729664+00:00"
+  },
+  {
+    "event_id": "baa80dd4-88bd-6407-2bcf-be01a28defe3",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 5,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-devdutt-padikkal",
+      "bidder": "CSK",
+      "amount_lakhs": 85.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:00:07.438534+00:00"
+  },
+  {
+    "event_id": "a3d70628-ece6-6fa2-fd51-66e6451b4cf3",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 6,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-devdutt-padikkal",
+      "bidder": "DC",
+      "amount_lakhs": 90.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:00:09.050561+00:00"
+  },
+  {
+    "event_id": "c6a7ee39-c4b0-32cc-d7c5-24a55304317f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 7,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-devdutt-padikkal",
+      "bidder": "CSK",
+      "amount_lakhs": 95.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:00:11.770966+00:00"
+  },
+  {
+    "event_id": "50c187fc-ce17-7b4e-0837-b8a3d261a7ab",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 8,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-devdutt-padikkal",
+      "name": "Devdutt Padikkal",
+      "winner": "CSK",
+      "final_price_lakhs": 95.0,
+      "nomination_seq": 1
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:00:12.910811+00:00"
+  },
+  {
+    "event_id": "3602f8ac-10f1-bc81-448a-aa9e66b2bc5b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 9,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-sam-curran",
+      "name": "Sam Curran",
+      "role": "all-rounder",
+      "base_price_lakhs": 150.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 2
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:00:14.410811+00:00"
+  },
+  {
+    "event_id": "95a76d79-bf3c-4c06-4343-08bc89fa6a68",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 10,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sam-curran",
+      "bidder": "MI",
+      "amount_lakhs": 150.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:00:15.410811+00:00"
+  },
+  {
+    "event_id": "2369b584-ff5e-9ff0-ff50-bde4382567b8",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 11,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sam-curran",
+      "bidder": "RR",
+      "amount_lakhs": 160.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:00:17.267678+00:00"
+  },
+  {
+    "event_id": "27209bdf-1c11-f735-dc71-3d960c0fd195",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 12,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sam-curran",
+      "bidder": "MI",
+      "amount_lakhs": 170.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:00:19.541494+00:00"
+  },
+  {
+    "event_id": "62801c45-1043-5a10-98ae-43346c12ace8",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 13,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sam-curran",
+      "bidder": "RR",
+      "amount_lakhs": 180.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:00:22.110109+00:00"
+  },
+  {
+    "event_id": "8da0365b-f898-97b9-405c-acec877409a9",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 14,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sam-curran",
+      "bidder": "MI",
+      "amount_lakhs": 190.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:00:24.064157+00:00"
+  },
+  {
+    "event_id": "e2817efd-ae84-9217-1d53-434bb88139b9",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 15,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sam-curran",
+      "bidder": "RR",
+      "amount_lakhs": 200.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:00:27.216107+00:00"
+  },
+  {
+    "event_id": "4b22d308-1c8e-aee9-5715-bd6fa4161293",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 16,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sam-curran",
+      "bidder": "MI",
+      "amount_lakhs": 220.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:00:29.558532+00:00"
+  },
+  {
+    "event_id": "b8db0672-f42d-47cc-00d4-af5974273ca3",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 17,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-sam-curran",
+      "name": "Sam Curran",
+      "winner": "MI",
+      "final_price_lakhs": 220.0,
+      "nomination_seq": 2
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:00:31.645446+00:00"
+  },
+  {
+    "event_id": "f8cda88b-436d-76e2-b83c-fe0be037e5ed",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 18,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-bhuvneshwar-kumar",
+      "name": "Bhuvneshwar Kumar",
+      "role": "pacer",
+      "base_price_lakhs": 75.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 3
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:00:33.145446+00:00"
+  },
+  {
+    "event_id": "eb2263dd-87c5-421e-ec24-a3c5c754108f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 19,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-bhuvneshwar-kumar",
+      "bidder": "RCB",
+      "amount_lakhs": 75.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:00:34.145446+00:00"
+  },
+  {
+    "event_id": "e0f3eab0-5cec-4eb5-edd9-68311ca35cfb",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 20,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-bhuvneshwar-kumar",
+      "bidder": "DC",
+      "amount_lakhs": 80.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:00:35.146589+00:00"
+  },
+  {
+    "event_id": "e0c53cb8-3da9-c2a9-0ed4-2f1a3d4cbf37",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 21,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-bhuvneshwar-kumar",
+      "bidder": "RCB",
+      "amount_lakhs": 85.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:00:38.609893+00:00"
+  },
+  {
+    "event_id": "11b7e948-d0e6-e660-7c69-dee1bb5e4bcf",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 22,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-bhuvneshwar-kumar",
+      "bidder": "DC",
+      "amount_lakhs": 90.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:00:41.028285+00:00"
+  },
+  {
+    "event_id": "79ac1b1e-a8e5-6e0c-20de-435d2031d750",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 23,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-bhuvneshwar-kumar",
+      "bidder": "RCB",
+      "amount_lakhs": 95.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:00:44.473246+00:00"
+  },
+  {
+    "event_id": "df57c59a-8715-a103-43da-c0432a45c2ab",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 24,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-bhuvneshwar-kumar",
+      "name": "Bhuvneshwar Kumar",
+      "winner": "RCB",
+      "final_price_lakhs": 95.0,
+      "nomination_seq": 3
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:00:47.840368+00:00"
+  },
+  {
+    "event_id": "36386821-f6e0-7cc0-6c52-c49f9b49bd26",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 25,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-shimron-hetmyer",
+      "name": "Shimron Hetmyer",
+      "role": "batsman",
+      "base_price_lakhs": 100.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 4
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:00:49.340368+00:00"
+  },
+  {
+    "event_id": "969b6662-0562-8059-568c-c69b1064005c",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 26,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shimron-hetmyer",
+      "bidder": "SRH",
+      "amount_lakhs": 100.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:00:50.340368+00:00"
+  },
+  {
+    "event_id": "0f1259e0-a18f-f6b6-b535-106e122c9a56",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 27,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shimron-hetmyer",
+      "bidder": "MI",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:00:52.448211+00:00"
+  },
+  {
+    "event_id": "839fbc50-1223-b513-5496-f63cdc1110c1",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 28,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shimron-hetmyer",
+      "bidder": "SRH",
+      "amount_lakhs": 120.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:00:54.020566+00:00"
+  },
+  {
+    "event_id": "b92da22b-21df-306f-8a0b-3c3336d8393a",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 29,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shimron-hetmyer",
+      "bidder": "MI",
+      "amount_lakhs": 130.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:00:55.615577+00:00"
+  },
+  {
+    "event_id": "7914c120-c8dc-d19f-3e35-11287900f7f9",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 30,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shimron-hetmyer",
+      "bidder": "SRH",
+      "amount_lakhs": 140.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:00:58.954363+00:00"
+  },
+  {
+    "event_id": "5ab33edf-6e59-5ed3-a8b3-17fa18d0752b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 31,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shimron-hetmyer",
+      "bidder": "MI",
+      "amount_lakhs": 150.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:01:01.973105+00:00"
+  },
+  {
+    "event_id": "a748dbcf-ac61-9e63-0dde-29a6baa4b71a",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 32,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shimron-hetmyer",
+      "bidder": "SRH",
+      "amount_lakhs": 160.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:01:04.032052+00:00"
+  },
+  {
+    "event_id": "ba6c34ab-6712-303a-0f84-4fef1931e9ee",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 33,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-shimron-hetmyer",
+      "name": "Shimron Hetmyer",
+      "winner": "SRH",
+      "final_price_lakhs": 160.0,
+      "nomination_seq": 4
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:01:07.492465+00:00"
+  },
+  {
+    "event_id": "1bf90e27-dc96-925e-ccf3-a17156dc8907",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 34,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-trevor-bayliss",
+      "name": "T Bayliss Jr",
+      "role": "batsman",
+      "base_price_lakhs": 75.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 5
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:01:08.992465+00:00"
+  },
+  {
+    "event_id": "8a63f881-ffd0-f9d5-a6f2-f7b80cf35b58",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 35,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-trevor-bayliss",
+      "bidder": "PBKS",
+      "amount_lakhs": 75.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:01:09.992465+00:00"
+  },
+  {
+    "event_id": "680ac07a-2a93-5d62-3c83-5dc0d9441fa5",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 36,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-trevor-bayliss",
+      "bidder": "LSG",
+      "amount_lakhs": 80.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:01:12.664520+00:00"
+  },
+  {
+    "event_id": "2a25a888-0f02-bad0-e706-7ef466aa9385",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 37,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-trevor-bayliss",
+      "bidder": "PBKS",
+      "amount_lakhs": 85.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:01:14.878623+00:00"
+  },
+  {
+    "event_id": "ed3049cf-43e4-58fc-63f2-ae24fc3d3348",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 38,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-trevor-bayliss",
+      "name": "T Bayliss Jr",
+      "winner": "PBKS",
+      "final_price_lakhs": 85.0,
+      "nomination_seq": 5
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:01:16.826056+00:00"
+  },
+  {
+    "event_id": "490617f2-747b-6dba-c8fe-3ccdc8b8d9c6",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 39,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-sai-sudharsan",
+      "name": "Sai Sudharsan",
+      "role": "batsman",
+      "base_price_lakhs": 50.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 6
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:01:18.326056+00:00"
+  },
+  {
+    "event_id": "0cd620c2-0ea2-622b-5048-67babf7b539b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 40,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sai-sudharsan",
+      "bidder": "RCB",
+      "amount_lakhs": 50.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:01:19.326056+00:00"
+  },
+  {
+    "event_id": "f5f59b22-0e8f-a8e0-284d-82e587f7e1fb",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 41,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sai-sudharsan",
+      "bidder": "CSK",
+      "amount_lakhs": 55.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:01:21.494411+00:00"
+  },
+  {
+    "event_id": "acdabacc-1165-e210-9854-3881118a9d29",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 42,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sai-sudharsan",
+      "bidder": "RCB",
+      "amount_lakhs": 60.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:01:23.763982+00:00"
+  },
+  {
+    "event_id": "3f07f814-91d6-3f78-e3e9-de99f10c718b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 43,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sai-sudharsan",
+      "bidder": "CSK",
+      "amount_lakhs": 65.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:01:26.918530+00:00"
+  },
+  {
+    "event_id": "956b8c0c-a849-9b92-6b52-52e314fcdd54",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 44,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sai-sudharsan",
+      "bidder": "RCB",
+      "amount_lakhs": 70.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:01:29.365828+00:00"
+  },
+  {
+    "event_id": "b758588d-ab73-295b-344a-54b842c18a62",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 45,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sai-sudharsan",
+      "bidder": "CSK",
+      "amount_lakhs": 75.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:01:31.778895+00:00"
+  },
+  {
+    "event_id": "4ccc9bc2-a53f-8a28-abf3-e3fc21813d25",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 46,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sai-sudharsan",
+      "bidder": "RCB",
+      "amount_lakhs": 80.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:01:33.564355+00:00"
+  },
+  {
+    "event_id": "12922f83-ef8c-485b-c07a-30f2edd4253b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 47,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-sai-sudharsan",
+      "name": "Sai Sudharsan",
+      "winner": "RCB",
+      "final_price_lakhs": 80.0,
+      "nomination_seq": 6
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:01:35.707416+00:00"
+  },
+  {
+    "event_id": "ff9ab5c2-9f04-4aed-7552-332702627f73",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 48,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-shardul-thakur",
+      "name": "Shardul Thakur",
+      "role": "all-rounder",
+      "base_price_lakhs": 75.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 7
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:01:37.207416+00:00"
+  },
+  {
+    "event_id": "9c96e9ec-4d71-c366-b41b-31438b10550c",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 49,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shardul-thakur",
+      "bidder": "MI",
+      "amount_lakhs": 75.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:01:38.207416+00:00"
+  },
+  {
+    "event_id": "ee87905e-4ca4-15ea-8dfa-6a56d12dbc9a",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 50,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shardul-thakur",
+      "bidder": "DC",
+      "amount_lakhs": 80.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:01:41.175123+00:00"
+  },
+  {
+    "event_id": "e3c43657-1d8c-bbac-43b4-09ef2260e70f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 51,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shardul-thakur",
+      "bidder": "MI",
+      "amount_lakhs": 85.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:01:43.833594+00:00"
+  },
+  {
+    "event_id": "35ebd32d-9ad6-20ab-4821-2ddb45b89cd9",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 52,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shardul-thakur",
+      "bidder": "DC",
+      "amount_lakhs": 90.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:01:45.101184+00:00"
+  },
+  {
+    "event_id": "81627cf1-4394-72e6-da58-7e8aa25d6b29",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 53,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shardul-thakur",
+      "bidder": "MI",
+      "amount_lakhs": 95.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:01:47.895215+00:00"
+  },
+  {
+    "event_id": "a2607723-17a0-df49-0d01-280fd89a40c0",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 54,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shardul-thakur",
+      "bidder": "DC",
+      "amount_lakhs": 100.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:01:50.116545+00:00"
+  },
+  {
+    "event_id": "217d65a0-c568-11cd-5563-f61600e85ece",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 55,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shardul-thakur",
+      "bidder": "MI",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:01:52.175484+00:00"
+  },
+  {
+    "event_id": "711c21c9-bdc1-4f1f-295d-6fbf430f801d",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 56,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-shardul-thakur",
+      "name": "Shardul Thakur",
+      "winner": "MI",
+      "final_price_lakhs": 110.0,
+      "nomination_seq": 7
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:01:54.768267+00:00"
+  },
+  {
+    "event_id": "8f9797b0-6d7c-e3c9-b4a6-9f3c8d3aed99",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 57,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-liam-livingstone",
+      "name": "Liam Livingstone",
+      "role": "all-rounder",
+      "base_price_lakhs": 100.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 8
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:01:56.268267+00:00"
+  },
+  {
+    "event_id": "f8e1daa7-cbce-abde-eede-db07e623a689",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 58,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-liam-livingstone",
+      "bidder": "DC",
+      "amount_lakhs": 100.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:01:57.268267+00:00"
+  },
+  {
+    "event_id": "5a8aaeca-1a50-aec3-aabc-25fa3fe12e47",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 59,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-liam-livingstone",
+      "bidder": "RR",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:01:59.989673+00:00"
+  },
+  {
+    "event_id": "bfddc3d9-9ee3-ac2a-f94d-62046808593f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 60,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-liam-livingstone",
+      "bidder": "DC",
+      "amount_lakhs": 120.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:02:02.939963+00:00"
+  },
+  {
+    "event_id": "ccc56569-f9e8-a369-2999-b735dd56cc94",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 61,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-liam-livingstone",
+      "bidder": "RR",
+      "amount_lakhs": 130.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:02:04.326347+00:00"
+  },
+  {
+    "event_id": "ecab3301-bc8f-7d29-2dea-94930658663a",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 62,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-liam-livingstone",
+      "bidder": "DC",
+      "amount_lakhs": 140.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:02:07.353276+00:00"
+  },
+  {
+    "event_id": "ab7f089a-cd5f-4822-6966-08aaee49f329",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 63,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-liam-livingstone",
+      "name": "Liam Livingstone",
+      "winner": "DC",
+      "final_price_lakhs": 140.0,
+      "nomination_seq": 8
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:02:09.183739+00:00"
+  },
+  {
+    "event_id": "3f87e362-cf8d-446a-bc2c-bb0ddd334cc7",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 64,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-faf-du-plessis",
+      "name": "Faf du Plessis",
+      "role": "batsman",
+      "base_price_lakhs": 100.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 9
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:02:10.683739+00:00"
+  },
+  {
+    "event_id": "a8f7ef5a-060e-df5b-3911-84973a43b2ba",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 65,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-faf-du-plessis",
+      "bidder": "KKR",
+      "amount_lakhs": 100.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "KKR",
+    "timestamp": "2026-04-19T10:02:11.683739+00:00"
+  },
+  {
+    "event_id": "4774bc58-c5f8-bc16-f786-0b5011c58ef0",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 66,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-faf-du-plessis",
+      "bidder": "DC",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:02:13.069999+00:00"
+  },
+  {
+    "event_id": "89456f27-d7fa-2d8d-fb2c-a025adf4e62d",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 67,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-faf-du-plessis",
+      "bidder": "KKR",
+      "amount_lakhs": 120.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "KKR",
+    "timestamp": "2026-04-19T10:02:14.947864+00:00"
+  },
+  {
+    "event_id": "2db69edb-42de-ffcc-f86c-2ca2e08596db",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 68,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-faf-du-plessis",
+      "bidder": "DC",
+      "amount_lakhs": 130.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:02:16.775739+00:00"
+  },
+  {
+    "event_id": "6f3f920c-98b8-e4cc-1bc0-44fc09cb3942",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 69,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-faf-du-plessis",
+      "bidder": "KKR",
+      "amount_lakhs": 140.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "KKR",
+    "timestamp": "2026-04-19T10:02:19.227213+00:00"
+  },
+  {
+    "event_id": "9b3080d5-6fb7-8271-504d-281fc9535b63",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 70,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-faf-du-plessis",
+      "name": "Faf du Plessis",
+      "winner": "KKR",
+      "final_price_lakhs": 140.0,
+      "nomination_seq": 9
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:02:21.091431+00:00"
+  },
+  {
+    "event_id": "629c2ae3-1d9a-f659-82ec-9f2dfbf6e16f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 71,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-rishabh-pant",
+      "name": "Rishabh Pant",
+      "role": "keeper",
+      "base_price_lakhs": 200.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 10
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:02:22.591431+00:00"
+  },
+  {
+    "event_id": "aa0b7b14-f2e9-702d-11e9-cdaa6e6981a3",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 72,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rishabh-pant",
+      "bidder": "SRH",
+      "amount_lakhs": 200.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:02:23.591431+00:00"
+  },
+  {
+    "event_id": "e6697833-b841-d0a0-1fe7-71d6d9178793",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 73,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rishabh-pant",
+      "bidder": "RR",
+      "amount_lakhs": 220.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:02:26.432973+00:00"
+  },
+  {
+    "event_id": "b27c4026-6703-b636-5380-b904688c7015",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 74,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rishabh-pant",
+      "bidder": "SRH",
+      "amount_lakhs": 240.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:02:28.183779+00:00"
+  },
+  {
+    "event_id": "610faa3f-f0bb-ac67-aa38-d0a16ba25efe",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 75,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rishabh-pant",
+      "bidder": "RR",
+      "amount_lakhs": 260.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:02:29.922917+00:00"
+  },
+  {
+    "event_id": "67f48ad5-4d0b-0d1a-91b0-e1d99d9262af",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 76,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rishabh-pant",
+      "bidder": "SRH",
+      "amount_lakhs": 280.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:02:32.616211+00:00"
+  },
+  {
+    "event_id": "c9277d9b-6e0d-2648-35ce-884149732d6c",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 77,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rishabh-pant",
+      "bidder": "RR",
+      "amount_lakhs": 300.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:02:34.986054+00:00"
+  },
+  {
+    "event_id": "acf5e81e-7131-6269-7118-e36477097749",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 78,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rishabh-pant",
+      "bidder": "SRH",
+      "amount_lakhs": 320.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:02:37.436016+00:00"
+  },
+  {
+    "event_id": "f5b78cc7-e6b3-c944-cb32-3e357922bac2",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 79,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-rishabh-pant",
+      "name": "Rishabh Pant",
+      "winner": "SRH",
+      "final_price_lakhs": 320.0,
+      "nomination_seq": 10
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:02:38.970270+00:00"
+  },
+  {
+    "event_id": "a8aa7158-2b70-e525-bc67-f831cbc84759",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 80,
+    "type": "snapshot.taken",
+    "payload": {
+      "nomination_seq": 10,
+      "budgets": {
+        "MI": 9670.0,
+        "CSK": 9905.0,
+        "RCB": 9825.0,
+        "DC": 9860.0,
+        "KKR": 9860.0,
+        "RR": 10000.0,
+        "PBKS": 9915.0,
+        "SRH": 9520.0,
+        "LSG": 10000.0,
+        "GT": 10000.0
+      },
+      "squad_sizes": {
+        "MI": 2,
+        "CSK": 1,
+        "RCB": 2,
+        "DC": 1,
+        "KKR": 1,
+        "RR": 0,
+        "PBKS": 1,
+        "SRH": 2,
+        "LSG": 0,
+        "GT": 0
+      }
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:02:40.470270+00:00"
+  },
+  {
+    "event_id": "a9f25336-83f4-a9a9-48a6-39d015b52908",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 81,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-ravichandran-ashwin",
+      "name": "R Ashwin",
+      "role": "spinner",
+      "base_price_lakhs": 100.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 11
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:02:40.970270+00:00"
+  },
+  {
+    "event_id": "74962764-12a4-def0-c4bb-b7a9d98868dd",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 82,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ravichandran-ashwin",
+      "bidder": "RCB",
+      "amount_lakhs": 100.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:02:41.970270+00:00"
+  },
+  {
+    "event_id": "664fa663-7e8f-8095-624c-69b6b24445a7",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 83,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ravichandran-ashwin",
+      "bidder": "DC",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:02:43.799152+00:00"
+  },
+  {
+    "event_id": "dc45d539-c03f-3538-e485-5aa1016b6287",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 84,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ravichandran-ashwin",
+      "bidder": "RCB",
+      "amount_lakhs": 120.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:02:45.409113+00:00"
+  },
+  {
+    "event_id": "cdda24ba-2d06-e8cf-3805-f9076cd66193",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 85,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ravichandran-ashwin",
+      "bidder": "DC",
+      "amount_lakhs": 130.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:02:48.334229+00:00"
+  },
+  {
+    "event_id": "eadf5085-3fcb-7546-8eb2-25790cdb1ca4",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 86,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ravichandran-ashwin",
+      "bidder": "RCB",
+      "amount_lakhs": 140.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:02:51.729144+00:00"
+  },
+  {
+    "event_id": "87f8424d-aae6-5fc1-76f2-dbfecd29a36f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 87,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ravichandran-ashwin",
+      "bidder": "DC",
+      "amount_lakhs": 150.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:02:54.849984+00:00"
+  },
+  {
+    "event_id": "714c7df4-e434-7d51-c158-1092f335cba3",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 88,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ravichandran-ashwin",
+      "bidder": "RCB",
+      "amount_lakhs": 160.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:02:58.319716+00:00"
+  },
+  {
+    "event_id": "6d3ee1dc-8139-2443-e45b-712eb8225688",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 89,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-ravichandran-ashwin",
+      "name": "R Ashwin",
+      "winner": "RCB",
+      "final_price_lakhs": 160.0,
+      "nomination_seq": 11
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:03:00.851346+00:00"
+  },
+  {
+    "event_id": "722764e6-8c41-561b-e827-a1b9d4a02e53",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 90,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-quinton-de-kock",
+      "name": "Quinton de Kock",
+      "role": "keeper",
+      "base_price_lakhs": 100.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 12
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:03:02.351346+00:00"
+  },
+  {
+    "event_id": "3c07c574-4925-7af1-b6aa-e05b13d5f2f7",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 91,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-quinton-de-kock",
+      "bidder": "MI",
+      "amount_lakhs": 100.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:03:03.351346+00:00"
+  },
+  {
+    "event_id": "3b33f3d8-269c-d696-236c-7b8714a0bccb",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 92,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-quinton-de-kock",
+      "bidder": "PBKS",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:03:04.894777+00:00"
+  },
+  {
+    "event_id": "68586eba-6a34-c854-1071-4d5136c59dac",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 93,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-quinton-de-kock",
+      "bidder": "MI",
+      "amount_lakhs": 120.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:03:06.852365+00:00"
+  },
+  {
+    "event_id": "6b8e869f-d538-5b0e-34f3-193c0ff0a55c",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 94,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-quinton-de-kock",
+      "bidder": "PBKS",
+      "amount_lakhs": 130.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:03:08.679568+00:00"
+  },
+  {
+    "event_id": "db52ca58-0500-0bc6-b20d-cb6ef2311f17",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 95,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-quinton-de-kock",
+      "bidder": "MI",
+      "amount_lakhs": 140.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:03:10.653260+00:00"
+  },
+  {
+    "event_id": "018267c4-7a1b-5806-6160-a6b49360715f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 96,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-quinton-de-kock",
+      "name": "Quinton de Kock",
+      "winner": "MI",
+      "final_price_lakhs": 140.0,
+      "nomination_seq": 12
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:03:13.854902+00:00"
+  },
+  {
+    "event_id": "c0e3befd-4c71-e0fe-5a0c-dd7cf1578470",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 97,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-nicholas-pooran",
+      "name": "Nicholas Pooran",
+      "role": "keeper",
+      "base_price_lakhs": 100.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 13
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:03:15.354902+00:00"
+  },
+  {
+    "event_id": "addc3e13-ab3b-4d37-560c-95ee638c254c",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 98,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-nicholas-pooran",
+      "bidder": "PBKS",
+      "amount_lakhs": 100.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:03:16.354902+00:00"
+  },
+  {
+    "event_id": "9f4c3b79-fb10-987f-20ac-3703eb67146a",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 99,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-nicholas-pooran",
+      "bidder": "CSK",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:03:18.951187+00:00"
+  },
+  {
+    "event_id": "06f028ff-a9ba-5a27-907b-fe36978648f8",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 100,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-nicholas-pooran",
+      "bidder": "PBKS",
+      "amount_lakhs": 120.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:03:21.286496+00:00"
+  },
+  {
+    "event_id": "0cdf742b-2e85-cb21-7631-de9ddde9f863",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 101,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-nicholas-pooran",
+      "bidder": "CSK",
+      "amount_lakhs": 130.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:03:22.496364+00:00"
+  },
+  {
+    "event_id": "53ac2ab9-7467-2cd9-362f-5e5c53cd6268",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 102,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-nicholas-pooran",
+      "name": "Nicholas Pooran",
+      "winner": "CSK",
+      "final_price_lakhs": 130.0,
+      "nomination_seq": 13
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:03:24.146755+00:00"
+  },
+  {
+    "event_id": "610e6a64-e130-1617-c2df-f33556666f9f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 103,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-riyan-parag",
+      "name": "Riyan Parag",
+      "role": "batsman",
+      "base_price_lakhs": 50.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 14
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:03:25.646755+00:00"
+  },
+  {
+    "event_id": "c1156d6d-0a4e-5b70-a6d9-64a3f510ab53",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 104,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-riyan-parag",
+      "bidder": "CSK",
+      "amount_lakhs": 50.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:03:26.646755+00:00"
+  },
+  {
+    "event_id": "3d114802-2702-878b-9f0f-da8d05379ff6",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 105,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-riyan-parag",
+      "bidder": "SRH",
+      "amount_lakhs": 55.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:03:27.708815+00:00"
+  },
+  {
+    "event_id": "770c7798-37cc-863b-f2a0-345990604f62",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 106,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-riyan-parag",
+      "bidder": "CSK",
+      "amount_lakhs": 60.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:03:29.024368+00:00"
+  },
+  {
+    "event_id": "f6b751f7-9b74-9245-9b1b-c8952af43ab7",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 107,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-riyan-parag",
+      "bidder": "SRH",
+      "amount_lakhs": 65.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:03:31.773030+00:00"
+  },
+  {
+    "event_id": "29ec8e49-d1bd-b8c0-c71d-5e601d5206ab",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 108,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-riyan-parag",
+      "name": "Riyan Parag",
+      "winner": "SRH",
+      "final_price_lakhs": 65.0,
+      "nomination_seq": 14
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:03:34.642844+00:00"
+  },
+  {
+    "event_id": "9424aed5-1bac-5c15-4fa0-3f26f6f7f0cc",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 109,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-adil-rashid",
+      "name": "Adil Rashid",
+      "role": "spinner",
+      "base_price_lakhs": 75.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 15
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:03:36.142844+00:00"
+  },
+  {
+    "event_id": "af2b99b4-d9ac-d158-4d34-85c5c5c14eb4",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 110,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-adil-rashid",
+      "bidder": "DC",
+      "amount_lakhs": 75.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:03:37.142844+00:00"
+  },
+  {
+    "event_id": "58e25888-0a83-81be-c85a-ca4690e0f4a0",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 111,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-adil-rashid",
+      "bidder": "RR",
+      "amount_lakhs": 80.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:03:39.343667+00:00"
+  },
+  {
+    "event_id": "575aed2c-a5c5-650c-8186-a57611a72609",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 112,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-adil-rashid",
+      "bidder": "DC",
+      "amount_lakhs": 85.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:03:41.675531+00:00"
+  },
+  {
+    "event_id": "1b049863-7d7d-dbed-d284-476c6b88f83d",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 113,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-adil-rashid",
+      "name": "Adil Rashid",
+      "winner": "DC",
+      "final_price_lakhs": 85.0,
+      "nomination_seq": 15
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:03:42.707161+00:00"
+  },
+  {
+    "event_id": "a2b5b498-5cb8-5aed-f5f6-2c976efb63b1",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 114,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-jasprit-bumrah",
+      "name": "Jasprit Bumrah",
+      "role": "pacer",
+      "base_price_lakhs": 200.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 16
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:03:44.207161+00:00"
+  },
+  {
+    "event_id": "44b591f7-97ac-6aa8-bb24-88a3d36357b6",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 115,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-jasprit-bumrah",
+      "bidder": "LSG",
+      "amount_lakhs": 200.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:03:45.207161+00:00"
+  },
+  {
+    "event_id": "7367c28d-e1b2-94de-4767-d76c162f8a24",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 116,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-jasprit-bumrah",
+      "bidder": "SRH",
+      "amount_lakhs": 220.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:03:46.851770+00:00"
+  },
+  {
+    "event_id": "561e16d1-6105-716b-ab0e-664e9c3eb2d5",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 117,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-jasprit-bumrah",
+      "bidder": "LSG",
+      "amount_lakhs": 240.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:03:48.461429+00:00"
+  },
+  {
+    "event_id": "5ad5cf06-364d-7c87-7cd0-129d2e8d0e87",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 118,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-jasprit-bumrah",
+      "bidder": "SRH",
+      "amount_lakhs": 260.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:03:49.533179+00:00"
+  },
+  {
+    "event_id": "989d9d4a-e15c-a666-4797-b2c957207246",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 119,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-jasprit-bumrah",
+      "name": "Jasprit Bumrah",
+      "winner": "SRH",
+      "final_price_lakhs": 260.0,
+      "nomination_seq": 16
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:03:52.527760+00:00"
+  },
+  {
+    "event_id": "8e485223-46b9-8991-e14e-b70db380c73a",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 120,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-jos-buttler",
+      "name": "Jos Buttler",
+      "role": "keeper",
+      "base_price_lakhs": 200.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 17
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:03:54.027760+00:00"
+  },
+  {
+    "event_id": "6786d506-38ba-8abc-4b53-05e517d2582e",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 121,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-jos-buttler",
+      "bidder": "CSK",
+      "amount_lakhs": 200.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:03:55.027760+00:00"
+  },
+  {
+    "event_id": "87ea7ff5-8db0-6746-7927-99735e781fd7",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 122,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-jos-buttler",
+      "bidder": "GT",
+      "amount_lakhs": 220.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "GT",
+    "timestamp": "2026-04-19T10:03:57.411334+00:00"
+  },
+  {
+    "event_id": "b3ee4d3b-5a10-4129-54ae-bd1b8ce6424d",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 123,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-jos-buttler",
+      "bidder": "CSK",
+      "amount_lakhs": 240.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:03:59.270727+00:00"
+  },
+  {
+    "event_id": "314d3441-b8a6-171f-1ee3-4dc43b048a8b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 124,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-jos-buttler",
+      "bidder": "GT",
+      "amount_lakhs": 260.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "GT",
+    "timestamp": "2026-04-19T10:04:01.405091+00:00"
+  },
+  {
+    "event_id": "2f65fafa-b0ae-8f08-c31e-dbbcf36cb62b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 125,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-jos-buttler",
+      "bidder": "CSK",
+      "amount_lakhs": 280.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:04:03.193960+00:00"
+  },
+  {
+    "event_id": "b97e6703-46c8-adfe-7bf4-7042bd1531c8",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 126,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-jos-buttler",
+      "name": "Jos Buttler",
+      "winner": "CSK",
+      "final_price_lakhs": 280.0,
+      "nomination_seq": 17
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:04:04.672813+00:00"
+  },
+  {
+    "event_id": "864e9a13-c29c-fc0c-fa02-eaec96ef2ad6",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 127,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-rinku-singh",
+      "name": "Rinku Singh",
+      "role": "batsman",
+      "base_price_lakhs": 50.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 18
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:04:06.172813+00:00"
+  },
+  {
+    "event_id": "2053da42-f1af-db65-b289-f2244ac9778d",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 128,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rinku-singh",
+      "bidder": "CSK",
+      "amount_lakhs": 50.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:04:07.172813+00:00"
+  },
+  {
+    "event_id": "782a65e0-48ca-7651-92f5-df7b0323d342",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 129,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rinku-singh",
+      "bidder": "RCB",
+      "amount_lakhs": 55.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:04:09.448552+00:00"
+  },
+  {
+    "event_id": "f0e98b3b-40a2-6c60-0d27-0659f72ada9b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 130,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rinku-singh",
+      "bidder": "CSK",
+      "amount_lakhs": 60.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:04:11.645338+00:00"
+  },
+  {
+    "event_id": "12f70c97-7de3-1a51-6694-c34310ba58e3",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 131,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rinku-singh",
+      "bidder": "RCB",
+      "amount_lakhs": 65.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:04:14.799645+00:00"
+  },
+  {
+    "event_id": "90164161-cfa7-01cd-2631-d00b26d794d3",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 132,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rinku-singh",
+      "bidder": "CSK",
+      "amount_lakhs": 70.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:04:17.242198+00:00"
+  },
+  {
+    "event_id": "c3b290d0-8edd-dfcd-1e52-d7703f897142",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 133,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rinku-singh",
+      "bidder": "RCB",
+      "amount_lakhs": 75.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:04:20.615012+00:00"
+  },
+  {
+    "event_id": "39c6a1ca-9e50-aa42-ca6d-fda1989bc4da",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 134,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-rinku-singh",
+      "name": "Rinku Singh",
+      "winner": "RCB",
+      "final_price_lakhs": 75.0,
+      "nomination_seq": 18
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:04:22.655447+00:00"
+  },
+  {
+    "event_id": "7354ea6f-6160-7459-85c7-504bc693da11",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 135,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-ravindra-jadeja",
+      "name": "Ravindra Jadeja",
+      "role": "spinner",
+      "base_price_lakhs": 150.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 19
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:04:24.155447+00:00"
+  },
+  {
+    "event_id": "2834e4c0-14c8-b3b4-a911-d19243bfd931",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 136,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ravindra-jadeja",
+      "bidder": "PBKS",
+      "amount_lakhs": 150.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:04:25.155447+00:00"
+  },
+  {
+    "event_id": "b07aa066-7354-35ea-6894-9b8d00af5b3a",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 137,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ravindra-jadeja",
+      "bidder": "MI",
+      "amount_lakhs": 160.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:04:26.635177+00:00"
+  },
+  {
+    "event_id": "48603b32-b4fb-0eb9-49c1-3de73b4206c5",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 138,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ravindra-jadeja",
+      "bidder": "PBKS",
+      "amount_lakhs": 170.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:04:29.119705+00:00"
+  },
+  {
+    "event_id": "43b9da13-ec85-6f37-3bc1-a987aff8754d",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 139,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ravindra-jadeja",
+      "bidder": "MI",
+      "amount_lakhs": 180.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:04:31.877174+00:00"
+  },
+  {
+    "event_id": "32a447b2-ef04-e57d-cdcc-c33aa9434aa0",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 140,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ravindra-jadeja",
+      "bidder": "PBKS",
+      "amount_lakhs": 190.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:04:34.846744+00:00"
+  },
+  {
+    "event_id": "44007d5a-e88d-a719-2624-2b40a5cb63a2",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 141,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ravindra-jadeja",
+      "bidder": "MI",
+      "amount_lakhs": 200.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:04:36.909592+00:00"
+  },
+  {
+    "event_id": "9854ce4e-4ebf-a5c3-cae9-b4a72a79ea68",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 142,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ravindra-jadeja",
+      "bidder": "PBKS",
+      "amount_lakhs": 220.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:04:39.976170+00:00"
+  },
+  {
+    "event_id": "706c5c56-49e2-623d-ebd3-461691b78d8e",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 143,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-ravindra-jadeja",
+      "name": "Ravindra Jadeja",
+      "winner": "PBKS",
+      "final_price_lakhs": 220.0,
+      "nomination_seq": 19
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:04:42.848564+00:00"
+  },
+  {
+    "event_id": "4dd8eb85-b04d-3376-77fc-97031fd5a423",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 144,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-ruturaj-gaikwad",
+      "name": "Ruturaj Gaikwad",
+      "role": "batsman",
+      "base_price_lakhs": 100.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 20
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:04:44.348564+00:00"
+  },
+  {
+    "event_id": "dc4ad56b-d601-6237-ac9e-d156f63fce41",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 145,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ruturaj-gaikwad",
+      "bidder": "CSK",
+      "amount_lakhs": 100.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:04:45.348564+00:00"
+  },
+  {
+    "event_id": "9384ec2b-44fe-acae-d248-a9a7ac1aa554",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 146,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ruturaj-gaikwad",
+      "bidder": "MI",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:04:47.498962+00:00"
+  },
+  {
+    "event_id": "7135f221-a6c9-537f-84da-d06a7872bdeb",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 147,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ruturaj-gaikwad",
+      "bidder": "CSK",
+      "amount_lakhs": 120.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:04:48.599541+00:00"
+  },
+  {
+    "event_id": "6f962882-95d8-2980-ff37-d19c2e76128b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 148,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-ruturaj-gaikwad",
+      "name": "Ruturaj Gaikwad",
+      "winner": "CSK",
+      "final_price_lakhs": 120.0,
+      "nomination_seq": 20
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:04:51.889723+00:00"
+  },
+  {
+    "event_id": "f8140102-7de1-bdfe-d072-5b5ca2814044",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 149,
+    "type": "snapshot.taken",
+    "payload": {
+      "nomination_seq": 20,
+      "budgets": {
+        "MI": 9530.0,
+        "CSK": 9375.0,
+        "RCB": 9590.0,
+        "DC": 9775.0,
+        "KKR": 9860.0,
+        "RR": 10000.0,
+        "PBKS": 9695.0,
+        "SRH": 9195.0,
+        "LSG": 10000.0,
+        "GT": 10000.0
+      },
+      "squad_sizes": {
+        "MI": 3,
+        "CSK": 4,
+        "RCB": 4,
+        "DC": 2,
+        "KKR": 1,
+        "RR": 0,
+        "PBKS": 2,
+        "SRH": 4,
+        "LSG": 0,
+        "GT": 0
+      }
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:04:53.389723+00:00"
+  },
+  {
+    "event_id": "6889803e-5913-f9d3-7852-99f4175ba98d",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 150,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-kl-rahul",
+      "name": "KL Rahul",
+      "role": "keeper",
+      "base_price_lakhs": 150.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 21
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:04:53.889723+00:00"
+  },
+  {
+    "event_id": "1dad09b2-52c2-1221-409d-360250843242",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 151,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-kl-rahul",
+      "bidder": "PBKS",
+      "amount_lakhs": 150.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:04:54.889723+00:00"
+  },
+  {
+    "event_id": "a85c6e4a-004b-6fab-fcf5-6188d32e6dcd",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 152,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-kl-rahul",
+      "bidder": "RCB",
+      "amount_lakhs": 160.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:04:57.830093+00:00"
+  },
+  {
+    "event_id": "5c9d927d-84b8-71bb-3005-68d20de051a6",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 153,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-kl-rahul",
+      "bidder": "PBKS",
+      "amount_lakhs": 170.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:05:01.003512+00:00"
+  },
+  {
+    "event_id": "341c6494-0d36-6dfc-c28e-bd7071299889",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 154,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-kl-rahul",
+      "bidder": "RCB",
+      "amount_lakhs": 180.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:05:03.560096+00:00"
+  },
+  {
+    "event_id": "b2c08394-e17f-29e1-7028-604649bc473f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 155,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-kl-rahul",
+      "bidder": "PBKS",
+      "amount_lakhs": 190.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:05:05.227737+00:00"
+  },
+  {
+    "event_id": "3d42993c-cc9f-d334-9bdf-0377a14923c2",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 156,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-kl-rahul",
+      "bidder": "RCB",
+      "amount_lakhs": 200.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:05:07.439516+00:00"
+  },
+  {
+    "event_id": "8d605936-0380-2b70-8d03-c91e4f8d5238",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 157,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-kl-rahul",
+      "name": "KL Rahul",
+      "winner": "RCB",
+      "final_price_lakhs": 200.0,
+      "nomination_seq": 21
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:05:10.213973+00:00"
+  },
+  {
+    "event_id": "fe049059-3985-fb62-17dc-8eff687213f9",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 158,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-local-talent-02",
+      "name": "Unknown Talent 02",
+      "role": "pacer",
+      "base_price_lakhs": 20.0,
+      "nationality": "Indian",
+      "is_cold_start": true,
+      "nomination_seq": 22
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:05:11.713973+00:00"
+  },
+  {
+    "event_id": "8d1fb540-74ef-f545-3e65-260378e3654b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 159,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-local-talent-02",
+      "bidder": "RR",
+      "amount_lakhs": 20.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:05:12.713973+00:00"
+  },
+  {
+    "event_id": "22f235f2-e11b-868d-bf0d-073d821c1336",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 160,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-local-talent-02",
+      "bidder": "RCB",
+      "amount_lakhs": 25.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:05:14.003257+00:00"
+  },
+  {
+    "event_id": "57021049-6a39-aaa6-daba-c50dca3dd859",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 161,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-local-talent-02",
+      "bidder": "RR",
+      "amount_lakhs": 30.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:05:17.163325+00:00"
+  },
+  {
+    "event_id": "b9de7a3a-4868-22b9-00a8-1de9d20f87d0",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 162,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-local-talent-02",
+      "bidder": "RCB",
+      "amount_lakhs": 35.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:05:20.498946+00:00"
+  },
+  {
+    "event_id": "a8f1e091-ffb8-102d-9475-dbc996418ced",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 163,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-local-talent-02",
+      "name": "Unknown Talent 02",
+      "winner": "RCB",
+      "final_price_lakhs": 35.0,
+      "nomination_seq": 22
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:05:22.245335+00:00"
+  },
+  {
+    "event_id": "7250ee18-260a-5962-dd81-b7f57d5911c6",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 164,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-david-warner",
+      "name": "David Warner",
+      "role": "batsman",
+      "base_price_lakhs": 150.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 23
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:05:23.745335+00:00"
+  },
+  {
+    "event_id": "517400f8-0b2c-782a-6928-8e92c68a152f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 165,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-david-warner",
+      "bidder": "LSG",
+      "amount_lakhs": 150.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:05:24.745335+00:00"
+  },
+  {
+    "event_id": "a6eab79e-d21c-82f8-cada-4f80a9e782d4",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 166,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-david-warner",
+      "bidder": "DC",
+      "amount_lakhs": 160.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:05:27.234746+00:00"
+  },
+  {
+    "event_id": "f72169bb-8096-2718-2051-acef097a1e10",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 167,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-david-warner",
+      "bidder": "LSG",
+      "amount_lakhs": 170.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:05:30.686791+00:00"
+  },
+  {
+    "event_id": "1986b4b2-70b7-e868-d854-80f0dfcaf0b7",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 168,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-david-warner",
+      "bidder": "DC",
+      "amount_lakhs": 180.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:05:33.162242+00:00"
+  },
+  {
+    "event_id": "def57689-68f4-5bce-24e7-5e8eb8f21423",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 169,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-david-warner",
+      "bidder": "LSG",
+      "amount_lakhs": 190.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:05:35.477120+00:00"
+  },
+  {
+    "event_id": "43d88870-f81d-baa1-c812-0a8e78308930",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 170,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-david-warner",
+      "bidder": "DC",
+      "amount_lakhs": 200.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:05:38.114073+00:00"
+  },
+  {
+    "event_id": "148f8b74-a65b-b1f2-65c1-7795b15516bc",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 171,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-david-warner",
+      "name": "David Warner",
+      "winner": "DC",
+      "final_price_lakhs": 200.0,
+      "nomination_seq": 23
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:05:39.960476+00:00"
+  },
+  {
+    "event_id": "aca2b148-da33-0aa1-541c-dfcdda0d4a5f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 172,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-ishan-kishan",
+      "name": "Ishan Kishan",
+      "role": "keeper",
+      "base_price_lakhs": 100.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 24
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:05:41.460476+00:00"
+  },
+  {
+    "event_id": "1723199d-bf2c-14a0-3a3c-8a71ff574e2b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 173,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ishan-kishan",
+      "bidder": "GT",
+      "amount_lakhs": 100.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "GT",
+    "timestamp": "2026-04-19T10:05:42.460476+00:00"
+  },
+  {
+    "event_id": "7194eae2-19ba-d7ae-df61-5a5cb4323070",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 174,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ishan-kishan",
+      "bidder": "RR",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:05:44.328419+00:00"
+  },
+  {
+    "event_id": "cbd00ef2-530a-37df-0bc6-10660769165f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 175,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ishan-kishan",
+      "bidder": "GT",
+      "amount_lakhs": 120.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "GT",
+    "timestamp": "2026-04-19T10:05:45.744331+00:00"
+  },
+  {
+    "event_id": "25440fe0-6e41-7d47-5ff5-95ea5bc440f1",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 176,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-ishan-kishan",
+      "name": "Ishan Kishan",
+      "winner": "GT",
+      "final_price_lakhs": 120.0,
+      "nomination_seq": 24
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:05:46.884629+00:00"
+  },
+  {
+    "event_id": "90e0a95b-697c-3923-87fa-841a3e83b91f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 177,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-kagiso-rabada",
+      "name": "Kagiso Rabada",
+      "role": "pacer",
+      "base_price_lakhs": 200.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 25
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:05:48.384629+00:00"
+  },
+  {
+    "event_id": "0267deb3-aab6-12c9-415d-174a75a66981",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 178,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-kagiso-rabada",
+      "bidder": "RR",
+      "amount_lakhs": 200.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:05:49.384629+00:00"
+  },
+  {
+    "event_id": "12e89d10-2871-1733-8bed-db12ad77e82f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 179,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-kagiso-rabada",
+      "bidder": "GT",
+      "amount_lakhs": 220.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "GT",
+    "timestamp": "2026-04-19T10:05:52.182446+00:00"
+  },
+  {
+    "event_id": "f6478986-a391-7c99-4c95-5f6a966b1964",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 180,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-kagiso-rabada",
+      "bidder": "RR",
+      "amount_lakhs": 240.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:05:54.286771+00:00"
+  },
+  {
+    "event_id": "ffd6f232-32ff-e294-4d57-d880d865d69a",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 181,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-kagiso-rabada",
+      "bidder": "GT",
+      "amount_lakhs": 260.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "GT",
+    "timestamp": "2026-04-19T10:05:56.347543+00:00"
+  },
+  {
+    "event_id": "5be4bf51-9269-8698-61a1-17293cb98350",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 182,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-kagiso-rabada",
+      "bidder": "RR",
+      "amount_lakhs": 280.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:05:58.309276+00:00"
+  },
+  {
+    "event_id": "d47d577b-fa5a-91ca-059d-d55d4b943e30",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 183,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-kagiso-rabada",
+      "bidder": "GT",
+      "amount_lakhs": 300.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "GT",
+    "timestamp": "2026-04-19T10:06:00.746306+00:00"
+  },
+  {
+    "event_id": "dd750e98-90e0-b95f-0212-b554464458b4",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 184,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-kagiso-rabada",
+      "name": "Kagiso Rabada",
+      "winner": "GT",
+      "final_price_lakhs": 300.0,
+      "nomination_seq": 25
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:06:03.391880+00:00"
+  },
+  {
+    "event_id": "f93e08d5-bea2-9dfe-c73f-6e1baf908e3c",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 185,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-rohit-sharma",
+      "name": "Rohit Sharma",
+      "role": "batsman",
+      "base_price_lakhs": 200.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 26
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:06:04.891880+00:00"
+  },
+  {
+    "event_id": "c478f6f1-b88e-c318-c16d-83edad81f8bd",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 186,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rohit-sharma",
+      "bidder": "RR",
+      "amount_lakhs": 200.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:06:05.891880+00:00"
+  },
+  {
+    "event_id": "0a17991e-a576-9411-a0a1-1839e7457704",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 187,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rohit-sharma",
+      "bidder": "DC",
+      "amount_lakhs": 220.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:06:08.210244+00:00"
+  },
+  {
+    "event_id": "21a4344f-bb7b-ee03-5d67-8bb1945ef2e4",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 188,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rohit-sharma",
+      "bidder": "RR",
+      "amount_lakhs": 240.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:06:09.982576+00:00"
+  },
+  {
+    "event_id": "336749b5-2cf6-bf75-6a5e-6920bf5ae7e6",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 189,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rohit-sharma",
+      "bidder": "DC",
+      "amount_lakhs": 260.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:06:11.207909+00:00"
+  },
+  {
+    "event_id": "5da8d6d2-f8b3-8a8b-e05f-b8bc8a16a06c",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 190,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-rohit-sharma",
+      "name": "Rohit Sharma",
+      "winner": "DC",
+      "final_price_lakhs": 260.0,
+      "nomination_seq": 26
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:06:12.538309+00:00"
+  },
+  {
+    "event_id": "45c45a3e-e9da-484a-8075-9f1f87e5f0fe",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 191,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-rashid-khan",
+      "name": "Rashid Khan",
+      "role": "spinner",
+      "base_price_lakhs": 200.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 27
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:06:14.038309+00:00"
+  },
+  {
+    "event_id": "ad238d36-dc32-2c97-39c1-e262f76c8ede",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 192,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rashid-khan",
+      "bidder": "LSG",
+      "amount_lakhs": 200.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:06:15.038309+00:00"
+  },
+  {
+    "event_id": "171e16cc-5da3-6f1b-8eac-0a33cdf974a7",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 193,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rashid-khan",
+      "bidder": "KKR",
+      "amount_lakhs": 220.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "KKR",
+    "timestamp": "2026-04-19T10:06:17.486742+00:00"
+  },
+  {
+    "event_id": "5e5ba13d-746c-db77-1fa3-82e8895ccd99",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 194,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rashid-khan",
+      "bidder": "LSG",
+      "amount_lakhs": 240.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:06:20.463447+00:00"
+  },
+  {
+    "event_id": "a377f6f1-d289-f0ab-618a-e30595a5bafa",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 195,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rashid-khan",
+      "bidder": "KKR",
+      "amount_lakhs": 260.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "KKR",
+    "timestamp": "2026-04-19T10:06:23.145518+00:00"
+  },
+  {
+    "event_id": "9e9a9f83-0668-03ee-78b2-b5493bdbc09e",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 196,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rashid-khan",
+      "bidder": "LSG",
+      "amount_lakhs": 280.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:06:26.496248+00:00"
+  },
+  {
+    "event_id": "a5cc8bf7-38ab-854c-9c2e-58deea4e3617",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 197,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-rashid-khan",
+      "bidder": "KKR",
+      "amount_lakhs": 300.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "KKR",
+    "timestamp": "2026-04-19T10:06:29.706835+00:00"
+  },
+  {
+    "event_id": "b379cb1e-e8cd-a0cc-76da-3ca0d2e82f38",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 198,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-rashid-khan",
+      "name": "Rashid Khan",
+      "winner": "KKR",
+      "final_price_lakhs": 300.0,
+      "nomination_seq": 27
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:06:30.864877+00:00"
+  },
+  {
+    "event_id": "1dde7969-6886-13db-a634-8e784d5c55c7",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 199,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-tilak-varma",
+      "name": "Tilak Varma",
+      "role": "batsman",
+      "base_price_lakhs": 50.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 28
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:06:32.364877+00:00"
+  },
+  {
+    "event_id": "965befdf-6b4b-e411-8a4a-0e2df22b5b98",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 200,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-tilak-varma",
+      "bidder": "RR",
+      "amount_lakhs": 50.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:06:33.364877+00:00"
+  },
+  {
+    "event_id": "7d45d8ef-d56c-e8ea-1959-7b5aa7a8f636",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 201,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-tilak-varma",
+      "bidder": "CSK",
+      "amount_lakhs": 55.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:06:35.849415+00:00"
+  },
+  {
+    "event_id": "5edb0d3c-b0b6-3bcf-0860-1833479d0cda",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 202,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-tilak-varma",
+      "bidder": "RR",
+      "amount_lakhs": 60.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:06:38.388546+00:00"
+  },
+  {
+    "event_id": "196f4dfa-5cd8-fe1a-dafe-c8a93c71e0be",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 203,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-tilak-varma",
+      "bidder": "CSK",
+      "amount_lakhs": 65.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:06:39.931720+00:00"
+  },
+  {
+    "event_id": "fa53e34d-e6d5-901d-8b62-1d415e09a9ee",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 204,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-tilak-varma",
+      "name": "Tilak Varma",
+      "winner": "CSK",
+      "final_price_lakhs": 65.0,
+      "nomination_seq": 28
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:06:43.384040+00:00"
+  },
+  {
+    "event_id": "65ec7acd-0f80-35f5-5bd2-0c98a5135ea0",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 205,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-mitchell-starc",
+      "name": "Mitchell Starc",
+      "role": "pacer",
+      "base_price_lakhs": 150.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 29
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:06:44.884040+00:00"
+  },
+  {
+    "event_id": "90882eaf-c977-6598-203c-8c25fd235def",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 206,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mitchell-starc",
+      "bidder": "CSK",
+      "amount_lakhs": 150.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:06:45.884040+00:00"
+  },
+  {
+    "event_id": "3ba5cd2f-dea4-5c19-d024-3d723748967f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 207,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mitchell-starc",
+      "bidder": "RCB",
+      "amount_lakhs": 160.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:06:47.294451+00:00"
+  },
+  {
+    "event_id": "46fb7bf3-00b9-d4a3-9892-40ace68933a9",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 208,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mitchell-starc",
+      "bidder": "CSK",
+      "amount_lakhs": 170.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:06:49.115850+00:00"
+  },
+  {
+    "event_id": "cc6b66e5-402a-df9c-8a4b-8f7c21472a15",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 209,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mitchell-starc",
+      "bidder": "RCB",
+      "amount_lakhs": 180.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:06:52.261865+00:00"
+  },
+  {
+    "event_id": "5bb5c40c-03cd-e2e3-21bd-db4106998731",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 210,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mitchell-starc",
+      "bidder": "CSK",
+      "amount_lakhs": 190.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:06:53.698108+00:00"
+  },
+  {
+    "event_id": "43ef2016-2c9b-662e-040a-3aae52e2afd9",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 211,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mitchell-starc",
+      "bidder": "RCB",
+      "amount_lakhs": 200.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:06:56.673069+00:00"
+  },
+  {
+    "event_id": "104556e5-bee3-eb79-1d18-1ee986ad8a8c",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 212,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mitchell-starc",
+      "bidder": "CSK",
+      "amount_lakhs": 220.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:06:57.804067+00:00"
+  },
+  {
+    "event_id": "97fa7f04-8363-9007-5cae-9610c72c1fe3",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 213,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-mitchell-starc",
+      "name": "Mitchell Starc",
+      "winner": "CSK",
+      "final_price_lakhs": 220.0,
+      "nomination_seq": 29
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:06:59.994682+00:00"
+  },
+  {
+    "event_id": "38b77c07-80fb-9296-73b6-a09b1beaf6ac",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 214,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-local-talent-01",
+      "name": "Unknown Talent 01",
+      "role": "batsman",
+      "base_price_lakhs": 20.0,
+      "nationality": "Indian",
+      "is_cold_start": true,
+      "nomination_seq": 30
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:07:01.494682+00:00"
+  },
+  {
+    "event_id": "b65feea9-7d82-4264-1ba3-62e7afa415e5",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 215,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-local-talent-01",
+      "bidder": "PBKS",
+      "amount_lakhs": 20.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:07:02.494682+00:00"
+  },
+  {
+    "event_id": "10d08d11-25f9-34bf-9bb9-61555275eb94",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 216,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-local-talent-01",
+      "bidder": "MI",
+      "amount_lakhs": 25.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:07:05.314083+00:00"
+  },
+  {
+    "event_id": "533f5a72-b64f-a54a-8c61-165495da75c1",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 217,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-local-talent-01",
+      "bidder": "PBKS",
+      "amount_lakhs": 30.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:07:06.629562+00:00"
+  },
+  {
+    "event_id": "7426b193-4b7e-6b3c-87d2-92a698eeac2b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 218,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-local-talent-01",
+      "name": "Unknown Talent 01",
+      "winner": "PBKS",
+      "final_price_lakhs": 30.0,
+      "nomination_seq": 30
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:07:08.581823+00:00"
+  },
+  {
+    "event_id": "1963c26d-6e21-8b09-9afd-4015816bcb9f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 219,
+    "type": "snapshot.taken",
+    "payload": {
+      "nomination_seq": 30,
+      "budgets": {
+        "MI": 9530.0,
+        "CSK": 9090.0,
+        "RCB": 9355.0,
+        "DC": 9315.0,
+        "KKR": 9560.0,
+        "RR": 10000.0,
+        "PBKS": 9665.0,
+        "SRH": 9195.0,
+        "LSG": 10000.0,
+        "GT": 9580.0
+      },
+      "squad_sizes": {
+        "MI": 3,
+        "CSK": 6,
+        "RCB": 6,
+        "DC": 4,
+        "KKR": 2,
+        "RR": 0,
+        "PBKS": 3,
+        "SRH": 4,
+        "LSG": 0,
+        "GT": 2
+      }
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:07:10.081823+00:00"
+  },
+  {
+    "event_id": "da509fed-1d4a-3d81-b3a7-d0e0cb08587d",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 220,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-shubman-gill",
+      "name": "Shubman Gill",
+      "role": "batsman",
+      "base_price_lakhs": 100.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 31
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:07:10.581823+00:00"
+  },
+  {
+    "event_id": "aa448259-5001-8b7b-6d40-67f450032b35",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 221,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shubman-gill",
+      "bidder": "RR",
+      "amount_lakhs": 100.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:07:11.581823+00:00"
+  },
+  {
+    "event_id": "d4ef00aa-175a-81ec-112f-a61279699ed2",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 222,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shubman-gill",
+      "bidder": "DC",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:07:13.091603+00:00"
+  },
+  {
+    "event_id": "cfd01cbd-5f65-c8ce-bd21-bc11be9d61ee",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 223,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shubman-gill",
+      "bidder": "RR",
+      "amount_lakhs": 120.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:07:14.305014+00:00"
+  },
+  {
+    "event_id": "5463adc7-8fca-7b6a-8fc4-2092f4e559e5",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 224,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shubman-gill",
+      "bidder": "DC",
+      "amount_lakhs": 130.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:07:15.630303+00:00"
+  },
+  {
+    "event_id": "aa53c19c-dfa4-bb9f-5a85-6750692ac139",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 225,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-shubman-gill",
+      "name": "Shubman Gill",
+      "winner": "DC",
+      "final_price_lakhs": 130.0,
+      "nomination_seq": 31
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:07:18.305336+00:00"
+  },
+  {
+    "event_id": "de3b496f-6c45-96f6-c012-a0fff0ede303",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 226,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-sunil-narine",
+      "name": "Sunil Narine",
+      "role": "all-rounder",
+      "base_price_lakhs": 150.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 32
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:07:19.805336+00:00"
+  },
+  {
+    "event_id": "c33a1f6c-1d69-1fba-5e18-7b248e676a01",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 227,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sunil-narine",
+      "bidder": "LSG",
+      "amount_lakhs": 150.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:07:20.805336+00:00"
+  },
+  {
+    "event_id": "c4767556-f97b-e2dd-8f9b-72aed85c16bd",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 228,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sunil-narine",
+      "bidder": "MI",
+      "amount_lakhs": 160.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:07:22.362472+00:00"
+  },
+  {
+    "event_id": "9be71737-06b8-9231-8e86-7f3ca487eeab",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 229,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sunil-narine",
+      "bidder": "LSG",
+      "amount_lakhs": 170.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:07:25.408539+00:00"
+  },
+  {
+    "event_id": "45f50c52-2e2f-bf77-0769-79d644777442",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 230,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-sunil-narine",
+      "bidder": "MI",
+      "amount_lakhs": 180.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:07:28.731250+00:00"
+  },
+  {
+    "event_id": "59dcabd0-56fe-bfb9-ebe9-e2074f199ec0",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 231,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-sunil-narine",
+      "name": "Sunil Narine",
+      "winner": "MI",
+      "final_price_lakhs": 180.0,
+      "nomination_seq": 32
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:07:31.487997+00:00"
+  },
+  {
+    "event_id": "24ac2130-deaf-528d-2e70-983801902620",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 232,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-yuzvendra-chahal",
+      "name": "Yuzvendra Chahal",
+      "role": "spinner",
+      "base_price_lakhs": 100.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 33
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:07:32.987997+00:00"
+  },
+  {
+    "event_id": "f10013a7-c6de-b2f0-530a-c1c7b8ba8368",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 233,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-yuzvendra-chahal",
+      "bidder": "RR",
+      "amount_lakhs": 100.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:07:33.987997+00:00"
+  },
+  {
+    "event_id": "9e2aa4ac-c122-b5b3-284c-03d227d415b6",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 234,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-yuzvendra-chahal",
+      "bidder": "DC",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:07:36.123184+00:00"
+  },
+  {
+    "event_id": "7c54535f-6c8c-3b6a-a974-d079716fda0a",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 235,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-yuzvendra-chahal",
+      "bidder": "RR",
+      "amount_lakhs": 120.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:07:37.247590+00:00"
+  },
+  {
+    "event_id": "c143f426-372f-871a-45ee-432d6a07f213",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 236,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-yuzvendra-chahal",
+      "name": "Yuzvendra Chahal",
+      "winner": "RR",
+      "final_price_lakhs": 120.0,
+      "nomination_seq": 33
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:07:39.765280+00:00"
+  },
+  {
+    "event_id": "6e0ed1e8-585d-3f86-1d23-24e6832920b7",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 237,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-mohit-sharma",
+      "name": "Mohit Sharma",
+      "role": "pacer",
+      "base_price_lakhs": 50.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 34
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:07:41.265280+00:00"
+  },
+  {
+    "event_id": "4169b9fc-c3a0-0c6f-2321-d1e1c47104c0",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 238,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mohit-sharma",
+      "bidder": "PBKS",
+      "amount_lakhs": 50.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:07:42.265280+00:00"
+  },
+  {
+    "event_id": "2112507c-2cfa-55b0-6e3f-683abf3c5140",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 239,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mohit-sharma",
+      "bidder": "GT",
+      "amount_lakhs": 55.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "GT",
+    "timestamp": "2026-04-19T10:07:43.844175+00:00"
+  },
+  {
+    "event_id": "ab05347f-d556-b37d-8f08-81ee8011316b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 240,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mohit-sharma",
+      "bidder": "PBKS",
+      "amount_lakhs": 60.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:07:45.794693+00:00"
+  },
+  {
+    "event_id": "bdf66ba5-dc9c-96de-65a6-74c212738a23",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 241,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-mohit-sharma",
+      "name": "Mohit Sharma",
+      "winner": "PBKS",
+      "final_price_lakhs": 60.0,
+      "nomination_seq": 34
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:07:48.810194+00:00"
+  },
+  {
+    "event_id": "75b27455-04cc-3ede-6fac-16730ad45230",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 242,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-jason-holder",
+      "name": "Jason Holder",
+      "role": "all-rounder",
+      "base_price_lakhs": 75.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 35
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:07:50.310194+00:00"
+  },
+  {
+    "event_id": "b08a4895-d4ff-a666-75c8-e90d9e3d750d",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 243,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-jason-holder",
+      "bidder": "MI",
+      "amount_lakhs": 75.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:07:51.310194+00:00"
+  },
+  {
+    "event_id": "96c044d0-6f88-7f28-3e49-fd091b19d8b8",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 244,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-jason-holder",
+      "bidder": "GT",
+      "amount_lakhs": 80.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "GT",
+    "timestamp": "2026-04-19T10:07:54.149733+00:00"
+  },
+  {
+    "event_id": "56ea57b3-beed-10b6-4f6e-274bdedab027",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 245,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-jason-holder",
+      "bidder": "MI",
+      "amount_lakhs": 85.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:07:56.150858+00:00"
+  },
+  {
+    "event_id": "82af085c-138d-994c-2b0a-beddc77444cb",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 246,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-jason-holder",
+      "name": "Jason Holder",
+      "winner": "MI",
+      "final_price_lakhs": 85.0,
+      "nomination_seq": 35
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:07:57.704788+00:00"
+  },
+  {
+    "event_id": "828c37e7-87d5-b7be-1d30-d990a21b0307",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 247,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-shivam-dube",
+      "name": "Shivam Dube",
+      "role": "all-rounder",
+      "base_price_lakhs": 50.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 36
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:07:59.204788+00:00"
+  },
+  {
+    "event_id": "2d5972c6-134a-5a2f-a7cf-705cc257cf73",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 248,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shivam-dube",
+      "bidder": "DC",
+      "amount_lakhs": 50.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:08:00.204788+00:00"
+  },
+  {
+    "event_id": "72eb7474-9458-054e-c287-4f069050f7ef",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 249,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shivam-dube",
+      "bidder": "KKR",
+      "amount_lakhs": 55.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "KKR",
+    "timestamp": "2026-04-19T10:08:03.107372+00:00"
+  },
+  {
+    "event_id": "9fe0a8c7-fc8d-5b93-a2a2-e91fa49b1cd9",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 250,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shivam-dube",
+      "bidder": "DC",
+      "amount_lakhs": 60.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:08:05.810206+00:00"
+  },
+  {
+    "event_id": "117b355b-7094-4bdb-26a5-24e350ee7a92",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 251,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shivam-dube",
+      "bidder": "KKR",
+      "amount_lakhs": 65.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "KKR",
+    "timestamp": "2026-04-19T10:08:07.618226+00:00"
+  },
+  {
+    "event_id": "0e614bcd-9767-4900-4651-0367cbdc4318",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 252,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shivam-dube",
+      "bidder": "DC",
+      "amount_lakhs": 70.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:08:09.790529+00:00"
+  },
+  {
+    "event_id": "0e9058b6-09a0-a0f6-73b0-a0917634c169",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 253,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-shivam-dube",
+      "bidder": "KKR",
+      "amount_lakhs": 75.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "KKR",
+    "timestamp": "2026-04-19T10:08:11.670385+00:00"
+  },
+  {
+    "event_id": "dd3f7d7e-a508-dc95-13a4-a492497de16d",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 254,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-shivam-dube",
+      "name": "Shivam Dube",
+      "winner": "KKR",
+      "final_price_lakhs": 75.0,
+      "nomination_seq": 36
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:08:13.592229+00:00"
+  },
+  {
+    "event_id": "9d713084-171d-abf9-daf4-81a7fa34d2e8",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 255,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-axar-patel",
+      "name": "Axar Patel",
+      "role": "spinner",
+      "base_price_lakhs": 100.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 37
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:08:15.092229+00:00"
+  },
+  {
+    "event_id": "0fd6f47e-f52d-4af2-269e-d4c980599b93",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 256,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-axar-patel",
+      "bidder": "PBKS",
+      "amount_lakhs": 100.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:08:16.092229+00:00"
+  },
+  {
+    "event_id": "2c2cd22b-a568-95c6-812a-1f9b15969802",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 257,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-axar-patel",
+      "bidder": "DC",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:08:17.993275+00:00"
+  },
+  {
+    "event_id": "85d2d0a6-8629-5b5d-707d-f251fdb1429e",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 258,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-axar-patel",
+      "bidder": "PBKS",
+      "amount_lakhs": 120.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:08:19.091130+00:00"
+  },
+  {
+    "event_id": "68a51c68-632d-bb5e-486b-b6bfeafde7d9",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 259,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-axar-patel",
+      "bidder": "DC",
+      "amount_lakhs": 130.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:08:21.615644+00:00"
+  },
+  {
+    "event_id": "a5b5cdc2-a181-c85e-ca0a-c6ac0d67d38e",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 260,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-axar-patel",
+      "bidder": "PBKS",
+      "amount_lakhs": 140.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:08:24.551806+00:00"
+  },
+  {
+    "event_id": "adaa44ca-8ed6-ad5e-1831-8aa354669d19",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 261,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-axar-patel",
+      "name": "Axar Patel",
+      "winner": "PBKS",
+      "final_price_lakhs": 140.0,
+      "nomination_seq": 37
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:08:26.388429+00:00"
+  },
+  {
+    "event_id": "b9469bcf-4082-cbb9-48bd-db3e62f5df2b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 262,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-prithvi-shaw",
+      "name": "Prithvi Shaw",
+      "role": "batsman",
+      "base_price_lakhs": 75.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 38
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:08:27.888429+00:00"
+  },
+  {
+    "event_id": "f020e992-b576-255e-9854-9f222102f9c9",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 263,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-prithvi-shaw",
+      "bidder": "PBKS",
+      "amount_lakhs": 75.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:08:28.888429+00:00"
+  },
+  {
+    "event_id": "20b71785-d02c-e0c1-5417-0a17caaa5bbe",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 264,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-prithvi-shaw",
+      "bidder": "CSK",
+      "amount_lakhs": 80.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:08:30.057867+00:00"
+  },
+  {
+    "event_id": "e99630f7-af77-520e-ff46-25afbd20563b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 265,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-prithvi-shaw",
+      "bidder": "PBKS",
+      "amount_lakhs": 85.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:08:32.733158+00:00"
+  },
+  {
+    "event_id": "04aac1b7-5ca0-c428-822c-4d326c645c15",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 266,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-prithvi-shaw",
+      "bidder": "CSK",
+      "amount_lakhs": 90.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:08:35.049141+00:00"
+  },
+  {
+    "event_id": "c422d03e-f29a-6339-577b-c55a36d55494",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 267,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-prithvi-shaw",
+      "bidder": "PBKS",
+      "amount_lakhs": 95.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:08:36.955636+00:00"
+  },
+  {
+    "event_id": "4bb907ec-13c1-1754-27aa-7cbc23377bbc",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 268,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-prithvi-shaw",
+      "bidder": "CSK",
+      "amount_lakhs": 100.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:08:39.171313+00:00"
+  },
+  {
+    "event_id": "bd17c5e8-d5ca-69ab-8a2e-6a93c5580bb2",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 269,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-prithvi-shaw",
+      "bidder": "PBKS",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:08:42.282384+00:00"
+  },
+  {
+    "event_id": "e05b46c5-5636-3094-a974-31db09a9d1c1",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 270,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-prithvi-shaw",
+      "name": "Prithvi Shaw",
+      "winner": "PBKS",
+      "final_price_lakhs": 110.0,
+      "nomination_seq": 38
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:08:45.491589+00:00"
+  },
+  {
+    "event_id": "98e52499-218c-6e1c-9e37-4f7ac42cbc39",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 271,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-virat-kohli",
+      "name": "Virat Kohli",
+      "role": "batsman",
+      "base_price_lakhs": 200.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 39
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:08:46.991589+00:00"
+  },
+  {
+    "event_id": "c09cb506-48f1-096d-9c4f-fb4671b701aa",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 272,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-virat-kohli",
+      "bidder": "LSG",
+      "amount_lakhs": 200.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:08:47.991589+00:00"
+  },
+  {
+    "event_id": "cf01f944-f731-5749-4f39-49a83d3a2582",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 273,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-virat-kohli",
+      "bidder": "KKR",
+      "amount_lakhs": 220.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "KKR",
+    "timestamp": "2026-04-19T10:08:50.488662+00:00"
+  },
+  {
+    "event_id": "f2771f63-ada5-8417-5e2a-d32d31ab0b56",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 274,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-virat-kohli",
+      "bidder": "LSG",
+      "amount_lakhs": 240.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:08:53.449588+00:00"
+  },
+  {
+    "event_id": "61c2645a-c733-2304-4822-3120c4f9eccd",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 275,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-virat-kohli",
+      "bidder": "KKR",
+      "amount_lakhs": 260.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "KKR",
+    "timestamp": "2026-04-19T10:08:55.875636+00:00"
+  },
+  {
+    "event_id": "cd1f5318-331f-63fb-d11f-c8c0297ca4ff",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 276,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-virat-kohli",
+      "bidder": "LSG",
+      "amount_lakhs": 280.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:08:58.132903+00:00"
+  },
+  {
+    "event_id": "dfc620ce-7b07-fd31-a424-4f230d5ba7cd",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 277,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-virat-kohli",
+      "bidder": "KKR",
+      "amount_lakhs": 300.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "KKR",
+    "timestamp": "2026-04-19T10:09:00.644562+00:00"
+  },
+  {
+    "event_id": "d88c656d-b61e-5fdb-1a43-5206ef2ddcc4",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 278,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-virat-kohli",
+      "name": "Virat Kohli",
+      "winner": "KKR",
+      "final_price_lakhs": 300.0,
+      "nomination_seq": 39
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:09:02.572592+00:00"
+  },
+  {
+    "event_id": "48f9e3d0-1fea-e1e0-d9e6-04b38412a335",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 279,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-ms-dhoni",
+      "name": "MS Dhoni",
+      "role": "keeper",
+      "base_price_lakhs": 200.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 40
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:09:04.072592+00:00"
+  },
+  {
+    "event_id": "808389c8-657e-01c9-0da2-3e5c6a36af18",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 280,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ms-dhoni",
+      "bidder": "LSG",
+      "amount_lakhs": 200.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:09:05.072592+00:00"
+  },
+  {
+    "event_id": "519554e3-0737-4c86-397b-5f515ffa46ef",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 281,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ms-dhoni",
+      "bidder": "GT",
+      "amount_lakhs": 220.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "GT",
+    "timestamp": "2026-04-19T10:09:06.820515+00:00"
+  },
+  {
+    "event_id": "25637cc3-ca97-ebf5-55d5-96afa663d2cd",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 282,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ms-dhoni",
+      "bidder": "LSG",
+      "amount_lakhs": 240.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:09:10.147580+00:00"
+  },
+  {
+    "event_id": "d4c3a832-b231-c60b-78f2-ce6bd46b415d",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 283,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ms-dhoni",
+      "bidder": "GT",
+      "amount_lakhs": 260.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "GT",
+    "timestamp": "2026-04-19T10:09:11.491579+00:00"
+  },
+  {
+    "event_id": "e7e646c7-0158-2463-9d87-76a072d78bdd",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 284,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ms-dhoni",
+      "bidder": "LSG",
+      "amount_lakhs": 280.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:09:12.838560+00:00"
+  },
+  {
+    "event_id": "f0b2a5d1-8c7e-6f42-2646-eaf9d5c0244d",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 285,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-ms-dhoni",
+      "bidder": "GT",
+      "amount_lakhs": 300.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "GT",
+    "timestamp": "2026-04-19T10:09:14.036625+00:00"
+  },
+  {
+    "event_id": "c6b33fe6-1c76-bdf6-6c5a-6c93871c0884",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 286,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-ms-dhoni",
+      "name": "MS Dhoni",
+      "winner": "GT",
+      "final_price_lakhs": 300.0,
+      "nomination_seq": 40
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:09:16.854712+00:00"
+  },
+  {
+    "event_id": "1f317405-4d18-3eba-3cd5-fd7f49c10669",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 287,
+    "type": "snapshot.taken",
+    "payload": {
+      "nomination_seq": 40,
+      "budgets": {
+        "MI": 9265.0,
+        "CSK": 9090.0,
+        "RCB": 9355.0,
+        "DC": 9185.0,
+        "KKR": 9185.0,
+        "RR": 9880.0,
+        "PBKS": 9355.0,
+        "SRH": 9195.0,
+        "LSG": 10000.0,
+        "GT": 9280.0
+      },
+      "squad_sizes": {
+        "MI": 5,
+        "CSK": 6,
+        "RCB": 6,
+        "DC": 5,
+        "KKR": 4,
+        "RR": 1,
+        "PBKS": 6,
+        "SRH": 4,
+        "LSG": 0,
+        "GT": 3
+      }
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:09:18.354712+00:00"
+  },
+  {
+    "event_id": "a3925731-6b79-afcc-3d0a-5f0c0c394ec7",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 288,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-andre-russell",
+      "name": "Andre Russell",
+      "role": "all-rounder",
+      "base_price_lakhs": 150.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 41
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:09:18.854712+00:00"
+  },
+  {
+    "event_id": "92170475-3d95-9e3f-5a52-26e69d642932",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 289,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-andre-russell",
+      "bidder": "DC",
+      "amount_lakhs": 150.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:09:19.854712+00:00"
+  },
+  {
+    "event_id": "86abd4e7-f412-4360-1153-6e995c508720",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 290,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-andre-russell",
+      "bidder": "MI",
+      "amount_lakhs": 160.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:09:21.687847+00:00"
+  },
+  {
+    "event_id": "63f4c69d-0534-a101-8ddc-e71981f38dd4",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 291,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-andre-russell",
+      "bidder": "DC",
+      "amount_lakhs": 170.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "DC",
+    "timestamp": "2026-04-19T10:09:24.048052+00:00"
+  },
+  {
+    "event_id": "fb25664d-630a-a767-a2bb-522b0b251279",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 292,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-andre-russell",
+      "name": "Andre Russell",
+      "winner": "DC",
+      "final_price_lakhs": 170.0,
+      "nomination_seq": 41
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:09:27.231381+00:00"
+  },
+  {
+    "event_id": "04287378-bf50-23f4-40ef-39355f90bed6",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 293,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-varun-chakravarthy",
+      "name": "Varun Chakravarthy",
+      "role": "spinner",
+      "base_price_lakhs": 100.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 42
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:09:28.731381+00:00"
+  },
+  {
+    "event_id": "c775e395-d494-05f0-2cd2-a404a48e40f1",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 294,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-varun-chakravarthy",
+      "bidder": "PBKS",
+      "amount_lakhs": 100.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:09:29.731381+00:00"
+  },
+  {
+    "event_id": "b74eba93-1027-5b53-2285-b2efcfbe4fe9",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 295,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-varun-chakravarthy",
+      "bidder": "RR",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:09:32.100746+00:00"
+  },
+  {
+    "event_id": "ca862225-0b36-e356-339b-77a84b1f0d7b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 296,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-varun-chakravarthy",
+      "bidder": "PBKS",
+      "amount_lakhs": 120.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:09:35.041222+00:00"
+  },
+  {
+    "event_id": "65f202f9-83f0-2dc7-4f61-2217eef16694",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 297,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-varun-chakravarthy",
+      "bidder": "RR",
+      "amount_lakhs": 130.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:09:36.539896+00:00"
+  },
+  {
+    "event_id": "a59b457f-c0d7-ac73-095f-fa8140d92bce",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 298,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-varun-chakravarthy",
+      "bidder": "PBKS",
+      "amount_lakhs": 140.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:09:40.012703+00:00"
+  },
+  {
+    "event_id": "a7de02cc-dda4-f4a7-0c3c-e284c7e53bbb",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 299,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-varun-chakravarthy",
+      "bidder": "RR",
+      "amount_lakhs": 150.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:09:41.490462+00:00"
+  },
+  {
+    "event_id": "6fdc0bad-5e36-8127-cca1-b45c1fdd980a",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 300,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-varun-chakravarthy",
+      "name": "Varun Chakravarthy",
+      "winner": "RR",
+      "final_price_lakhs": 150.0,
+      "nomination_seq": 42
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:09:43.320273+00:00"
+  },
+  {
+    "event_id": "7092947d-be49-69ec-6667-d3bbe3b56360",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 301,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-suryakumar-yadav",
+      "name": "Suryakumar Yadav",
+      "role": "batsman",
+      "base_price_lakhs": 150.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 43
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:09:44.820273+00:00"
+  },
+  {
+    "event_id": "2e326567-d284-f54e-febe-c0db9a3a6103",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 302,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-suryakumar-yadav",
+      "bidder": "RR",
+      "amount_lakhs": 150.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:09:45.820273+00:00"
+  },
+  {
+    "event_id": "4e76833a-4baf-0f5e-a932-009453f28f11",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 303,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-suryakumar-yadav",
+      "bidder": "RCB",
+      "amount_lakhs": 160.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:09:47.911222+00:00"
+  },
+  {
+    "event_id": "59fefbbc-71a3-fad2-b094-6d2a2aa93b43",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 304,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-suryakumar-yadav",
+      "bidder": "RR",
+      "amount_lakhs": 170.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:09:50.026012+00:00"
+  },
+  {
+    "event_id": "ff86cc31-9d66-e815-5a41-53b3e95f176c",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 305,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-suryakumar-yadav",
+      "bidder": "RCB",
+      "amount_lakhs": 180.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RCB",
+    "timestamp": "2026-04-19T10:09:52.143836+00:00"
+  },
+  {
+    "event_id": "1335e5db-0eaf-04b5-f2a9-dc8aca9e4a62",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 306,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-suryakumar-yadav",
+      "bidder": "RR",
+      "amount_lakhs": 190.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:09:54.231187+00:00"
+  },
+  {
+    "event_id": "cd14a03e-8359-9af6-5d01-f55f67fd64c4",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 307,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-suryakumar-yadav",
+      "name": "Suryakumar Yadav",
+      "winner": "RR",
+      "final_price_lakhs": 190.0,
+      "nomination_seq": 43
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:09:56.909147+00:00"
+  },
+  {
+    "event_id": "f3ea0184-28f4-e3ce-aded-da80bff9507d",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 308,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-deep-dasgupta",
+      "name": "D Dasgupta Jr",
+      "role": "keeper",
+      "base_price_lakhs": 50.0,
+      "nationality": "Indian",
+      "is_cold_start": true,
+      "nomination_seq": 44
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:09:58.409147+00:00"
+  },
+  {
+    "event_id": "f2e6195f-732e-2016-add7-02c92747b93c",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 309,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-deep-dasgupta",
+      "bidder": "LSG",
+      "amount_lakhs": 50.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:09:59.409147+00:00"
+  },
+  {
+    "event_id": "5df06e8c-878a-aed9-233f-fc8292ec89af",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 310,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-deep-dasgupta",
+      "bidder": "CSK",
+      "amount_lakhs": 55.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:10:01.151076+00:00"
+  },
+  {
+    "event_id": "06a241af-1d0a-f7f7-f5e4-a4713fe68c9c",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 311,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-deep-dasgupta",
+      "bidder": "LSG",
+      "amount_lakhs": 60.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:10:03.146161+00:00"
+  },
+  {
+    "event_id": "1e2595b8-8fc9-c86b-e9dd-ebf563119aca",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 312,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-deep-dasgupta",
+      "bidder": "CSK",
+      "amount_lakhs": 65.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:10:05.985348+00:00"
+  },
+  {
+    "event_id": "9ca3fbb3-ff11-c8ba-36ee-1640723ef466",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 313,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-deep-dasgupta",
+      "bidder": "LSG",
+      "amount_lakhs": 70.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:10:07.639790+00:00"
+  },
+  {
+    "event_id": "22bf18f5-1f65-2a87-333e-e3447dbf4bc1",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 314,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-deep-dasgupta",
+      "bidder": "CSK",
+      "amount_lakhs": 75.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:10:09.353732+00:00"
+  },
+  {
+    "event_id": "b69f68c3-e60f-d420-2c33-350c73b911d8",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 315,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-deep-dasgupta",
+      "name": "D Dasgupta Jr",
+      "winner": "CSK",
+      "final_price_lakhs": 75.0,
+      "nomination_seq": 44
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:10:12.485798+00:00"
+  },
+  {
+    "event_id": "cf7dcb43-1679-742f-ff4c-96d671f2ce8f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 316,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-deepak-chahar",
+      "name": "Deepak Chahar",
+      "role": "pacer",
+      "base_price_lakhs": 75.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 45
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:10:13.985798+00:00"
+  },
+  {
+    "event_id": "5c8ac066-cb2f-afa3-2c91-3a7ca3404f08",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 317,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-deepak-chahar",
+      "bidder": "GT",
+      "amount_lakhs": 75.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "GT",
+    "timestamp": "2026-04-19T10:10:14.985798+00:00"
+  },
+  {
+    "event_id": "ca55e38b-3c9a-be10-238d-6f44cac4d0eb",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 318,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-deepak-chahar",
+      "bidder": "LSG",
+      "amount_lakhs": 80.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:10:17.003309+00:00"
+  },
+  {
+    "event_id": "cdbcc653-77a7-e8b7-5e70-f65f9280c5aa",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 319,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-deepak-chahar",
+      "bidder": "GT",
+      "amount_lakhs": 85.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "GT",
+    "timestamp": "2026-04-19T10:10:19.238364+00:00"
+  },
+  {
+    "event_id": "161237c9-e25d-f9a8-9ca8-a5c42138afe0",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 320,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-deepak-chahar",
+      "name": "Deepak Chahar",
+      "winner": "GT",
+      "final_price_lakhs": 85.0,
+      "nomination_seq": 45
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:10:22.695894+00:00"
+  },
+  {
+    "event_id": "ffe575f6-65ed-cfe3-4f2d-ad3f10d4de39",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 321,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-hardik-pandya",
+      "name": "Hardik Pandya",
+      "role": "all-rounder",
+      "base_price_lakhs": 150.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 46
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:10:24.195894+00:00"
+  },
+  {
+    "event_id": "c7bf4fbc-d43c-dd6d-e0c1-ff1e20da8972",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 322,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-hardik-pandya",
+      "bidder": "MI",
+      "amount_lakhs": 150.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:10:25.195894+00:00"
+  },
+  {
+    "event_id": "80bbae52-6ec0-1269-2108-4dd9f75d1e3c",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 323,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-hardik-pandya",
+      "bidder": "LSG",
+      "amount_lakhs": 160.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:10:27.298501+00:00"
+  },
+  {
+    "event_id": "4ddb1b36-272c-0588-84a2-576c1fc905f8",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 324,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-hardik-pandya",
+      "bidder": "MI",
+      "amount_lakhs": 170.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:10:30.575281+00:00"
+  },
+  {
+    "event_id": "f28e4122-5894-f7f1-39b8-6bb2b596ca7c",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 325,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-hardik-pandya",
+      "bidder": "LSG",
+      "amount_lakhs": 180.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:10:31.986924+00:00"
+  },
+  {
+    "event_id": "3240d7a1-4027-ab7d-1430-29a9d88f1c94",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 326,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-hardik-pandya",
+      "bidder": "MI",
+      "amount_lakhs": 190.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:10:35.339184+00:00"
+  },
+  {
+    "event_id": "9d4b2bf9-4d85-e9c7-a001-7720200b2903",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 327,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-hardik-pandya",
+      "bidder": "LSG",
+      "amount_lakhs": 200.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:10:37.926827+00:00"
+  },
+  {
+    "event_id": "94a53fde-f10d-27c8-9780-c2152b2bb8e9",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 328,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-hardik-pandya",
+      "bidder": "MI",
+      "amount_lakhs": 220.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "MI",
+    "timestamp": "2026-04-19T10:10:40.260522+00:00"
+  },
+  {
+    "event_id": "e6e987ca-b87b-6384-9fdd-de2ea8a2b7ad",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 329,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-hardik-pandya",
+      "name": "Hardik Pandya",
+      "winner": "MI",
+      "final_price_lakhs": 220.0,
+      "nomination_seq": 46
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:10:41.646008+00:00"
+  },
+  {
+    "event_id": "ec86a890-d7b0-0bdc-566e-3cbe9aea622f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 330,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-yashasvi-jaiswal",
+      "name": "Yashasvi Jaiswal",
+      "role": "batsman",
+      "base_price_lakhs": 100.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 47
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:10:43.146008+00:00"
+  },
+  {
+    "event_id": "8baaf744-a08d-d21b-e395-4cb17f7f6c0a",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 331,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-yashasvi-jaiswal",
+      "bidder": "CSK",
+      "amount_lakhs": 100.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:10:44.146008+00:00"
+  },
+  {
+    "event_id": "67f5ae02-af5b-8f47-ceae-71cfce000af0",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 332,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-yashasvi-jaiswal",
+      "bidder": "SRH",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:10:45.725351+00:00"
+  },
+  {
+    "event_id": "6a662fce-7089-fc6d-2877-f5d90f5675f8",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 333,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-yashasvi-jaiswal",
+      "bidder": "CSK",
+      "amount_lakhs": 120.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:10:47.468936+00:00"
+  },
+  {
+    "event_id": "dc8a4922-5005-680f-24c7-78a59b4e164b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 334,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-yashasvi-jaiswal",
+      "bidder": "SRH",
+      "amount_lakhs": 130.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:10:49.679563+00:00"
+  },
+  {
+    "event_id": "66124ab4-f9b2-1e6e-586a-346adc5be7d1",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 335,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-yashasvi-jaiswal",
+      "bidder": "CSK",
+      "amount_lakhs": 140.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "CSK",
+    "timestamp": "2026-04-19T10:10:52.475471+00:00"
+  },
+  {
+    "event_id": "1b2ededb-8fc8-5fc0-83d5-bceb5edbb8ee",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 336,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-yashasvi-jaiswal",
+      "name": "Yashasvi Jaiswal",
+      "winner": "CSK",
+      "final_price_lakhs": 140.0,
+      "nomination_seq": 47
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:10:53.802386+00:00"
+  },
+  {
+    "event_id": "1f5d988f-776a-bf09-3de2-885951b1943c",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 337,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-mohammed-shami",
+      "name": "Mohammed Shami",
+      "role": "pacer",
+      "base_price_lakhs": 100.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 48
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:10:55.302386+00:00"
+  },
+  {
+    "event_id": "3098f7b2-500e-15c0-b89b-df7f93e34c35",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 338,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mohammed-shami",
+      "bidder": "SRH",
+      "amount_lakhs": 100.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:10:56.302386+00:00"
+  },
+  {
+    "event_id": "4efc8248-e10b-1a47-7fae-b7487781321e",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 339,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mohammed-shami",
+      "bidder": "RR",
+      "amount_lakhs": 110.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:10:58.828629+00:00"
+  },
+  {
+    "event_id": "f778c676-750d-112e-8164-ceec64ab851b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 340,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mohammed-shami",
+      "bidder": "SRH",
+      "amount_lakhs": 120.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:11:01.072054+00:00"
+  },
+  {
+    "event_id": "7eb162f1-4806-f804-0cf0-374c0c74dc0f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 341,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mohammed-shami",
+      "bidder": "RR",
+      "amount_lakhs": 130.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:11:02.673876+00:00"
+  },
+  {
+    "event_id": "896490ab-4926-ce5f-7878-6140ac2a4f71",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 342,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mohammed-shami",
+      "bidder": "SRH",
+      "amount_lakhs": 140.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "SRH",
+    "timestamp": "2026-04-19T10:11:05.167673+00:00"
+  },
+  {
+    "event_id": "ba3df7ff-43b4-7ee5-e1e8-9e7e22498f66",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 343,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-mohammed-shami",
+      "bidder": "RR",
+      "amount_lakhs": 150.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:11:06.188117+00:00"
+  },
+  {
+    "event_id": "668c8477-0b95-017c-5dae-1201673ba8bd",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 344,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-mohammed-shami",
+      "name": "Mohammed Shami",
+      "winner": "RR",
+      "final_price_lakhs": 150.0,
+      "nomination_seq": 48
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:11:08.102561+00:00"
+  },
+  {
+    "event_id": "31d4ee09-8fd3-3afc-91fd-fa4f0d18ab95",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 345,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-umesh-yadav",
+      "name": "Umesh Yadav",
+      "role": "pacer",
+      "base_price_lakhs": 75.0,
+      "nationality": "Indian",
+      "is_cold_start": false,
+      "nomination_seq": 49
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:11:09.602561+00:00"
+  },
+  {
+    "event_id": "56ce4b42-fc9e-1dcb-cb7e-62685f89ed12",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 346,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-umesh-yadav",
+      "bidder": "RR",
+      "amount_lakhs": 75.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:11:10.602561+00:00"
+  },
+  {
+    "event_id": "66c14dca-8255-da61-9a3b-031932f57510",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 347,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-umesh-yadav",
+      "bidder": "PBKS",
+      "amount_lakhs": 80.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:11:12.718224+00:00"
+  },
+  {
+    "event_id": "cdd0b4d4-5542-27de-b6ad-f48b2314d0c8",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 348,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-umesh-yadav",
+      "bidder": "RR",
+      "amount_lakhs": 85.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:11:14.968419+00:00"
+  },
+  {
+    "event_id": "23c8afdb-83f8-2f16-e4a4-474c9b33e3a4",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 349,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-umesh-yadav",
+      "bidder": "PBKS",
+      "amount_lakhs": 90.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "PBKS",
+    "timestamp": "2026-04-19T10:11:17.152779+00:00"
+  },
+  {
+    "event_id": "9dd2f9de-fd98-fe33-6498-abe92999bbef",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 350,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-umesh-yadav",
+      "bidder": "RR",
+      "amount_lakhs": 95.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:11:18.972694+00:00"
+  },
+  {
+    "event_id": "81df6517-561c-9210-97fe-56c54c9a9f24",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 351,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-umesh-yadav",
+      "name": "Umesh Yadav",
+      "winner": "RR",
+      "final_price_lakhs": 95.0,
+      "nomination_seq": 49
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:11:21.820992+00:00"
+  },
+  {
+    "event_id": "7d66971e-8847-6c56-827c-9f8cd40ac5e9",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 352,
+    "type": "player.nominated",
+    "payload": {
+      "player_id": "p-pat-cummins",
+      "name": "Pat Cummins",
+      "role": "pacer",
+      "base_price_lakhs": 200.0,
+      "nationality": "Overseas",
+      "is_cold_start": false,
+      "nomination_seq": 50
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:11:23.320992+00:00"
+  },
+  {
+    "event_id": "43f9cd6b-797e-be87-98cf-118806d25913",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 353,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-pat-cummins",
+      "bidder": "RR",
+      "amount_lakhs": 200.0,
+      "bid_type": "opening"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:11:24.320992+00:00"
+  },
+  {
+    "event_id": "7afeb114-9561-c813-0d25-9caab8adad87",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 354,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-pat-cummins",
+      "bidder": "LSG",
+      "amount_lakhs": 220.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:11:27.255134+00:00"
+  },
+  {
+    "event_id": "61542765-d756-ba9c-c64c-96479ea7017c",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 355,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-pat-cummins",
+      "bidder": "RR",
+      "amount_lakhs": 240.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:11:28.681414+00:00"
+  },
+  {
+    "event_id": "b35556a5-f2bd-92f2-9293-f70508150147",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 356,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-pat-cummins",
+      "bidder": "LSG",
+      "amount_lakhs": 260.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:11:30.050853+00:00"
+  },
+  {
+    "event_id": "69b7c0fa-26c4-32f6-6b35-2f85504e2687",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 357,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-pat-cummins",
+      "bidder": "RR",
+      "amount_lakhs": 280.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:11:31.325592+00:00"
+  },
+  {
+    "event_id": "78bb22a5-eba7-42d2-9c89-d374c66495a7",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 358,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-pat-cummins",
+      "bidder": "LSG",
+      "amount_lakhs": 300.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "LSG",
+    "timestamp": "2026-04-19T10:11:34.051843+00:00"
+  },
+  {
+    "event_id": "84c86c46-2359-5fa4-b4ad-af890ff1aa9f",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 359,
+    "type": "bid.placed",
+    "payload": {
+      "player_id": "p-pat-cummins",
+      "bidder": "RR",
+      "amount_lakhs": 320.0,
+      "bid_type": "raise"
+    },
+    "agent_id": "RR",
+    "timestamp": "2026-04-19T10:11:37.233887+00:00"
+  },
+  {
+    "event_id": "7a768555-a987-b218-ff84-faef5336723b",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 360,
+    "type": "player.sold",
+    "payload": {
+      "player_id": "p-pat-cummins",
+      "name": "Pat Cummins",
+      "winner": "RR",
+      "final_price_lakhs": 320.0,
+      "nomination_seq": 50
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:11:38.752241+00:00"
+  },
+  {
+    "event_id": "f4e95734-5052-1700-6077-96a38685abaa",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 361,
+    "type": "snapshot.taken",
+    "payload": {
+      "nomination_seq": 50,
+      "budgets": {
+        "MI": 9045.0,
+        "CSK": 8875.0,
+        "RCB": 9355.0,
+        "DC": 9015.0,
+        "KKR": 9185.0,
+        "RR": 8975.0,
+        "PBKS": 9355.0,
+        "SRH": 9195.0,
+        "LSG": 10000.0,
+        "GT": 9195.0
+      },
+      "squad_sizes": {
+        "MI": 6,
+        "CSK": 8,
+        "RCB": 6,
+        "DC": 6,
+        "KKR": 4,
+        "RR": 6,
+        "PBKS": 6,
+        "SRH": 4,
+        "LSG": 0,
+        "GT": 4
+      }
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:11:40.252241+00:00"
+  },
+  {
+    "event_id": "887b03e5-e980-f808-75ac-824c2c55aef7",
+    "auction_id": "550e8400-e29b-41d4-a716-446655440000",
+    "seq": 362,
+    "type": "auction.ended",
+    "payload": {
+      "total_nominations": 50,
+      "sold_count": 50,
+      "unsold_count": 0
+    },
+    "agent_id": null,
+    "timestamp": "2026-04-19T10:11:40.752241+00:00"
+  }
+]

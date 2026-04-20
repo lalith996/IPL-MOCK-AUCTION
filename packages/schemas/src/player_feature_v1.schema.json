@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "player_feature_v1",
+  "title": "PlayerFeatureV1",
+  "description": "Versioned feature vector for a player, derived from Cricsheet ETL.",
+  "type": "object",
+  "required": [
+    "player_id",
+    "canonical_name",
+    "role",
+    "nationality",
+    "is_overseas",
+    "data_coverage_score",
+    "feature_version",
+    "career"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "player_id":          { "type": "string" },
+    "canonical_name":     { "type": "string" },
+    "role": {
+      "type": "string",
+      "enum": ["batter", "bowler", "all-rounder", "keeper"]
+    },
+    "role_subtype": {
+      "type": "string",
+      "enum": ["opener", "anchor", "finisher", "pp-spinner", "death-bowler", "all-rounder", "keeper"]
+    },
+    "nationality":        { "type": "string" },
+    "is_overseas":        { "type": "boolean" },
+    "data_coverage_score": { "type": "number", "minimum": 0, "maximum": 1 },
+    "feature_version":    { "type": "string", "pattern": "^feature_v\\d+$" },
+    "career": { "$ref": "#/$defs/statsBlock" },
+    "form_5":  { "$ref": "#/$defs/statsBlock" },
+    "form_10": { "$ref": "#/$defs/statsBlock" },
+    "form_20": { "$ref": "#/$defs/statsBlock" },
+    "phase_metrics": {
+      "type": "object",
+      "properties": {
+        "powerplay": { "$ref": "#/$defs/phaseBlock" },
+        "middle":    { "$ref": "#/$defs/phaseBlock" },
+        "death":     { "$ref": "#/$defs/phaseBlock" }
+      },
+      "additionalProperties": false
+    },
+    "specialist_ratings": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "death_bowler":      { "type": "number", "minimum": 0, "maximum": 1 },
+        "powerplay_batter":  { "type": "number", "minimum": 0, "maximum": 1 },
+        "powerplay_bowler":  { "type": "number", "minimum": 0, "maximum": 1 },
+        "anchor":            { "type": "number", "minimum": 0, "maximum": 1 },
+        "finisher":          { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "venue_splits": {
+      "type": "object",
+      "description": "Keyed by ground name.",
+      "additionalProperties": { "$ref": "#/$defs/statsBlock" }
+    },
+    "base_price_tier": {
+      "type": "number",
+      "description": "Base price in INR (e.g., 2000000 = 20L)."
+    },
+    "form_score":  { "type": "number", "minimum": 0, "maximum": 100 },
+    "value_score": { "type": "number", "minimum": 0, "maximum": 100 }
+  },
+  "$defs": {
+    "statsBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "matches":        { "type": "integer", "minimum": 0 },
+        "innings":        { "type": "integer", "minimum": 0 },
+        "runs":           { "type": "number", "minimum": 0 },
+        "balls_faced":    { "type": "integer", "minimum": 0 },
+        "average":        { "type": "number", "minimum": 0 },
+        "strike_rate":    { "type": "number", "minimum": 0 },
+        "hundreds":       { "type": "integer", "minimum": 0 },
+        "fifties":        { "type": "integer", "minimum": 0 },
+        "fours":          { "type": "integer", "minimum": 0 },
+        "sixes":          { "type": "integer", "minimum": 0 },
+        "boundary_pct":   { "type": "number", "minimum": 0, "maximum": 100 },
+        "dot_pct":        { "type": "number", "minimum": 0, "maximum": 100 },
+        "wickets":        { "type": "integer", "minimum": 0 },
+        "economy":        { "type": "number", "minimum": 0 },
+        "bowling_avg":    { "type": "number", "minimum": 0 },
+        "bowling_sr":     { "type": "number", "minimum": 0 }
+      }
+    },
+    "phaseBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "sr":      { "type": "number", "minimum": 0 },
+        "economy": { "type": "number", "minimum": 0 },
+        "wickets": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

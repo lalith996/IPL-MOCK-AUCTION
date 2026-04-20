@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "auction_event",
+  "title": "AuctionEvent",
+  "description": "Append-only event log entry for the event-sourced auction.",
+  "type": "object",
+  "required": ["event_id", "auction_id", "seq", "type", "payload", "timestamp"],
+  "additionalProperties": false,
+  "properties": {
+    "event_id":   { "type": "string", "format": "uuid" },
+    "auction_id": { "type": "string", "format": "uuid" },
+    "seq": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Monotonically increasing sequence number per auction_id."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "auction.started",
+        "auction.paused",
+        "auction.resumed",
+        "auction.ended",
+        "player.nominated",
+        "bid.placed",
+        "bid.raised",
+        "bid.dropped",
+        "bid.rejected",
+        "player.sold",
+        "player.unsold",
+        "agent.timeout",
+        "agent.cooldown",
+        "snapshot.taken"
+      ]
+    },
+    "payload": {
+      "type": "object",
+      "description": "Event-type-specific data. Shape depends on 'type'."
+    },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "agent_id": {
+      "type": ["string", "null"],
+      "enum": ["MI", "CSK", "RCB", "DC", "KKR", "RR", "PBKS", "SRH", "LSG", "GT", null],
+      "description": "Present when the event is agent-specific."
+    }
+  }
+}

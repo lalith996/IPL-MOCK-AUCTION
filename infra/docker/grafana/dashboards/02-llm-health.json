@@ -1,0 +1,104 @@
+{
+  "title": "LLM Health",
+  "uid": "ipl-llm-health",
+  "tags": ["ipl", "llm"],
+  "timezone": "UTC",
+  "refresh": "10s",
+  "schemaVersion": 39,
+  "panels": [
+    {
+      "id": 1,
+      "title": "LLM Latency p50/p95 by Model",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "histogram_quantile(0.50, sum by(model, le) (rate(ipl_llm_call_duration_seconds_bucket[2m])))",
+          "legendFormat": "p50 {{ model }}"
+        },
+        {
+          "datasource": "Prometheus",
+          "expr": "histogram_quantile(0.95, sum by(model, le) (rate(ipl_llm_call_duration_seconds_bucket[2m])))",
+          "legendFormat": "p95 {{ model }}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "s" }
+      }
+    },
+    {
+      "id": 2,
+      "title": "LLM Error Rate by Model",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "sum by(model) (rate(ipl_llm_call_error_total[2m]))",
+        "legendFormat": "{{ model }}"
+      }]
+    },
+    {
+      "id": 3,
+      "title": "Circuit Breaker State (0=CLOSED 1=HALF_OPEN 2=OPEN)",
+      "type": "table",
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 8 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "ipl_llm_circuit_state",
+        "legendFormat": "{{ model }}"
+      }]
+    },
+    {
+      "id": 4,
+      "title": "Fallback Activations (1h)",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 12, "y": 8 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "increase(ipl_llm_fallback_total[1h])",
+        "legendFormat": "fallbacks"
+      }]
+    },
+    {
+      "id": 5,
+      "title": "LLM Cost (cents) — Budget vs Used",
+      "type": "bargauge",
+      "gridPos": { "h": 6, "w": 6, "x": 18, "y": 8 },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "ipl_llm_cost_used_cents",
+          "legendFormat": "Used"
+        },
+        {
+          "datasource": "Prometheus",
+          "expr": "ipl_llm_cost_budget_cents",
+          "legendFormat": "Budget"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Retry Count by Model (5m)",
+      "type": "timeseries",
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 14 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "sum by(model) (increase(ipl_llm_retry_total[5m]))",
+        "legendFormat": "{{ model }}"
+      }]
+    },
+    {
+      "id": 7,
+      "title": "Schema Repair Attempts",
+      "type": "timeseries",
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 14 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "rate(ipl_llm_schema_repair_total[5m])",
+        "legendFormat": "repairs/s"
+      }]
+    }
+  ]
+}

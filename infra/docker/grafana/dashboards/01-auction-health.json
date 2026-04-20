@@ -1,0 +1,83 @@
+{
+  "title": "Auction Health",
+  "uid": "ipl-auction-health",
+  "tags": ["ipl", "auction"],
+  "timezone": "UTC",
+  "refresh": "10s",
+  "schemaVersion": 39,
+  "panels": [
+    {
+      "id": 1,
+      "title": "Current FSM Phase",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "ipl_auction_phase",
+        "legendFormat": "Phase"
+      }]
+    },
+    {
+      "id": 2,
+      "title": "Nominations per Minute",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 6, "y": 0 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "rate(ipl_player_nominated_total[1m]) * 60",
+        "legendFormat": "nominations/min"
+      }]
+    },
+    {
+      "id": 3,
+      "title": "Rule Rejections (1m rate)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "sum by(rule_id) (rate(ipl_rule_violation_total[1m]))",
+        "legendFormat": "{{ rule_id }}"
+      }]
+    },
+    {
+      "id": 4,
+      "title": "Leader Re-elections (5m)",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 16 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "increase(ipl_auction_manager_leader_elections_total[5m])",
+        "legendFormat": "elections"
+      }]
+    },
+    {
+      "id": 5,
+      "title": "Sold vs Unsold (running total)",
+      "type": "piechart",
+      "gridPos": { "h": 8, "w": 6, "x": 18, "y": 0 },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "ipl_player_sold_total",
+          "legendFormat": "Sold"
+        },
+        {
+          "datasource": "Prometheus",
+          "expr": "ipl_player_unsold_total",
+          "legendFormat": "Unsold"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Active Auction Sessions",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 0 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "ipl_active_auction_sessions",
+        "legendFormat": "sessions"
+      }]
+    }
+  ]
+}

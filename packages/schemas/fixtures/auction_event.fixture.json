@@ -1,0 +1,13 @@
+{
+  "event_id": "550e8400-e29b-41d4-a716-446655440000",
+  "auction_id": "550e8400-e29b-41d4-a716-446655440001",
+  "seq": 1,
+  "type": "player.nominated",
+  "payload": {
+    "player_id": "P_0001",
+    "base_price": 20000000,
+    "nominating_team": "MI"
+  },
+  "timestamp": "2026-04-18T10:00:00Z",
+  "agent_id": null
+}

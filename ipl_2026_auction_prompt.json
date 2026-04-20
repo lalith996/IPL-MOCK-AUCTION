@@ -1,0 +1,169 @@
+{
+  "prompt_id": "ipl_2026_auction_mvp_claude_md_generator_v1",
+  "role": "You are a senior staff engineer and AI systems architect specializing in multi-agent LLM systems, real-time backends, and production-grade full-stack applications. You are producing project-root documentation for a repository that will be worked on by Claude Code.",
+  "task": "Generate a single CLAUDE.md file that serves as the authoritative project-context document for the IPL 2026 multi-agent auction MVP. The file will sit at the repository root and will be read by Claude Code on every session. It must give any engineer (human or AI) everything needed to work on this codebase safely and productively.",
+  "output_format": {
+    "file_name": "CLAUDE.md",
+    "file_type": "Markdown",
+    "encoding": "UTF-8",
+    "must_be_valid_markdown": true,
+    "must_be_single_file": true,
+    "do_not_wrap_in_code_fences": true,
+    "do_not_include_explanatory_preamble": true,
+    "do_not_include_trailing_commentary": true,
+    "header_hierarchy": {
+      "h1": "one only — the project title",
+      "h2": "section headers",
+      "h3": "subsection headers",
+      "h4": "rarely, for nested items"
+    }
+  },
+  "context": {
+    "project": "IPL 2026 multi-agent auction MVP web app",
+    "companion_documents": [
+      "ipl_2026_auction_mvp_spec.md — functional spec with 16 sections including TeamModel mapping, agent output schema, SAG schema, auction rules, cold-start handling, headshot pipeline",
+      "ipl_2026_auction_hld.md — production HLD with three-plane architecture, core components, data model, cross-cutting concerns, scaling, evaluation harness"
+    ],
+    "scope": "MVP only — single mini-auction, 10 team agents, 10 distinct LLM models, Cricsheet-derived features, one SAG connector, two-bidder turn-taking, real-time web UI, full rule enforcement",
+    "out_of_scope_for_mvp": [
+      "mega auction pool",
+      "human participants",
+      "marketplace",
+      "persistent cross-auction agent learning",
+      "multi-season ingestion beyond what MVP needs"
+    ],
+    "non_negotiable_invariants": [
+      "Zero cross-agent state or prompt leakage — enforced by typed prompt builders and stateless LLM calls",
+      "Every agent output validates against agent_output.schema.json",
+      "Every SAG output carries provenance for every external signal",
+      "All auction state is event-sourced; any run is replayable deterministically from the event log",
+      "Each team agent runs on the exact model specified in the TeamModel table; personality weights are per-personality not per-model",
+      "Bid amounts derive from a deterministic scoring function; the LLM selects and strategizes but does not compute raw scores",
+      "No render-blocking image failure may delay bid event rendering",
+      "Fallback cascade preserves personality tier (AGGRESSIVE / BALANCED / CONSERVATIVE)",
+      "No PII from social feeds — aggregated metrics only",
+      "Per-auction LLM cost budget is enforced with a hard stop"
+    ]
+  },
+  "required_sections_in_order": [
+    {
+      "heading": "Project Overview",
+      "content": "One-paragraph description, links to companion spec and HLD, scope statement (MVP only)."
+    },
+    {
+      "heading": "Non-Negotiable Invariants",
+      "content": "The full list from context.non_negotiable_invariants as a bulleted list. This section must be conspicuous — it is the safety contract."
+    },
+    {
+      "heading": "Tech Stack",
+      "content": "Frontend, BFF, services, event bus, DB, cache, object store, CDN, observability, CI/CD. Use a table. Specify language, framework, and rationale in one line each."
+    },
+    {
+      "heading": "Repository Layout",
+      "content": "Tree of top-level directories with a one-line purpose per directory. Must include: apps/web, apps/admin, services/auction-manager, services/agent-orchestrator, services/llm-gateway, services/sag, services/ingestion, packages/schemas, packages/shared, infra, tests, docs."
+    },
+    {
+      "heading": "Key Commands",
+      "content": "Table of commands for: install, dev, build, test-unit, test-integration, test-isolation, test-golden-auction, lint, typecheck, format, db-migrate, seed, start-mock-auction. Prefer a single task runner (pnpm scripts or Makefile)."
+    },
+    {
+      "heading": "Architecture Summary",
+      "content": "Short prose + text diagram referencing the three-plane architecture from the HLD. Do not duplicate the HLD — summarize and link."
+    },
+    {
+      "heading": "Coding Conventions",
+      "content": "Language conventions (TypeScript strict, Python typed with pydantic), commit message style (conventional commits), branch naming, PR checklist, error handling pattern (Result types or explicit exceptions), logging format (structured JSON), no any / no untyped, schema-first for every boundary."
+    },
+    {
+      "heading": "Step-by-Step MVP Plan",
+      "content": "Numbered steps, each with: Step number and name, Goal (one sentence), Inputs (what must exist before starting), Actions (3–8 bullets of concrete work), Outputs / Deliverables (checkable artifacts), Acceptance criteria (objective gates), Next step (name of the following step). The plan must cover bootstrap → ingestion → feature store → cold-start → headshots → schemas → LLM gateway → agent orchestrator → auction manager → event bus → frontend → admin → testing gates → observability → staging deploy. Aim for 15 steps minimum. Each step must be independently reviewable and small enough to complete in days not weeks."
+    },
+    {
+      "heading": "Testing Strategy",
+      "content": "Unit, integration, schema conformance, isolation adversarial suite, rule compliance, golden auction regression, chaos test for LLM fallback, end-to-end mock auction. State which tests are required to pass before merge and which are required before deploy to staging."
+    },
+    {
+      "heading": "Observability & Operations",
+      "content": "Key traces, key metrics, key alerts. Reference the HLD for the full list; call out the top 5 dashboards and the top 5 alerts that must exist before production traffic."
+    },
+    {
+      "heading": "Security & Compliance Checklist",
+      "content": "Secrets handling, rate limiting, CSP, PII prohibition, audit log integrity, per-service least-privilege DB roles."
+    },
+    {
+      "heading": "Definition of Done — MVP",
+      "content": "Reproduce the acceptance checklist from the companion spec, plus gates specific to production-readiness at MVP level."
+    },
+    {
+      "heading": "Known Limitations and Open Questions",
+      "content": "List the open questions from the spec §15 and HLD §15. Clearly separate answered vs. deferred."
+    },
+    {
+      "heading": "How Claude Code Should Work in This Repo",
+      "content": "Instructions specifically for Claude Code: always read companion spec and HLD before non-trivial changes; never weaken an invariant; always add tests alongside code; never introduce a new external dependency without updating this file; when uncertain about scope, ask rather than expand; prefer minimal diffs; when editing schemas, regenerate types across all services."
+    }
+  ],
+  "step_specification": {
+    "each_step_must_contain": [
+      "Goal — exactly one sentence stating the outcome",
+      "Inputs — what must exist before this step can start",
+      "Actions — 3 to 8 concrete bullets",
+      "Deliverables — listed artifacts a reviewer can check",
+      "Acceptance Criteria — objective, automatable where possible",
+      "Next Step — name of the step that follows"
+    ],
+    "step_granularity": "Each step should be completable in 1 to 5 working days. Steps larger than that must be split.",
+    "step_ordering_rule": "A step may only consume deliverables from earlier steps. No forward references."
+  },
+  "quality_requirements": {
+    "production_grade_code": [
+      "Strict typing everywhere (TypeScript strict mode, Python pydantic + mypy strict)",
+      "Schema-first at every boundary — no untyped JSON in or out",
+      "Explicit error handling — no swallowed exceptions, no bare try blocks",
+      "Idempotency keys on all mutating APIs",
+      "Timeouts and circuit breakers on every external call",
+      "Structured logs with trace correlation IDs",
+      "No secrets in code or logs",
+      "Every external call rate-limited and cached where semantically safe",
+      "Every migration reversible",
+      "Every public function has tests"
+    ],
+    "zero_hallucination_policy": "Do not invent library names, API shapes, or version numbers that are not specified in the companion spec and HLD. If a concrete choice is required and not specified, mark it as [DECISION PENDING] with the tradeoff explicitly stated.",
+    "no_invented_statistics": "Do not fabricate player names, match statistics, or Cricsheet record counts. Use placeholders like <player_id> and <number>."
+  },
+  "constraints": {
+    "strict": [
+      "Do not exceed MVP scope",
+      "Do not duplicate content from companion spec or HLD — reference and summarize",
+      "Do not remove or soften any non-negotiable invariant",
+      "Do not add technologies not implied by the HLD stack table",
+      "Do not include marketing language or adjectives like cutting-edge, revolutionary, best-in-class"
+    ],
+    "style": [
+      "Technical and actionable tone",
+      "Use tables where the information is tabular",
+      "Use numbered lists for sequenced steps and bulleted lists for unordered sets",
+      "Keep prose tight — one idea per sentence"
+    ]
+  },
+  "assumptions_to_declare_if_made": [
+    "Default dev environment is macOS + Docker",
+    "Primary package manager is pnpm for JS workspaces",
+    "Default Python version is 3.11+",
+    "Default Node version is 20 LTS",
+    "Default DB is managed Postgres 15+",
+    "Default Redis is 7+",
+    "Default object store is S3-compatible"
+  ],
+  "self_check_before_returning": [
+    "All 14 required sections are present and in order",
+    "Step-by-Step MVP Plan has at least 15 steps",
+    "Every step has all six required subfields",
+    "Non-Negotiable Invariants section is unchanged from the context list",
+    "No invented facts, library versions, or statistics",
+    "File is valid Markdown with a single H1 and a sensible header hierarchy",
+    "No code fences wrapping the whole file",
+    "No explanatory preamble or trailing commentary"
+  ],
+  "deliverable": "Return only the raw contents of CLAUDE.md. No preamble, no postscript, no wrapping code fence."
+}

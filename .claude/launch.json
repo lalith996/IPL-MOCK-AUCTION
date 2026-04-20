@@ -1,0 +1,53 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web (spectator UI)",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@ipl/web", "dev"],
+      "port": 3000
+    },
+    {
+      "name": "admin (operator console)",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@ipl/admin", "dev"],
+      "port": 3001
+    },
+    {
+      "name": "llm-gateway",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@ipl/llm-gateway", "dev"],
+      "port": 3002
+    },
+    {
+      "name": "broadcaster (WebSocket fan-out)",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@ipl/broadcaster", "dev"],
+      "port": 3003
+    },
+    {
+      "name": "auction-manager",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@ipl/auction-manager", "dev"],
+      "port": 3004
+    },
+    {
+      "name": "sag (player intelligence)",
+      "runtimeExecutable": "uv",
+      "runtimeArgs": ["run", "uvicorn", "services.sag.src.main:app", "--reload", "--port", "3005"],
+      "port": 3005
+    },
+    {
+      "name": "agent-orchestrator",
+      "runtimeExecutable": "uv",
+      "runtimeArgs": ["run", "uvicorn", "src.main:app", "--reload", "--port", "3006", "--app-dir", "services/agent-orchestrator"],
+      "port": 3006
+    },
+    {
+      "name": "server (legacy Express/MongoDB)",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "ipl-auction-server", "dev"],
+      "port": 5000
+    }
+  ]
+}

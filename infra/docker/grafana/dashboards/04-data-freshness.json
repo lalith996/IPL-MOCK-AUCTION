@@ -1,0 +1,111 @@
+{
+  "title": "Data Freshness",
+  "uid": "ipl-data-freshness",
+  "tags": ["ipl", "data"],
+  "timezone": "UTC",
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "panels": [
+    {
+      "id": 1,
+      "title": "SAG Source Staleness (seconds since last success)",
+      "type": "bargauge",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "time() - ipl_sag_source_last_success_timestamp",
+        "legendFormat": "{{ source }}"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "steps": [
+              { "color": "green", "value": 0 },
+              { "color": "yellow", "value": 300 },
+              { "color": "red", "value": 900 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "title": "SAG Cache Hit Rate",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "rate(ipl_sag_cache_hit_total[2m]) / (rate(ipl_sag_cache_hit_total[2m]) + rate(ipl_sag_cache_miss_total[2m]))",
+        "legendFormat": "Cache hit rate"
+      }],
+      "fieldConfig": {
+        "defaults": { "unit": "percentunit" }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Cricsheet ETL Last Run",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 8 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "time() - ipl_etl_last_run_timestamp",
+        "legendFormat": "Age"
+      }],
+      "fieldConfig": {
+        "defaults": { "unit": "s" }
+      }
+    },
+    {
+      "id": 4,
+      "title": "SAG Lookup Latency p95 (SLO: 1.5s cached / 5s uncached)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 12 },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "histogram_quantile(0.95, sum by(cache_status, le) (rate(ipl_sag_lookup_duration_seconds_bucket[2m])))",
+          "legendFormat": "p95 {{ cache_status }}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "steps": [
+              { "color": "green", "value": 0 },
+              { "color": "yellow", "value": 1.5 },
+              { "color": "red", "value": 5 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "Players with Cold-Start Flag Active",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 8 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "ipl_cold_start_players_total",
+        "legendFormat": "cold-start"
+      }]
+    },
+    {
+      "id": 6,
+      "title": "Injury Feed Lag (s)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 12 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "time() - ipl_sag_source_last_success_timestamp{source=\"injury_feed\"}",
+        "legendFormat": "Injury feed lag"
+      }],
+      "fieldConfig": {
+        "defaults": { "unit": "s" }
+      }
+    }
+  ]
+}

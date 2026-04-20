@@ -1,0 +1,61 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    project: ipl-auction-2026
+    environment: local
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []  # wire to Alertmanager in staging
+
+rule_files:
+  - /etc/prometheus/alerts/*.yml
+
+scrape_configs:
+  # ── Auction Manager (Fastify) ────────────────────────────────────────────
+  - job_name: auction-manager
+    static_configs:
+      - targets: ['host.docker.internal:3004']
+    metrics_path: /metrics
+    scrape_interval: 10s
+
+  # ── LLM Gateway (Fastify) ───────────────────────────────────────────────
+  - job_name: llm-gateway
+    static_configs:
+      - targets: ['host.docker.internal:3002']
+    metrics_path: /metrics
+    scrape_interval: 10s
+
+  # ── SAG Service (FastAPI) ───────────────────────────────────────────────
+  - job_name: sag
+    static_configs:
+      - targets: ['host.docker.internal:3005']
+    metrics_path: /metrics
+    scrape_interval: 15s
+
+  # ── Agent Orchestrator (FastAPI) ────────────────────────────────────────
+  - job_name: agent-orchestrator
+    static_configs:
+      - targets: ['host.docker.internal:3006']
+    metrics_path: /metrics
+    scrape_interval: 15s
+
+  # ── Broadcaster (Node) ──────────────────────────────────────────────────
+  - job_name: broadcaster
+    static_configs:
+      - targets: ['host.docker.internal:3003']
+    metrics_path: /metrics
+    scrape_interval: 15s
+
+  # ── Redis ────────────────────────────────────────────────────────────────
+  - job_name: redis
+    static_configs:
+      - targets: ['redis:6379']
+    metrics_path: /metrics
+
+  # ── Prometheus self-monitoring ──────────────────────────────────────────
+  - job_name: prometheus
+    static_configs:
+      - targets: ['localhost:9090']

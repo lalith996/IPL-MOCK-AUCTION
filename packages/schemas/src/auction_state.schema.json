@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "auction_state",
+  "title": "AuctionState",
+  "description": "Current snapshot of the auction, rebuilt from the event log.",
+  "type": "object",
+  "required": ["auction_id", "phase", "teams", "nomination_order", "sold_players", "unsold_players", "remaining_pool"],
+  "additionalProperties": false,
+  "properties": {
+    "auction_id": { "type": "string", "format": "uuid" },
+    "phase": {
+      "type": "string",
+      "enum": ["prep", "nominating", "opening_bid", "open_bidding", "closing", "sold", "unsold", "ended"]
+    },
+    "current_player": {
+      "type": ["object", "null"],
+      "properties": {
+        "player_id":       { "type": "string" },
+        "base_price":      { "type": "number", "minimum": 0 },
+        "current_bid":     { "type": "number", "minimum": 0 },
+        "current_bidder":  { "type": ["string", "null"] },
+        "bid_count":       { "type": "integer", "minimum": 0 }
+      },
+      "required": ["player_id", "base_price", "current_bid", "current_bidder", "bid_count"]
+    },
+    "active_bidders": {
+      "type": "array",
+      "maxItems": 2,
+      "items": { "type": "string" }
+    },
+    "standby_queue": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "teams": {
+      "type": "object",
+      "description": "Keyed by agent_id.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["budget_remaining", "squad", "overseas_count", "warnings"],
+        "properties": {
+          "budget_remaining": { "type": "number", "minimum": 0 },
+          "squad": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "player_id":    { "type": "string" },
+                "price_paid":   { "type": "number" },
+                "role":         { "type": "string" },
+                "is_overseas":  { "type": "boolean" }
+              },
+              "required": ["player_id", "price_paid", "role", "is_overseas"]
+            }
+          },
+          "overseas_count": { "type": "integer", "minimum": 0, "maximum": 8 },
+          "warnings":       { "type": "integer", "minimum": 0, "maximum": 3 }
+        }
+      }
+    },
+    "nomination_order":  { "type": "array", "items": { "type": "string" } },
+    "sold_players":      { "type": "array", "items": { "type": "string" } },
+    "unsold_players":    { "type": "array", "items": { "type": "string" } },
+    "remaining_pool":    { "type": "array", "items": { "type": "string" } },
+    "last_event_seq":    { "type": "integer", "minimum": 0 },
+    "seed":              { "type": "integer" }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "title": "Spectator Experience",
+  "uid": "ipl-spectator-experience",
+  "tags": ["ipl", "frontend"],
+  "timezone": "UTC",
+  "refresh": "15s",
+  "schemaVersion": 39,
+  "panels": [
+    {
+      "id": 1,
+      "title": "Active WebSocket Clients",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "ipl_broadcaster_active_clients",
+        "legendFormat": "WSS clients"
+      }]
+    },
+    {
+      "id": 2,
+      "title": "WSS Delivery Latency p95 (SLO: 500ms)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "histogram_quantile(0.95, sum by(le) (rate(ipl_broadcaster_delivery_latency_seconds_bucket[2m])))",
+        "legendFormat": "p95 WSS latency"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "steps": [
+              { "color": "green", "value": 0 },
+              { "color": "yellow", "value": 0.3 },
+              { "color": "red", "value": 0.5 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "LCP Distribution (from RUM)",
+      "type": "histogram",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "sum by(le) (ipl_web_lcp_seconds_bucket)",
+        "legendFormat": "LCP"
+      }],
+      "fieldConfig": {
+        "defaults": { "unit": "s" }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Image Load Error Rate (headshots)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "rate(ipl_headshot_load_error_total[2m])",
+          "legendFormat": "load errors/s"
+        },
+        {
+          "datasource": "Prometheus",
+          "expr": "rate(ipl_headshot_fallback_avatar_total[2m])",
+          "legendFormat": "avatar fallbacks/s"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "WSS Reconnect Rate",
+      "type": "timeseries",
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 16 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "rate(ipl_broadcaster_reconnect_total[2m])",
+        "legendFormat": "reconnects/s"
+      }]
+    },
+    {
+      "id": 6,
+      "title": "Slow Consumer Evictions",
+      "type": "timeseries",
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 16 },
+      "targets": [{
+        "datasource": "Prometheus",
+        "expr": "rate(ipl_broadcaster_slow_eviction_total[5m])",
+        "legendFormat": "evictions/s"
+      }]
+    }
+  ]
+}

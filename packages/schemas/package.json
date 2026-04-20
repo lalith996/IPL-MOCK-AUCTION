@@ -1,0 +1,25 @@
+{
+  "name": "@ipl/schemas",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./ts/index.ts",
+  "exports": {
+    ".": "./ts/index.ts",
+    "./src/*": "./src/*"
+  },
+  "scripts": {
+    "generate": "node scripts/generate.mjs && uv run python scripts/generate_pydantic.py",
+    "validate": "node scripts/validate.mjs",
+    "lint": "echo 'no lint for schemas package'",
+    "typecheck": "echo 'schemas types are generated'",
+    "test:unit": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.0",
+    "ajv-formats": "^3.0.0",
+    "json-schema-to-typescript": "^15.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}

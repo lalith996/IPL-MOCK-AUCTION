@@ -1,0 +1,129 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "sag_output",
+  "title": "SagOutput",
+  "description": "Structured player intelligence returned by the SAG service.",
+  "type": "object",
+  "required": ["player_id", "player_summary", "confidence", "provenance"],
+  "additionalProperties": false,
+  "properties": {
+    "player_id": { "type": "string" },
+    "player_summary": { "type": "string", "maxLength": 500 },
+    "last_12_innings_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "runs":         { "type": "number", "minimum": 0 },
+        "strike_rate":  { "type": "number", "minimum": 0 },
+        "average":      { "type": "number", "minimum": 0 },
+        "boundary_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "dot_pct":      { "type": "number", "minimum": 0, "maximum": 100 },
+        "wickets":      { "type": "number", "minimum": 0 },
+        "economy":      { "type": "number", "minimum": 0 },
+        "bowling_sr":   { "type": "number", "minimum": 0 }
+      }
+    },
+    "situational_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "powerplay": {
+          "type": "object",
+          "properties": {
+            "sr":      { "type": "number", "minimum": 0 },
+            "economy": { "type": "number", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "middle": {
+          "type": "object",
+          "properties": {
+            "sr":      { "type": "number", "minimum": 0 },
+            "economy": { "type": "number", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "death": {
+          "type": "object",
+          "properties": {
+            "sr":      { "type": "number", "minimum": 0 },
+            "economy": { "type": "number", "minimum": 0 }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "injury_status": {
+      "type": "object",
+      "required": ["source", "timestamp", "severity"],
+      "additionalProperties": false,
+      "properties": {
+        "source":          { "type": "string" },
+        "timestamp":       { "type": "string", "format": "date-time" },
+        "severity":        { "type": "string", "enum": ["none", "minor", "moderate", "major"] },
+        "expected_return": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "social_buzz": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "volume":      { "type": "number", "minimum": 0 },
+        "sentiment":   { "type": "number", "minimum": -1, "maximum": 1 },
+        "top_sources": { "type": "array", "items": { "type": "string" }, "maxItems": 5 }
+      }
+    },
+    "cold_start_profile": {
+      "type": "object",
+      "description": "Present when query_type is cold_start or player has data_coverage_score < 0.5.",
+      "required": ["cohort_ids", "cohort_size", "imputed_metrics", "source_signals", "data_coverage_score", "imputation_confidence"],
+      "additionalProperties": false,
+      "properties": {
+        "cohort_ids":             { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "cohort_size":            { "type": "integer", "minimum": 1 },
+        "imputed_metrics": {
+          "type": "object",
+          "required": ["strike_rate", "economy", "role_fit"],
+          "additionalProperties": false,
+          "properties": {
+            "strike_rate": { "type": "number", "minimum": 0 },
+            "economy":     { "type": "number", "minimum": 0 },
+            "role_fit":    { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        "source_signals":         { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "data_coverage_score":    { "type": "number", "minimum": 0, "maximum": 1 },
+        "imputation_confidence":  { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Overall confidence in this response; degrades with source staleness."
+    },
+    "missing_fields": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Fields that could not be populated due to missing source data."
+    },
+    "provenance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["source", "fetched_at", "type"],
+        "additionalProperties": false,
+        "properties": {
+          "source":     { "type": "string" },
+          "fetched_at": { "type": "string", "format": "date-time" },
+          "type": {
+            "type": "string",
+            "enum": ["cricsheet", "injury", "social", "api", "cold_start", "cache"]
+          },
+          "stale": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}
