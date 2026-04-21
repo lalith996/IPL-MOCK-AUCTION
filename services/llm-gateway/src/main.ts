@@ -13,7 +13,6 @@ import {
   setBudget,
   BudgetExceededError,
 } from "./cost-tracker.js";
-import type { AgentId } from "./team-model.js";
 
 const server = Fastify({ logger: { level: process.env["LOG_LEVEL"] ?? "info" } });
 
@@ -41,7 +40,7 @@ server.post<{ Body: RouterCallRequest }>(
   async (request, reply) => {
     try {
       const result = await routeCall(request.body);
-      return reply.code(200).send(result);
+      return await reply.code(200).send(result);
     } catch (err) {
       if (err instanceof AgentTimeoutError) {
         return reply.code(504).send({ error: "agent.timeout", detail: err.message });

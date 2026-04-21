@@ -58,7 +58,7 @@ const _PERSONALITY_INSTRUCTIONS: Record<Personality, string> = {
  */
 export function buildSystemPrompt(ctx: CallContext): string {
   const squadLines = ctx.ownSquad
-    .map((s) => `  - ${s.playerId} (${s.role}) @ ₹${s.price}L`)
+    .map((s) => `  - ${s.playerId} (${s.role}) @ ₹${String(s.price)}L`)
     .join("\n");
 
   return `You are the ${ctx.agentId} franchise agent in an IPL mini-auction.
@@ -80,7 +80,7 @@ NOMINATED PLAYER:
     ctx.nominatedPlayer.isColdStart ? " [LIMITED DATA — cold-start estimate]" : ""
   }
 
-CURRENT BID: ₹${ctx.currentBid}L${
+CURRENT BID: ₹${String(ctx.currentBid)}L${
     ctx.currentBidder ? ` (held by ${ctx.currentBidder})` : " (opening)"
   }
 BID DEADLINE: ${ctx.bidDeadlineIso}

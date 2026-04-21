@@ -87,7 +87,7 @@ export class BudgetExceededError extends Error {
   ) {
     super(
       `Budget exceeded for auction ${auctionId}: ` +
-        `used ${usedCents.toFixed(4)}¢ of ${limitCents}¢`,
+        `used ${usedCents.toFixed(4)}¢ of ${String(limitCents)}¢`,
     );
     this.name = "BudgetExceededError";
   }

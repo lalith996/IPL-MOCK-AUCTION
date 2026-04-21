@@ -82,7 +82,7 @@ async function _callLlm(
   messages: LlmMessage[],
 ): Promise<{ text: string; usage: TokenUsage }> {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), CALL_TIMEOUT_MS);
+  const timer = setTimeout(() => { controller.abort(); }, CALL_TIMEOUT_MS);
 
   let lastError: unknown;
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
@@ -112,7 +112,7 @@ async function _callLlm(
       }
 
       if (!resp.ok) {
-        throw new Error(`HTTP ${resp.status}: ${await resp.text()}`);
+        throw new Error(`HTTP ${String(resp.status)}: ${await resp.text()}`);
       }
 
       const json = (await resp.json()) as LlmResponse;
@@ -130,7 +130,7 @@ async function _callLlm(
   }
 
   clearTimeout(timer);
-  throw lastError ?? new Error("LLM call failed after retries");
+  throw lastError instanceof Error ? lastError : new Error("LLM call failed after retries");
 }
 
 // ---------------------------------------------------------------------------
