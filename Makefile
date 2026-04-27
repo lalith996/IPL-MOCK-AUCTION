@@ -14,9 +14,31 @@ install: ## Install all JS and Python dependencies
 
 # ─── Development ─────────────────────────────────────────────────────────────
 
-dev: ## Start all services in local dev mode (requires Docker stack running)
-	docker compose -f infra/docker/docker-compose.yml up -d postgres redis
-	$(PNPM) -r --parallel dev
+dev: ## Start full local stack in dependency order (infra → migrations → services → frontends)
+	# 1. Infrastructure (postgres, redis, minio, otel-collector)
+	docker compose -f infra/docker/docker-compose.yml up -d postgres redis minio otel-collector
+	# 2. Wait for Postgres to be ready
+	@until docker compose -f infra/docker/docker-compose.yml exec -T postgres \
+		pg_isready -U postgres -d ipl_auction 2>/dev/null; do \
+		echo "Waiting for Postgres..."; sleep 2; done
+	# 3. Apply migrations
+	$(MAKE) db-migrate
+	# 4. Python services in background (SAG on :8002, Orchestrator on :8001)
+	$(UV) run uvicorn services.sag.src.main:app \
+		--host 0.0.0.0 --port 8002 --reload &
+	$(UV) run uvicorn services.agent_orchestrator.src.main:app \
+		--host 0.0.0.0 --port 8001 --reload &
+	# 5. Node.js services + frontend apps (auction-manager :3004, gateway :3002, broadcaster :3003, web :3000, admin :3001)
+	$(PNPM) -r --parallel --if-present dev
+
+dev-infra: ## Start only infrastructure containers (Postgres, Redis, MinIO, OTel)
+	docker compose -f infra/docker/docker-compose.yml up -d postgres redis minio otel-collector
+
+dev-obs: ## Start observability stack (Prometheus, Grafana, Loki)
+	docker compose -f infra/docker/docker-compose.yml up -d prometheus grafana loki
+
+stop-python: ## Kill background Python uvicorn processes
+	pkill -f "uvicorn services" 2>/dev/null || true
 
 # ─── Build ────────────────────────────────────────────────────────────────────
 
