@@ -1,0 +1,169 @@
+# Production Docker Compose — use with an external managed Postgres + Redis.
+# Override IMAGE_TAG (default: latest) for pinned deploys.
+#
+# Usage:
+#   IMAGE_TAG=v1.2.3 docker compose -f docker-compose.prod.yml up -d
+
+x-common-env: &common-env
+  DATABASE_URL: ${DATABASE_URL:?required}
+  REDIS_URL: ${REDIS_URL:?required}
+  OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-http://otel-collector:4318}
+  LOG_LEVEL: ${LOG_LEVEL:-info}
+  NODE_ENV: production
+
+x-healthcheck-defaults: &hc
+  interval: 15s
+  timeout: 5s
+  retries: 3
+  start_period: 20s
+
+services:
+  # ── LLM Gateway ─────────────────────────────────────────────────────────────
+  llm-gateway:
+    image: ghcr.io/lalith996/ipl-auction/llm-gateway:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      <<: *common-env
+      PORT: "3002"
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:?required}
+      LLM_RATE_LIMIT_RPS: ${LLM_RATE_LIMIT_RPS:-5}
+      LLM_BUDGET_CENTS_PER_AUCTION: ${LLM_BUDGET_CENTS_PER_AUCTION:-500}
+    ports: []   # internal only; exposed via ingress
+    expose: ["3002"]
+    healthcheck:
+      <<: *hc
+      test: ["CMD", "wget", "-qO-", "http://localhost:3002/healthz"]
+    deploy:
+      replicas: 2
+      resources:
+        limits: { cpus: "0.5", memory: 256M }
+
+  # ── SAG ─────────────────────────────────────────────────────────────────────
+  sag:
+    image: ghcr.io/lalith996/ipl-auction/sag:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      <<: *common-env
+      SAG_RATE_LIMIT_RPS: ${SAG_RATE_LIMIT_RPS:-10}
+    expose: ["8002"]
+    healthcheck:
+      <<: *hc
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8002/healthz')"]
+
+  # ── Agent Orchestrator ───────────────────────────────────────────────────────
+  agent-orchestrator:
+    image: ghcr.io/lalith996/ipl-auction/agent-orchestrator:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      <<: *common-env
+      LLM_GATEWAY_URL: http://llm-gateway:3002
+      SAG_URL: http://sag:8002
+    expose: ["8001"]
+    depends_on:
+      llm-gateway:
+        condition: service_healthy
+      sag:
+        condition: service_healthy
+    healthcheck:
+      <<: *hc
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/healthz')"]
+    deploy:
+      resources:
+        limits: { cpus: "2.0", memory: 1G }
+
+  # ── Auction Manager ──────────────────────────────────────────────────────────
+  auction-manager:
+    image: ghcr.io/lalith996/ipl-auction/auction-manager:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      <<: *common-env
+      PORT: "3004"
+      INSTANCE_ID: ${INSTANCE_ID:-}
+      LLM_GATEWAY_URL: http://llm-gateway:3002
+      ORCHESTRATOR_URL: http://agent-orchestrator:8001
+      SAG_URL: http://sag:8002
+      LLM_BUDGET_CENTS_PER_AUCTION: ${LLM_BUDGET_CENTS_PER_AUCTION:-500}
+    expose: ["3004"]
+    depends_on:
+      llm-gateway:
+        condition: service_healthy
+      agent-orchestrator:
+        condition: service_healthy
+    healthcheck:
+      <<: *hc
+      test: ["CMD", "wget", "-qO-", "http://localhost:3004/healthz"]
+    deploy:
+      replicas: 1   # Singleton — Redis leader election
+      resources:
+        limits: { cpus: "1.0", memory: 512M }
+
+  # ── Broadcaster ──────────────────────────────────────────────────────────────
+  broadcaster:
+    image: ghcr.io/lalith996/ipl-auction/broadcaster:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      <<: *common-env
+      PORT: "3003"
+    expose: ["3003"]
+    healthcheck:
+      <<: *hc
+      test: ["CMD", "wget", "-qO-", "http://localhost:3003/healthz"]
+    deploy:
+      replicas: 2
+      resources:
+        limits: { cpus: "0.5", memory: 256M }
+
+  # ── Web spectator app ────────────────────────────────────────────────────────
+  web:
+    image: ghcr.io/lalith996/ipl-auction/web:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      PORT: "3000"
+      AUCTION_MANAGER_URL: http://auction-manager:3004
+    expose: ["3000"]
+    depends_on:
+      auction-manager:
+        condition: service_healthy
+    healthcheck:
+      <<: *hc
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/auctions"]
+    deploy:
+      replicas: 2
+      resources:
+        limits: { cpus: "0.5", memory: 512M }
+
+  # ── Admin console ────────────────────────────────────────────────────────────
+  admin:
+    image: ghcr.io/lalith996/ipl-auction/admin:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      PORT: "3001"
+      DATABASE_URL: ${DATABASE_URL:?required}
+      AUCTION_MANAGER_URL: http://auction-manager:3004
+      JWT_SECRET: ${JWT_SECRET:?required}
+      OPERATOR_PASSWORD: ${OPERATOR_PASSWORD:?required}
+    expose: ["3001"]
+    depends_on:
+      auction-manager:
+        condition: service_healthy
+    healthcheck:
+      <<: *hc
+      test: ["CMD", "wget", "-qO-", "http://localhost:3001/api/auth/operator"]
+    deploy:
+      resources:
+        limits: { cpus: "0.25", memory: 256M }
+
+  # ── Nginx reverse proxy ──────────────────────────────────────────────────────
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.prod.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - web
+      - admin
+      - broadcaster

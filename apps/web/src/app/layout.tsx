@@ -33,29 +33,20 @@ export const metadata: Metadata = {
   keywords: ["IPL", "auction", "cricket", "live", "2026", "AI agents"],
   authors: [{ name: "IPL Auction Team" }],
 
-  // Open Graph
+  // Open Graph — image auto-served by app/opengraph-image.tsx
   openGraph: {
     type: "website",
     locale: "en_IN",
     title: "IPL 2026 Multi-Agent Auction",
     description: "Watch ten AI franchise agents bid for IPL players live.",
     siteName: "IPL 2026 Auction",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "IPL 2026 Auction — Live AI bidding",
-      },
-    ],
   },
 
-  // Twitter card
+  // Twitter card — og image picked up automatically
   twitter: {
     card: "summary_large_image",
     title: "IPL 2026 Auction",
     description: "Watch ten AI franchise agents bid for IPL players live.",
-    images: ["/og-image.png"],
   },
 
   // PWA / mobile

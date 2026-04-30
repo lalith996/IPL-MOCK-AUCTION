@@ -1,0 +1,63 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ipl-auction-ingress
+  namespace: ipl-auction
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # TLS termination at ingress
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # WebSocket support for broadcaster
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+    # Rate limit at ingress level (per IP)
+    nginx.ingress.kubernetes.io/limit-rps: "20"
+    # HSTS
+    nginx.ingress.kubernetes.io/server-snippet: |
+      add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
+spec:
+  tls:
+    - hosts:
+        - ipl-auction.example.com
+        - admin.ipl-auction.example.com
+        - ws.ipl-auction.example.com
+      secretName: ipl-auction-tls
+  rules:
+    # Spectator web app
+    - host: ipl-auction.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 3000
+
+    # Admin console (separate subdomain for isolation)
+    - host: admin.ipl-auction.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: admin
+                port:
+                  number: 3001
+
+    # WebSocket broadcaster (separate subdomain avoids upgrade header conflicts)
+    - host: ws.ipl-auction.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: broadcaster
+                port:
+                  number: 3003

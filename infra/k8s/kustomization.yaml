@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: ipl-auction
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - secrets.yaml
+  - auction-manager.yaml
+  - llm-gateway.yaml
+  - broadcaster.yaml
+  - agent-orchestrator.yaml
+  - sag.yaml
+  - web.yaml
+  - admin.yaml
+  - ingress.yaml
+
+commonLabels:
+  app.kubernetes.io/managed-by: kustomize
+  app.kubernetes.io/part-of: ipl-auction

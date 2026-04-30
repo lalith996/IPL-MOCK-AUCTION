@@ -225,3 +225,75 @@ jobs:
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/ipl_auction_test
           REDIS_URL: redis://localhost:6379
+
+  # ─── E2E (Playwright) ──────────────────────────────────────────────────────
+  test-e2e:
+    name: Playwright E2E
+    runs-on: ubuntu-latest
+    needs: [lint, typecheck, test-unit]
+    # Only run on main or when explicitly triggered — skip on draft PRs
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium firefox
+
+      - name: Run E2E tests (mock-only, no live services)
+        run: pnpm exec playwright test --project=chromium
+        env:
+          CI: "true"
+          # Tests use page.route() mocks — no real services needed
+          BASE_URL: "http://localhost:3000"
+          ADMIN_URL: "http://localhost:3001"
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+  # ─── Docker build (CI smoke — no push on PRs) ──────────────────────────────
+  docker-build:
+    name: Docker Build Smoke
+    runs-on: ubuntu-latest
+    needs: [lint, typecheck]
+    # Only verify Docker builds on main; skip expensive builds on PRs
+    if: github.ref == 'refs/heads/main'
+    strategy:
+      matrix:
+        service:
+          - { name: auction-manager, context: ., dockerfile: services/auction-manager/Dockerfile }
+          - { name: llm-gateway,     context: ., dockerfile: services/llm-gateway/Dockerfile }
+          - { name: broadcaster,     context: ., dockerfile: services/broadcaster/Dockerfile }
+          - { name: web,             context: ., dockerfile: apps/web/Dockerfile }
+          - { name: admin,           context: ., dockerfile: apps/admin/Dockerfile }
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build ${{ matrix.service.name }} (no push)
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.service.context }}
+          file: ${{ matrix.service.dockerfile }}
+          push: false
+          cache-from: type=gha,scope=${{ matrix.service.name }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.service.name }}
+          tags: ghcr.io/lalith996/ipl-auction/${{ matrix.service.name }}:ci
