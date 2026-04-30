@@ -11,11 +11,12 @@
     "test:unit": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "next": "16.0.10",
-    "react": "19.2.1",
-    "react-dom": "19.2.1",
+    "@ipl/schemas": "workspace:*",
     "jose": "^5.9.0",
-    "@ipl/schemas": "workspace:*"
+    "next": "16.0.10",
+    "postgres": "^3.4.9",
+    "react": "19.2.1",
+    "react-dom": "19.2.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

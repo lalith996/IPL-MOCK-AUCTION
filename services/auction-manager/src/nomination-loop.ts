@@ -49,6 +49,9 @@ interface NominatedPlayer {
   economy: number;
   wickets: number;
   data_coverage_score: number;
+  // ✅ BUG FIX #4: Add headshot metadata fields
+  headshot_url?: string;
+  blurhash?: string;
 }
 
 interface PublicState {
@@ -180,6 +183,9 @@ export async function runNominationLoop(deps: NominationLoopDeps): Promise<void>
       // ── 2b. SAG lookup ────────────────────────────────────────────────────
       const sag = await _fetchSag(sagUrl, playerId);
 
+      // ✅ BUG FIX #4: Fetch headshot metadata after SAG lookup
+      const headshot = await _fetchHeadshot(sagUrl, playerId);
+
       // ── 2c. NominatePlayer → FSM ──────────────────────────────────────────
       await fsm.handleCommand({
         type: "NominatePlayer",
@@ -203,6 +209,9 @@ export async function runNominationLoop(deps: NominationLoopDeps): Promise<void>
         economy: player.economy_rate,
         wickets: player.wickets,
         data_coverage_score: player.data_coverage_score,
+        // headshot metadata (optional — omit key entirely when absent)
+        ...(headshot?.primary_url !== undefined ? { headshot_url: headshot.primary_url } : {}),
+        ...(headshot?.blurhash !== undefined ? { blurhash: headshot.blurhash } : {}),
       };
 
       const publicState: PublicState = {
@@ -246,11 +255,15 @@ export async function runNominationLoop(deps: NominationLoopDeps): Promise<void>
         // Re-check pause between commands
         while (isPaused()) await _sleep(500);
 
+        // ✅ BUG FIX #7: Use proper UUID-based seq to avoid idempotency collisions
+        const { randomUUID } = await import("node:crypto");
+        const seq = parseInt(randomUUID().replace(/-/g, "").slice(0, 15), 16);
+
         if (output.action === "bid" && output.bid_amount_lakhs !== null && output.bid_amount_lakhs > 0) {
           const result = await fsm.handleCommand({
             type: "PlaceBid",
             clientId: output.agent_id,
-            seq: Date.now() + Math.random(), // jitter for uniqueness
+            seq,
             auctionId,
             payload: {
               agentId: output.agent_id,
@@ -266,7 +279,7 @@ export async function runNominationLoop(deps: NominationLoopDeps): Promise<void>
           await fsm.handleCommand({
             type: "DropBid",
             clientId: output.agent_id,
-            seq: Date.now() + Math.random(),
+            seq,
             auctionId,
             payload: { agentId: output.agent_id },
           });
@@ -328,6 +341,24 @@ async function _fetchSag(sagUrl: string, playerId: string): Promise<SagOutput | 
     return (await resp.json()) as SagOutput;
   } catch {
     return null; // SAG failure is non-fatal
+  }
+}
+
+// ✅ BUG FIX #4: Fetch headshot metadata from SAG service
+async function _fetchHeadshot(
+  sagUrl: string,
+  playerId: string,
+): Promise<{ primary_url: string; blurhash: string } | null> {
+  try {
+    const resp = await fetch(`${sagUrl}/sag/headshot/${playerId}`, {
+      method: "GET",
+      signal: AbortSignal.timeout(3_000),
+    });
+    if (!resp.ok) return null;
+    return (await resp.json()) as { primary_url: string; blurhash: string };
+  } catch {
+    // Non-fatal: UI will render initials avatar fallback
+    return null;
   }
 }
 
