@@ -114,6 +114,25 @@ wss.on("connection", (socket: WebSocket, req) => {
 // Background stream consumer loop — fan out live events to connected clients
 // ---------------------------------------------------------------------------
 
+// ✅ BUG FIX #6: Track active loops to prevent race condition duplicates
+const activeLoops = new Set<string>();
+
+async function _safeConsumeLoop(auctionId: string, lastId: string): Promise<void> {
+  if (activeLoops.has(auctionId)) {
+    console.warn(
+      `[broadcaster] Consume loop already running for ${auctionId}, skipping duplicate`
+    );
+    return;
+  }
+
+  activeLoops.add(auctionId);
+  try {
+    await _consumeLoop(auctionId, lastId);
+  } finally {
+    activeLoops.delete(auctionId);
+  }
+}
+
 async function _consumeLoop(auctionId: string, lastId: string): Promise<void> {
   let cursor = lastId;
   for (;;) {
@@ -134,8 +153,8 @@ async function _consumeLoop(auctionId: string, lastId: string): Promise<void> {
 const controlSub = new IORedis(REDIS_URL);
 await controlSub.subscribe("broadcaster:register_auction");
 controlSub.on("message", (_channel: string, auctionId: string) => {
-  // Start a consumer loop for this auction in the background
-  void _consumeLoop(auctionId, "0-0");
+  // ✅ Use safe wrapper to prevent duplicate loops
+  void _safeConsumeLoop(auctionId, "0-0");
 });
 
 // ---------------------------------------------------------------------------

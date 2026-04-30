@@ -116,11 +116,41 @@ class SagAggregator:
 
         # Cold-start profile
         cold_start_profile = None
+        # ✅ BUG FIX #3: Actually call cold_start module when coverage < 0.5
         if player_data.get("data_coverage_score", 1.0) < 0.5:
             cs_cached = await self._cache.get(request.player_id, "cold_start")
             if cs_cached:
                 from .models import ColdStartProfile
                 cold_start_profile = ColdStartProfile.model_validate(cs_cached)
+            else:
+                # Build cold-start profile from KNN cohort
+                try:
+                    from .cold_start import build_cold_start_profile as build_cs
+
+                    # Collect all full-coverage players for KNN
+                    full_coverage = [
+                        p for p in feature_store.values()
+                        if isinstance(p, dict) and p.get("data_coverage_score", 0) >= 0.8
+                    ]
+
+                    if full_coverage:
+                        cold_start_profile = build_cs(
+                            player_id=request.player_id,
+                            player_meta=player_data,
+                            full_coverage_players=full_coverage,
+                            k=5,
+                        )
+                        # Cache the cold-start profile
+                        await self._cache.set(
+                            request.player_id,
+                            "cold_start",
+                            cold_start_profile.model_dump(),
+                        )
+                except Exception as e:
+                    # Non-fatal: proceed without cold-start
+                    import logging
+                    logging.warning(f"Cold-start profile failed for {request.player_id}: {e}")
+
             provenance.append(ProvenanceEntry(
                 source="cold_start_knn",
                 fetched_at=now_iso,

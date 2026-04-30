@@ -4,7 +4,7 @@
  * and cost tracking.
  */
 
-import { type AgentId, getTeamModel, getFallbackModels } from "./team-model.js";
+import { type AgentId, getTeamModel } from "./team-model.js";
 import * as cb from "./circuit-breaker.js";
 import { recordUsage, BudgetExceededError, type TokenUsage } from "./cost-tracker.js";
 import { buildSystemPrompt, buildRepairPrompt, type CallContext } from "./prompt-builder.js";
@@ -33,6 +33,31 @@ export class AgentTimeoutError extends Error {
     this.name = "AgentTimeoutError";
   }
 }
+
+// ---------------------------------------------------------------------------
+// Fallback cascade per personality (BUG FIX #8)
+// ---------------------------------------------------------------------------
+
+type Personality = "AGGRESSIVE" | "BALANCED" | "CONSERVATIVE";
+
+const FALLBACK_CASCADE: Record<Personality, string[]> = {
+  AGGRESSIVE: [
+    "meta-llama/llama-3.1-8b-instruct:free",      // MI
+    "google/gemini-flash-1.5-8b:free",             // RCB
+    "google/gemma-2-9b-it:free",                   // PBKS
+  ],
+  BALANCED: [
+    "meta-llama/llama-3.1-70b-instruct:free",     // CSK
+    "mistralai/mistral-7b-instruct:free",          // DC
+    "microsoft/phi-3-mini-128k-instruct:free",     // KKR
+    "huggingfaceh4/zephyr-7b-beta:free",           // LSG
+  ],
+  CONSERVATIVE: [
+    "qwen/qwen-2-7b-instruct:free",                // RR
+    "openchat/openchat-7b:free",                   // SRH
+    "meta-llama/llama-3-8b-instruct:free",         // GT
+  ],
+};
 
 // ---------------------------------------------------------------------------
 // Token-bucket rate limiter (per model, in-process)
@@ -139,14 +164,19 @@ async function _callLlm(
 
 export async function routeCall(req: RouterCallRequest): Promise<RouterCallResponse> {
   const primary = getTeamModel(req.agentId);
-  const fallbacks = getFallbackModels(primary);
-  const candidates = [primary, ...fallbacks];
+  // ✅ BUG FIX #8: Use hardcoded fallback cascade per personality
+  const personality = primary.personality as Personality;
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  const fallbackModels = FALLBACK_CASCADE[personality] ?? [];
+  
+  const candidates = [
+    primary.model,
+    ...fallbackModels,
+  ];
 
   let wasFallback = false;
 
-  for (const candidate of candidates) {
-    const { model } = candidate;
-
+  for (const model of candidates) {
     if (cb.isOpen(model)) continue; // skip tripped breakers
 
     if (!_consumeToken(model)) {
@@ -194,7 +224,7 @@ export async function routeCall(req: RouterCallRequest): Promise<RouterCallRespo
       }
 
       // Success path
-      recordUsage(req.auctionId, model, usage);
+      recordUsage(req.auctionId, model === primary.model ? primary.model : model, usage);
       cb.recordSuccess(model);
 
       return {

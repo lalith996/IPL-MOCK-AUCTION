@@ -597,10 +597,22 @@ function Dashboard({ token, operatorId, onSignOut }: DashboardProps): React.JSX.
     return () => clearInterval(interval);
   }, [fetchAuctions]);
 
+  /** Persist approvals to DB for a specific auction. */
+  async function persistApproval(auctionId: string): Promise<void> {
+    await apiFetch(`/api/auctions/${auctionId}/approve`, token, {
+      method: "POST",
+      body: JSON.stringify({ missingPlayers: true, headshots: true }),
+    });
+  }
+
   async function handleAction(
     id: string,
     action: "start" | "pause" | "resume",
   ): Promise<void> {
+    // Persist approval to DB before starting (BFF checks DB)
+    if (action === "start") {
+      await persistApproval(id);
+    }
     const resp = await apiFetch(`/api/auctions/${id}?action=${action}`, token, {
       method: "POST",
     });

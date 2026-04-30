@@ -95,6 +95,38 @@ async def lookup(body: SagLookupRequest) -> SagOutput:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
+# ✅ BUG FIX #4: Add headshot metadata endpoint
+@app.get(
+    "/sag/headshot/{player_id}",
+    response_model=dict[str, str],
+    dependencies=[Depends(_check_rate_limit)],
+)
+async def get_headshot(player_id: str) -> dict[str, str]:
+    """Return headshot metadata (primary CDN URL + blurhash) for a player."""
+    try:
+        # Query feature store for headshot metadata
+        player = _state.feature_store.get(player_id, {})
+        if not isinstance(player, dict):
+            raise HTTPException(status_code=404, detail="Player not found")
+
+        headshot_url = player.get("headshot_url", "")
+        blurhash = player.get("blurhash", "L6PZfSi_.AyE_3t7t7R**0o#DgR4")  # generic placeholder
+
+        if not headshot_url:
+            # Fallback to blank URL with generic blurhash
+            return {
+                "primary_url": "",
+                "blurhash": blurhash,
+            }
+
+        return {
+            "primary_url": headshot_url,
+            "blurhash": blurhash,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
+
+
 # ---------------------------------------------------------------------------
 # Internal endpoints (test/seed use only — blocked in prod by network policy)
 # ---------------------------------------------------------------------------

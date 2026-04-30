@@ -133,6 +133,16 @@ export const useAuctionStore = create<AuctionState & AuctionActions>((set, get) 
     const newSeenIds = new Set(state.seenEventIds);
     newSeenIds.add(eventId);
 
+    // ✅ BUG FIX #5: Enforce max dedup set size (1000 event IDs)
+    // to prevent unbounded memory growth on long auctions
+    const MAX_DEDUP_SIZE = 1000;
+    if (newSeenIds.size > MAX_DEDUP_SIZE) {
+      const arr = Array.from(newSeenIds);
+      arr.shift(); // remove oldest (first)
+      newSeenIds.clear();
+      arr.forEach((id) => newSeenIds.add(id));
+    }
+
     const ev = event as Record<string, unknown>;
     const type = ev["type"] as string;
 

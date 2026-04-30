@@ -48,7 +48,19 @@
       "Bash(pnpm --filter @ipl/web exec eslint src/components/PlayerCard.tsx src/components/RationalePanel.tsx)",
       "Bash(pnpm --filter @ipl/web exec eslint src/hooks/useAuctionSocket.ts)",
       "Bash(pnpm --filter @ipl/llm-gateway lint)",
-      "Bash(grep -E \"^  [0-9]|\\\\.ts$\")"
+      "Bash(grep -E \"^  [0-9]|\\\\.ts$\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(gh pr *)",
+      "Bash(brew install *)",
+      "Bash(export PATH=\"/opt/homebrew/bin:$PATH\")",
+      "Bash(gh auth *)",
+      "Bash(git remote *)",
+      "Bash(pnpm --filter @ipl/auction-manager exec vitest run src/rules/compliance.test.ts)",
+      "Bash(pnpm -r --if-present test:unit)",
+      "Bash(pnpm -r --if-present lint)",
+      "Bash(pnpm --filter @ipl/auction-manager exec eslint src/)"
     ]
   }
 }
