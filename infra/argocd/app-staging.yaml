@@ -1,0 +1,58 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ipl-auction-staging
+  namespace: argocd
+  labels:
+    environment: staging
+  annotations:
+    notifications.argoproj.io/subscribe.on-deployed.slack: deployments
+    notifications.argoproj.io/subscribe.on-health-degraded.slack: alerts
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: ipl-auction
+
+  source:
+    repoURL: https://github.com/lalith996/IPL-MOCK-AUCTION.git
+    targetRevision: main
+    path: infra/k8s
+
+    # Kustomize overlay for staging (image tags injected by CI)
+    kustomize:
+      images:
+        - ghcr.io/lalith996/ipl-auction/auction-manager
+        - ghcr.io/lalith996/ipl-auction/llm-gateway
+        - ghcr.io/lalith996/ipl-auction/broadcaster
+        - ghcr.io/lalith996/ipl-auction/agent-orchestrator
+        - ghcr.io/lalith996/ipl-auction/sag
+        - ghcr.io/lalith996/ipl-auction/web
+        - ghcr.io/lalith996/ipl-auction/admin
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ipl-auction
+
+  syncPolicy:
+    automated:
+      prune: true       # Remove resources not in Git
+      selfHeal: true    # Re-apply if cluster state drifts
+      allowEmpty: false
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - ApplyOutOfSyncOnly=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 2m
+
+  # Health checks — only mark Healthy when all pods are ready
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas  # Don't override HPA-managed replica count

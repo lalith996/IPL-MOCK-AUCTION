@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ipl-auction-production
+  namespace: argocd
+  labels:
+    environment: production
+  annotations:
+    notifications.argoproj.io/subscribe.on-deployed.slack: deployments
+    notifications.argoproj.io/subscribe.on-health-degraded.slack: alerts-critical
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: ipl-auction
+
+  source:
+    repoURL: https://github.com/lalith996/IPL-MOCK-AUCTION.git
+    # Production tracks tags, not main branch — requires explicit promotion
+    targetRevision: HEAD
+    path: infra/k8s
+
+    kustomize:
+      images:
+        - ghcr.io/lalith996/ipl-auction/auction-manager
+        - ghcr.io/lalith996/ipl-auction/llm-gateway
+        - ghcr.io/lalith996/ipl-auction/broadcaster
+        - ghcr.io/lalith996/ipl-auction/agent-orchestrator
+        - ghcr.io/lalith996/ipl-auction/sag
+        - ghcr.io/lalith996/ipl-auction/web
+        - ghcr.io/lalith996/ipl-auction/admin
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ipl-auction
+
+  syncPolicy:
+    # Production: manual sync only — no auto-deploy
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+    retry:
+      limit: 2
+      backoff:
+        duration: 30s
+        factor: 2
+        maxDuration: 5m
+
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas

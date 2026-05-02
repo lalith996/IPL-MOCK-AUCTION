@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: ipl-auction
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: IPL 2026 Multi-Agent Auction MVP
+
+  # Source repos allowed
+  sourceRepos:
+    - https://github.com/lalith996/IPL-MOCK-AUCTION.git
+
+  # Target clusters and namespaces
+  destinations:
+    - namespace: ipl-auction
+      server: https://kubernetes.default.svc
+
+  # Cluster-level resources allowed
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+    - group: "networking.k8s.io"
+      kind: Ingress
+    - group: "autoscaling"
+      kind: HorizontalPodAutoscaler
+
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
+
+  # RBAC: only platform team can approve syncs
+  roles:
+    - name: platform-engineer
+      policies:
+        - p, proj:ipl-auction:platform-engineer, applications, *, ipl-auction/*, allow
+      groups:
+        - platform-team
