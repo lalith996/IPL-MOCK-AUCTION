@@ -41,7 +41,7 @@ async def _lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     cache = SagCache(_state.redis_client)
     _state.aggregator = SagAggregator(
         cache=cache,
-        injury_adapter=MockInjuryAdapter(),
+        injury_adapter=MockInjuryAdapter(cache=cache),
     )
     yield
     await _state.redis_client.aclose()
@@ -104,6 +104,12 @@ async def lookup(body: SagLookupRequest) -> SagOutput:
 async def get_headshot(player_id: str) -> dict[str, str]:
     """Return headshot metadata (primary CDN URL + blurhash) for a player."""
     try:
+        # Check cache first for headshot
+        cache = SagCache(_state.redis_client)
+        cached = await cache.get(player_id, "headshot")
+        if cached:
+            return cached
+
         # Query feature store for headshot metadata
         player = _state.feature_store.get(player_id, {})
         if not isinstance(player, dict):
@@ -112,17 +118,15 @@ async def get_headshot(player_id: str) -> dict[str, str]:
         headshot_url = player.get("headshot_url", "")
         blurhash = player.get("blurhash", "L6PZfSi_.AyE_3t7t7R**0o#DgR4")  # generic placeholder
 
-        if not headshot_url:
-            # Fallback to blank URL with generic blurhash
-            return {
-                "primary_url": "",
-                "blurhash": blurhash,
-            }
-
-        return {
-            "primary_url": headshot_url,
+        resp = {
+            "primary_url": headshot_url if headshot_url else "",
             "blurhash": blurhash,
         }
+
+        # Cache the resulting headshot metadata for 7 days
+        await cache.set(player_id, "headshot", resp)
+
+        return resp
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) from e
 

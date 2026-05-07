@@ -16,6 +16,55 @@ const SNAPSHOT_INTERVAL = 20;
 export class EventStore {
   constructor(private readonly sql: ReturnType<typeof postgres>) {}
 
+  /**
+   * Persists an event and possibly a snapshot transactionally.
+   * Marking idempotency state could also go here if needed per-client.
+   */
+  async persistEventAndSnapshot(
+    event: AuctionEvent,
+    state: AuctionState,
+    clientId: string,
+    clientSeq: number
+  ): Promise<void> {
+    await this.sql.begin(async (tx) => {
+      // 1. Insert Event
+      await tx`
+        INSERT INTO auction_events
+          (event_id, auction_id, seq, type, agent_id, payload, timestamp)
+        VALUES (
+          ${event.eventId},
+          ${event.auctionId},
+          ${event.seq},
+          ${event.type},
+          ${event.agentId},
+          ${tx.json(event.payload as unknown as Parameters<typeof tx.json>[0])},
+          ${event.timestamp}
+        )
+      `;
+
+      // 2. Mark command processed
+      await tx`
+        INSERT INTO processed_commands (client_id, client_seq, processed_at)
+        VALUES (${clientId}, ${clientSeq}, ${new Date().toISOString()})
+        ON CONFLICT DO NOTHING
+      `;
+
+      // 3. Save snapshot periodically
+      if (state.seq % SNAPSHOT_INTERVAL === 0) {
+        await tx`
+          INSERT INTO auction_snapshots (auction_id, seq, state, created_at)
+          VALUES (
+            ${state.auctionId},
+            ${state.seq},
+            ${tx.json(state as unknown as Parameters<typeof tx.json>[0])},
+            ${new Date().toISOString()}
+          )
+          ON CONFLICT (auction_id, seq) DO NOTHING
+        `;
+      }
+    });
+  }
+
   async appendEvent(
     auctionId: string,
     type: EventType,
