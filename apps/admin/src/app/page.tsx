@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/set-state-in-effect */
+
 "use client";
 
 /**
@@ -240,7 +240,7 @@ function ReplayViewer({ auctionId, token, onClose }: ReplayViewerProps): React.J
       try {
         const resp = await fetch(`/api/auctions/${auctionId}/replay`, {
           headers: authHeader(token),
-          signal: abortController!.signal,
+          signal: abortController?.signal,
         });
 
         if (!resp.ok || !resp.body) {

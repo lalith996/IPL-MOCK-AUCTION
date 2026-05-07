@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-confusing-void-expression */
+
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { isOpen, recordSuccess, recordFailure, resetAll } from "../circuit-breaker.js";
 

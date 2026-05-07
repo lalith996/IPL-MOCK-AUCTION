@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/set-state-in-effect */
+
 /**
  * BidTicker — live bid amount, bidding team, and countdown clock.
  */
@@ -42,7 +42,7 @@ export function BidTicker(): React.JSX.Element {
       setCountdown(Math.max(0, BID_WINDOW_SECONDS - elapsed));
     }, 250);
     return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+
   }, [currentBidLakhs, currentBidder]);
 
   const isActive = phase === "opening_bid" || phase === "open_bidding";

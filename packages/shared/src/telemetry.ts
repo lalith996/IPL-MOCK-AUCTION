@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call */
+
 /**
  * OpenTelemetry SDK initialiser — shared across all TypeScript services.
  *

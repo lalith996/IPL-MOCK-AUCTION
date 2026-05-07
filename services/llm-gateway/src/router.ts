@@ -166,7 +166,7 @@ export async function routeCall(req: RouterCallRequest): Promise<RouterCallRespo
   const primary = getTeamModel(req.agentId);
   // ✅ BUG FIX #8: Use hardcoded fallback cascade per personality
   const personality = primary.personality as Personality;
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
   const fallbackModels = FALLBACK_CASCADE[personality] ?? [];
   
   const candidates = [

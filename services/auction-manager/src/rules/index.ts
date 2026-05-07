@@ -31,10 +31,10 @@ export function checkBudgetRule(
   agentId: AgentId,
   bidLakhs: number,
 ): RuleViolation | null {
-  /* eslint-disable @typescript-eslint/no-unnecessary-condition */
+
   const team = state.teams[agentId] ?? null;
   if (!team) return { ruleId: "BudgetRule", message: `Unknown agent: ${agentId}` };
-  /* eslint-enable @typescript-eslint/no-unnecessary-condition */
+
   const budgetLakhs = team.budgetRemainingCr * 100;
   if (bidLakhs > budgetLakhs) {
     return {

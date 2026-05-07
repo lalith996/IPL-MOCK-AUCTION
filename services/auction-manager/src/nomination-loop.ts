@@ -238,8 +238,9 @@ export async function runNominationLoop(deps: NominationLoopDeps): Promise<void>
         agentOutputs = await _callOrchestrator(orchestratorUrl, evalReq);
       } catch (err) {
         console.error(`[nomination-loop] ${auctionId}: orchestrator call failed for ${playerId}:`, err);
-        // Skip to next player on orchestrator failure
-        await _removeFromPool(sql, auctionId, playerId);
+        // Do NOT permanently remove the player on orchestrator failure.
+        // Instead, push them to the back of the pool so they can be attempted again later.
+        await _requeuePlayer(sql, auctionId, playerId);
         continue;
       }
 
@@ -425,6 +426,19 @@ async function _markEnded(
 ): Promise<void> {
   await sql`
     UPDATE auction_sessions SET status = 'ended' WHERE id = ${auctionId}
+  `;
+}
+
+async function _requeuePlayer(
+  sql: ReturnType<typeof postgres>,
+  auctionId: string,
+  playerId: string,
+): Promise<void> {
+  // Remove from current position and append to the end of the array
+  await sql`
+    UPDATE auction_sessions
+    SET player_pool = array_append(array_remove(player_pool, ${playerId}), ${playerId})
+    WHERE id = ${auctionId}
   `;
 }
 

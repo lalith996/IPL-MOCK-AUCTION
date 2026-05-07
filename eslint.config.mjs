@@ -1,24 +1,23 @@
-import tseslint from '@typescript-eslint/eslint-plugin';
-import tsparser from '@typescript-eslint/parser';
+import tseslint from 'typescript-eslint';
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
   {
-    ignores: ['**/node_modules/**', '**/dist/**', '**/.next/**', 'packages/schemas/ts/**'],
+    ignores: ['**/node_modules/**', '**/dist/**', '**/.next/**', 'packages/schemas/ts/**', 'docs/**', '**/build/**'],
   },
   {
     files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
-      parser: tsparser,
+      parser: tseslint.parser,
       parserOptions: {
         projectService: true,
       },
     },
     plugins: {
-      '@typescript-eslint': tseslint,
+      '@typescript-eslint': tseslint.plugin,
     },
     rules: {
-      ...tseslint.configs['strict-type-checked'].rules,
+      ...tseslint.configs.strictTypeChecked.rules,
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
