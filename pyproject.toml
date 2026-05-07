@@ -36,6 +36,7 @@ pythonpath = [
 [dependency-groups]
 dev = [
     "anyio[trio]>=4.6.0",
+    "datamodel-code-generator>=0.56.1",
     "fakeredis>=2.26.0",
     "httpx>=0.28.0",
     "jsonschema>=4.26.0",
