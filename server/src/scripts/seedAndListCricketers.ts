@@ -70,7 +70,7 @@ const seedAndListCricketers = async () => {
 
         for (const dirName of jsonDirs) {
             const jsonDir = path.join(__dirname, '../../../', dirName);
-            
+
             if (!fs.existsSync(jsonDir)) {
                 console.log(`⚠️  Directory not found: ${dirName}, skipping...`);
                 continue;
@@ -83,10 +83,10 @@ const seedAndListCricketers = async () => {
                 try {
                     const content = fs.readFileSync(path.join(jsonDir, file), 'utf-8');
                     const matchData: CricsheetMatch = JSON.parse(content);
-                    
+
                     processMatchData(matchData, playersMap, file);
                     totalFilesProcessed++;
-                    
+
                     if (totalFilesProcessed % 100 === 0) {
                         console.log(`   Processed ${totalFilesProcessed} matches...`);
                     }
@@ -104,7 +104,7 @@ const seedAndListCricketers = async () => {
         const players = Array.from(playersMap.values()).map(playerData => {
             const role = determineRole(playerData);
             const stats = calculateStats(playerData);
-            
+
             return {
                 name: playerData.name,
                 role: role,
@@ -127,11 +127,11 @@ const seedAndListCricketers = async () => {
         // List all cricketers
         console.log('📋 LISTING ALL CRICKETERS IN DATABASE:\n');
         console.log('=' .repeat(80));
-        
+
         const allPlayers = await Player.find({}).sort({ name: 1 });
-        
+
         console.log(`\nTotal Cricketers: ${allPlayers.length}\n`);
-        
+
         // Group by role
         const roleGroups: { [key: string]: typeof allPlayers } = {
             'Batsman': [],
@@ -161,7 +161,7 @@ const seedAndListCricketers = async () => {
         }
 
         console.log('\n' + '='.repeat(80));
-        
+
         // Summary statistics
         console.log('\n📊 SUMMARY STATISTICS:');
         console.log(`   Batsmen: ${roleGroups['Batsman'].length}`);
@@ -191,7 +191,7 @@ function processMatchData(
     for (const [teamName, playerNames] of Object.entries(teams)) {
         for (const playerName of playerNames) {
             const cricsheetId = registry[playerName] || playerName;
-            
+
             if (!playersMap.has(cricsheetId)) {
                 playersMap.set(cricsheetId, {
                     name: playerName,
@@ -209,38 +209,38 @@ function processMatchData(
     if (matchData.innings) {
         for (const inning of matchData.innings) {
             const battersInInning = new Set<string>();
-            
+
             for (const over of inning.overs || []) {
                 for (const delivery of over.deliveries || []) {
                     // Batting stats
                     const batterId = registry[delivery.batter] || delivery.batter;
                     const batterData = playersMap.get(batterId);
-                    
+
                     if (batterData) {
                         batterData.battingStats.runs += delivery.runs.batter;
                         batterData.battingStats.ballsFaced += 1;
-                        
+
                         if (delivery.runs.batter === 4) batterData.battingStats.fours++;
                         if (delivery.runs.batter === 6) batterData.battingStats.sixes++;
-                        
+
                         battersInInning.add(batterId);
                     }
 
                     // Bowling stats
                     const bowlerId = registry[delivery.bowler] || delivery.bowler;
                     const bowlerData = playersMap.get(bowlerId);
-                    
+
                     if (bowlerData) {
                         bowlerData.bowlingStats.ballsBowled += 1;
                         bowlerData.bowlingStats.runsConceded += delivery.runs.total;
-                        
+
                         if (delivery.wickets && delivery.wickets.length > 0) {
                             bowlerData.bowlingStats.wickets += delivery.wickets.length;
                         }
                     }
                 }
             }
-            
+
             // Count innings for batters who faced at least one ball
             battersInInning.forEach(batterId => {
                 const data = playersMap.get(batterId);
@@ -262,8 +262,8 @@ function determineRole(playerData: PlayerData): 'Batsman' | 'Bowler' | 'All-Roun
         return 'Batsman';
     } else {
         // Default based on which they did more
-        return playerData.battingStats.ballsFaced >= playerData.bowlingStats.ballsBowled 
-            ? 'Batsman' 
+        return playerData.battingStats.ballsFaced >= playerData.bowlingStats.ballsBowled
+            ? 'Batsman'
             : 'Bowler';
     }
 }
@@ -271,7 +271,7 @@ function determineRole(playerData: PlayerData): 'Batsman' | 'Bowler' | 'All-Roun
 function calculateStats(playerData: PlayerData) {
     const batting = playerData.battingStats;
     const bowling = playerData.bowlingStats;
-    
+
     const average = batting.innings > 0 ? batting.runs / batting.innings : 0;
     const strikeRate = batting.ballsFaced > 0 ? (batting.runs / batting.ballsFaced) * 100 : 0;
     const economy = bowling.ballsBowled > 0 ? (bowling.runsConceded / bowling.ballsBowled) * 6 : 0;
@@ -298,18 +298,18 @@ function calculateStats(playerData: PlayerData) {
 
 function calculateBasePrice(stats: any, role: string): number {
     let price = 20; // Base minimum (in lakhs)
-    
+
     // Add based on stats
     price += Math.min(stats.runs / 100, 50);
     price += Math.min(stats.wickets * 2, 30);
     price += Math.min(stats.matches * 0.5, 20);
-    
+
     return Math.round(price * 10) / 10;
 }
 
 function determineTier(stats: any, role: string): string {
     const totalImpact = stats.runs + (stats.wickets * 20) + (stats.matches * 5);
-    
+
     if (totalImpact > 3000) return 'Marquee';
     if (role === 'All-Rounder' && stats.runs > 500 && stats.wickets > 20) return 'All-Rounder';
     if (role === 'Wicketkeeper') return 'Wicketkeeper';

@@ -26,7 +26,7 @@ const retainedPlayers = [
   { name: 'Ayush Mhatre', role: 'BAT', status: 'retained', team: 'CSK', price: 0.30, country: 'India' },
   { name: 'Dewald Brevis', role: 'BAT', status: 'retained', team: 'CSK', price: 3.00, country: 'South Africa' },
   { name: 'Urvil Patel', role: 'WK', status: 'retained', team: 'CSK', price: 0.30, country: 'India' },
-  
+
   // DC (17)
   { name: 'Abhishek Porel', role: 'WK', status: 'retained', team: 'DC', price: 4.00, country: 'India' },
   { name: 'Ajay Mandal', role: 'AR', status: 'retained', team: 'DC', price: 0.30, country: 'India' },
@@ -45,7 +45,7 @@ const retainedPlayers = [
   { name: 'Tripurana Vijay', role: 'AR', status: 'retained', team: 'DC', price: 0.30, country: 'India' },
   { name: 'Tristan Stubbs', role: 'BAT', status: 'retained', team: 'DC', price: 9.20, country: 'South Africa' },
   { name: 'Vipraj Nigam', role: 'BAT', status: 'retained', team: 'DC', price: 0.30, country: 'India' },
-  
+
   // GT (20)
   { name: 'Anuj Rawat', role: 'WK', status: 'retained', team: 'GT', price: 3.40, country: 'India' },
   { name: 'Glenn Phillips', role: 'BAT', status: 'retained', team: 'GT', price: 1.50, country: 'New Zealand' },
@@ -67,7 +67,7 @@ const retainedPlayers = [
   { name: 'Shahrukh Khan', role: 'AR', status: 'retained', team: 'GT', price: 4.60, country: 'India' },
   { name: 'Shubman Gill', role: 'BAT', status: 'retained', team: 'GT', price: 16.50, country: 'India' },
   { name: 'Washington Sundar', role: 'AR', status: 'retained', team: 'GT', price: 3.20, country: 'India' },
-  
+
   // KKR (12)
   { name: 'Ajinkya Rahane', role: 'BAT', status: 'retained', team: 'KKR', price: 3.20, country: 'India' },
   { name: 'Angkrish Raghuvanshi', role: 'BAT', status: 'retained', team: 'KKR', price: 4.00, country: 'India' },
@@ -81,7 +81,7 @@ const retainedPlayers = [
   { name: 'Umran Malik', role: 'BOWL', status: 'retained', team: 'KKR', price: 0.80, country: 'India' },
   { name: 'Vaibhav Arora', role: 'BOWL', status: 'retained', team: 'KKR', price: 4.20, country: 'India' },
   { name: 'Varun Chakaravarthy', role: 'BOWL', status: 'retained', team: 'KKR', price: 12.00, country: 'India' },
-  
+
   // LSG (19)
   { name: 'Abdul Samad', role: 'BAT', status: 'retained', team: 'LSG', price: 0.20, country: 'India' },
   { name: 'Aiden Markram', role: 'BAT', status: 'retained', team: 'LSG', price: 2.60, country: 'South Africa' },
@@ -102,7 +102,7 @@ const retainedPlayers = [
   { name: 'Prince Yadav', role: 'BOWL', status: 'retained', team: 'LSG', price: 0.20, country: 'India' },
   { name: 'Rishabh Pant', role: 'WK', status: 'retained', team: 'LSG', price: 27.00, country: 'India' },
   { name: 'Shahbaz Ahmed', role: 'AR', status: 'retained', team: 'LSG', price: 2.40, country: 'India' },
-  
+
   // MI (20)
   { name: 'Allah Ghazanfar', role: 'BOWL', status: 'retained', team: 'MI', price: 4.80, country: 'Afghanistan' },
   { name: 'Ashwani Kumar', role: 'BOWL', status: 'retained', team: 'MI', price: 0.30, country: 'India' },
@@ -124,7 +124,7 @@ const retainedPlayers = [
   { name: 'Tilak Varma', role: 'BAT', status: 'retained', team: 'MI', price: 8.00, country: 'India' },
   { name: 'Trent Boult', role: 'BOWL', status: 'retained', team: 'MI', price: 12.50, country: 'New Zealand' },
   { name: 'Will Jacks', role: 'BAT', status: 'retained', team: 'MI', price: 5.25, country: 'England' },
-  
+
   // PBKS (21)
   { name: 'Arshdeep Singh', role: 'BOWL', status: 'retained', team: 'PBKS', price: 18.00, country: 'India' },
   { name: 'Azmatullah Omarzai', role: 'AR', status: 'retained', team: 'PBKS', price: 2.40, country: 'Afghanistan' },
@@ -147,7 +147,7 @@ const retainedPlayers = [
   { name: 'Xavier Bartlett', role: 'BOWL', status: 'retained', team: 'PBKS', price: 0.90, country: 'Australia' },
   { name: 'Yash Thakur', role: 'BOWL', status: 'retained', team: 'PBKS', price: 1.20, country: 'India' },
   { name: 'Yuzvendra Chahal', role: 'BOWL', status: 'retained', team: 'PBKS', price: 18.00, country: 'India' },
-  
+
   // RR (16)
   { name: 'Dhruv Jurel', role: 'WK', status: 'retained', team: 'RR', price: 14.00, country: 'India' },
   { name: 'Donovan Ferreira', role: 'WK', status: 'retained', team: 'RR', price: 0.40, country: 'South Africa' },
@@ -165,7 +165,7 @@ const retainedPlayers = [
   { name: 'Vaibhav Suryavanshi', role: 'BAT', status: 'retained', team: 'RR', price: 1.10, country: 'India' },
   { name: 'Yashaswi Jaiswal', role: 'BAT', status: 'retained', team: 'RR', price: 18.00, country: 'India' },
   { name: 'Yudhvir Charak', role: 'AR', status: 'retained', team: 'RR', price: 0.30, country: 'India' },
-  
+
   // RCB (17)
   { name: 'Abhinandan Singh', role: 'BOWL', status: 'retained', team: 'RCB', price: 0.30, country: 'India' },
   { name: 'Bhuvneshwar Kumar', role: 'BOWL', status: 'retained', team: 'RCB', price: 10.75, country: 'India' },
@@ -184,7 +184,7 @@ const retainedPlayers = [
   { name: 'Tim David', role: 'BAT', status: 'retained', team: 'RCB', price: 8.00, country: 'Australia' },
   { name: 'Virat Kohli', role: 'BAT', status: 'retained', team: 'RCB', price: 21.00, country: 'India' },
   { name: 'Yash Dayal', role: 'BOWL', status: 'retained', team: 'RCB', price: 3.20, country: 'India' },
-  
+
   // SRH (15)
   { name: 'Abhishek Sharma', role: 'BAT', status: 'retained', team: 'SRH', price: 14.00, country: 'India' },
   { name: 'Aniket Verma', role: 'AR', status: 'retained', team: 'SRH', price: 0.30, country: 'India' },
@@ -223,15 +223,15 @@ async function seedPlayers(players: any[]) {
   for (const player of players) {
     // Generate cricsheetId from name (replace spaces with underscores)
     const cricsheetId = player.name.replace(/\s+/g, '_');
-    
+
     await Player.findOneAndUpdate(
       { name: player.name },
-      { 
+      {
         ...player,
         cricsheetId,
-        stats: { 
-          batting: { avg: 0, sr: 0, runs: 0 }, 
-          bowling: { avg: 0, econ: 0, wickets: 0 } 
+        stats: {
+          batting: { avg: 0, sr: 0, runs: 0 },
+          bowling: { avg: 0, econ: 0, wickets: 0 }
         },
         tier: 1, // Default tier, will be updated with Cricsheet data
         isOverseas: player.country !== 'India'

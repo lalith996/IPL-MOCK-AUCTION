@@ -81,7 +81,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  /* eslint-disable react-hooks/set-state-in-effect */
+
   useEffect(() => {
     async function fetchSessions() {
       try {
@@ -102,9 +102,9 @@ export default function Home() {
 
     void fetchSessions();
     const t = setInterval(() => { void fetchSessions(); }, 10_000);
-    return () => clearInterval(t);
+    return () => { clearInterval(t); };
   }, []);
-  /* eslint-enable react-hooks/set-state-in-effect */
+
 
   const live = sessions.filter(
     (s) => s.status === "active" || s.status === "paused",

@@ -1,3 +1,4 @@
+import type { IncomingMessage } from 'node:http';
 /**
  * Broadcaster — WebSocket fan-out from Redis Streams.
  *
@@ -56,7 +57,7 @@ const httpServer = createServer((req, res) => {
 
 const wss = new WebSocketServer({ server: httpServer });
 
-wss.on("connection", (socket: WebSocket, req) => {
+wss.on("connection", (socket: WebSocket, req: IncomingMessage) => {
   void (async () => {
     const url = new URL(req.url ?? "/", `http://localhost:${String(PORT)}`);
     const auctionId = url.searchParams.get("auctionId") ?? "";

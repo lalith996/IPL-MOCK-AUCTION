@@ -52,21 +52,21 @@ interface PlayerStats {
     fullName: string; // Store both full name and short name
     nationality: string;
     cricsheetId?: string;
-    
+
     overall: FormatStats;
     test: FormatStats;
     odi: FormatStats;
     t20i: FormatStats;
     t20: FormatStats;
     ipl: FormatStats;
-    
+
     powerplayBatting: { runs: number; balls: number; fours: number; sixes: number };
     middleOverBatting: { runs: number; balls: number };
     deathBatting: { runs: number; balls: number; fours: number; sixes: number };
     powerplayBowling: { wickets: number; balls: number; runs: number };
     middleOverBowling: { wickets: number; balls: number; runs: number };
     deathBowling: { wickets: number; balls: number; runs: number };
-    
+
     recentMatches: Array<{
         date: string;
         runs: number;
@@ -96,7 +96,7 @@ const createEmptyFormatStats = (): FormatStats => ({
 
 const buildGlobalNameRegistry = () => {
     console.log('📖 Building global name registry from IPL 2026 players...\n');
-    
+
     // Create mapping for IPL 2026 players
     IPL_2026_PLAYERS.forEach(player => {
         // Store full name
@@ -104,7 +104,7 @@ const buildGlobalNameRegistry = () => {
             fullName: player.name,
             nationality: player.nationality
         });
-        
+
         // Also create short name variations (e.g., "Virat Kohli" -> "V Kohli")
         const nameParts = player.name.split(' ');
         if (nameParts.length >= 2) {
@@ -115,7 +115,7 @@ const buildGlobalNameRegistry = () => {
             });
         }
     });
-    
+
     console.log(`✅ Registry built with ${globalNameRegistry.size} name variations\n`);
 };
 
@@ -169,7 +169,7 @@ const seedIPL2026PlayersV3 = async () => {
 
         for (const dirInfo of jsonDirs) {
             const jsonDir = path.join(__dirname, '../../../', dirInfo.path);
-            
+
             if (!fs.existsSync(jsonDir)) {
                 console.log(`⚠️  Directory not found: ${dirInfo.path}, skipping...`);
                 continue;
@@ -182,18 +182,18 @@ const seedIPL2026PlayersV3 = async () => {
                 try {
                     const content = fs.readFileSync(path.join(jsonDir, file), 'utf-8');
                     const matchData: CricsheetMatch = JSON.parse(content);
-                    
+
                     const foundPlayers = processMatchByFormat(
                         matchData,
                         playersStatsMap,
                         dirInfo.format,
                         dirInfo.type
                     );
-                    
+
                     foundPlayers.forEach(p => playersFoundInMatches.add(p));
-                    
+
                     totalFilesProcessed++;
-                    
+
                     if (totalFilesProcessed % 1000 === 0) {
                         console.log(`   Processed ${totalFilesProcessed} matches... (${playersFoundInMatches.size} unique players found)`);
                     }
@@ -201,26 +201,26 @@ const seedIPL2026PlayersV3 = async () => {
                     continue;
                 }
             }
-            
+
             console.log(`✅ Completed ${dirInfo.type} - Found ${playersFoundInMatches.size} players\n`);
         }
 
         console.log(`✅ Total matches processed: ${totalFilesProcessed}`);
         console.log(`✅ Total unique IPL 2026 players found: ${playersFoundInMatches.size}\n`);
-        
+
         // Convert to Player documents
         const players = Array.from(playersStatsMap.values())
             .filter(p => p.overall.matches > 0)
             .map(playerStats => {
                 const role = determineRole(playerStats);
-                
+
                 const overallStats = calculateDetailedStats(playerStats.overall);
                 const testStats = calculateDetailedStats(playerStats.test);
                 const odiStats = calculateDetailedStats(playerStats.odi);
                 const t20iStats = calculateDetailedStats(playerStats.t20i);
                 const t20Stats = calculateDetailedStats(playerStats.t20);
                 const iplStats = calculateDetailedStats(playerStats.ipl);
-                
+
                 return {
                     name: playerStats.fullName,
                     role: role,
@@ -239,7 +239,7 @@ const seedIPL2026PlayersV3 = async () => {
                     tier: determineTier(overallStats, iplStats, role, playerStats),
                     nationality: playerStats.nationality,
                     isOverseas: playerStats.nationality !== 'India',
-                    
+
                     specialistRatings: {
                         deathBowler: calculateDeathBowlingIndex(playerStats),
                         powerplayBatter: calculatePowerplayBattingIndex(playerStats),
@@ -247,7 +247,7 @@ const seedIPL2026PlayersV3 = async () => {
                         middleOrderAnchor: calculateMiddleOrderIndex(playerStats),
                         finisher: calculateFinisherIndex(playerStats),
                     },
-                    
+
                     recentForm: playerStats.recentMatches.slice(-10),
                 };
             });
@@ -257,7 +257,7 @@ const seedIPL2026PlayersV3 = async () => {
 
         // Print summary
         printSummary(players, playersFoundInMatches);
-        
+
         process.exit(0);
     } catch (error) {
         console.error('❌ Error:', error);
@@ -284,19 +284,19 @@ function processMatchByFormat(
         for (const cricsheetName of playerNames) {
             // Check if this player is in our IPL 2026 list
             const playerInfo = globalNameRegistry.get(cricsheetName);
-            
+
             if (playerInfo) {
                 const fullName = playerInfo.fullName;
-                
+
                 if (playersMap.has(fullName)) {
                     const playerStats = playersMap.get(fullName)!;
                     const cricsheetId = registry[cricsheetName];
-                    
+
                     if (cricsheetId) {
                         playerStats.cricsheetId = cricsheetId;
                         cricsheetIdToPlayer.set(cricsheetId, fullName);
                     }
-                    
+
                     playersFoundInThisMatch.add(fullName);
                 }
             }
@@ -316,19 +316,19 @@ function processMatchByFormat(
                 for (const delivery of over.deliveries || []) {
                     const batterCricsheetName = delivery.batter;
                     const bowlerCricsheetName = delivery.bowler;
-                    
+
                     // Check if batter is in our list
                     const batterInfo = globalNameRegistry.get(batterCricsheetName);
                     if (batterInfo && playersMap.has(batterInfo.fullName)) {
                         const batterFullName = batterInfo.fullName;
                         const playerStats = playersMap.get(batterFullName)!;
                         const formatStats = getFormatStats(playerStats, format);
-                        
+
                         formatStats.runs += delivery.runs.batter;
                         formatStats.ballsFaced += 1;
                         playerStats.overall.runs += delivery.runs.batter;
                         playerStats.overall.ballsFaced += 1;
-                        
+
                         if (delivery.runs.batter === 4) {
                             formatStats.fours++;
                             playerStats.overall.fours++;
@@ -337,7 +337,7 @@ function processMatchByFormat(
                             formatStats.sixes++;
                             playerStats.overall.sixes++;
                         }
-                        
+
                         // Phase-specific (T20 formats only)
                         if (isT20Format) {
                             if (phase === 'powerplay') {
@@ -372,12 +372,12 @@ function processMatchByFormat(
                         const bowlerFullName = bowlerInfo.fullName;
                         const playerStats = playersMap.get(bowlerFullName)!;
                         const formatStats = getFormatStats(playerStats, format);
-                        
+
                         formatStats.ballsBowled += 1;
                         formatStats.runsConceded += delivery.runs.total;
                         playerStats.overall.ballsBowled += 1;
                         playerStats.overall.runsConceded += delivery.runs.total;
-                        
+
                         if (delivery.wickets && delivery.wickets.length > 0) {
                             formatStats.wickets += delivery.wickets.length;
                             playerStats.overall.wickets += delivery.wickets.length;
@@ -416,7 +416,7 @@ function processMatchByFormat(
         playersFoundInThisMatch.forEach(fullName => {
             const playerStats = playersMap.get(fullName)!;
             const formatStats = getFormatStats(playerStats, format);
-            
+
             formatStats.matches += 1;
             playerStats.overall.matches += 1;
 
@@ -467,7 +467,7 @@ function determineRole(playerStats: PlayerStats): 'Batsman' | 'Bowler' | 'All-Ro
     const hasSignificantBatting = playerStats.overall.runs > 200 || playerStats.overall.innings > 10;
     const hasSignificantBowling = playerStats.overall.wickets > 10 || playerStats.overall.ballsBowled > 120;
 
-    const knownKeepers = ['MS Dhoni', 'KL Rahul', 'Rishabh Pant', 'Sanju Samson', 'Ishan Kishan', 
+    const knownKeepers = ['MS Dhoni', 'KL Rahul', 'Rishabh Pant', 'Sanju Samson', 'Ishan Kishan',
                           'Quinton de Kock', 'Jos Buttler', 'Heinrich Klaasen', 'Nicholas Pooran',
                           'Rahmanullah Gurbaz', 'Jitesh Sharma', 'Dhruv Jurel', 'Abhishek Porel'];
     if (knownKeepers.includes(playerStats.fullName)) return 'Wicketkeeper';
@@ -505,7 +505,7 @@ function calculateDetailedStats(formatStats: FormatStats) {
 function calculateDeathBowlingIndex(playerStats: PlayerStats): number {
     if (playerStats.deathBowling.balls < 30) return 0;
     const economy = (playerStats.deathBowling.runs / playerStats.deathBowling.balls) * 6;
-    const wicketsPerMatch = (playerStats.t20.matches + playerStats.ipl.matches) > 0 
+    const wicketsPerMatch = (playerStats.t20.matches + playerStats.ipl.matches) > 0
         ? playerStats.deathBowling.wickets / (playerStats.t20.matches + playerStats.ipl.matches) : 0;
     const economyScore = Math.max(0, 100 - (economy * 8));
     const wicketScore = wicketsPerMatch * 50;
@@ -524,7 +524,7 @@ function calculatePowerplayBattingIndex(playerStats: PlayerStats): number {
 function calculatePowerplayBowlingIndex(playerStats: PlayerStats): number {
     if (playerStats.powerplayBowling.balls < 30) return 0;
     const economy = (playerStats.powerplayBowling.runs / playerStats.powerplayBowling.balls) * 6;
-    const wicketsPerMatch = (playerStats.t20.matches + playerStats.ipl.matches) > 0 
+    const wicketsPerMatch = (playerStats.t20.matches + playerStats.ipl.matches) > 0
         ? playerStats.powerplayBowling.wickets / (playerStats.t20.matches + playerStats.ipl.matches) : 0;
     const economyScore = Math.max(0, 100 - (economy * 10));
     const wicketScore = wicketsPerMatch * 50;
@@ -577,27 +577,27 @@ function calculateValueScore(stats: any, role: string): number {
 
 function calculateBasePrice(overallStats: any, iplStats: any, role: string, nationality: string): number {
     let price = 20;
-    
+
     price += Math.min(iplStats.runs / 30, 100);
     price += Math.min(iplStats.wickets * 4, 80);
     price += Math.min(overallStats.runs / 100, 80);
     price += Math.min(overallStats.wickets * 2, 60);
     price += Math.min(overallStats.matches * 1, 40);
-    
+
     if (role === 'All-Rounder') price *= 1.3;
     if (role === 'Wicketkeeper') price *= 1.2;
     if (nationality !== 'India') price *= 1.5;
-    
+
     if (overallStats.strikeRate > 140) price += 50;
     if (overallStats.economy < 7.5 && overallStats.wickets > 20) price += 50;
-    
+
     return Math.round(Math.min(price, 2000) * 10) / 10;
 }
 
 function determineTier(overallStats: any, iplStats: any, role: string, playerStats: PlayerStats): string {
     const totalImpact = overallStats.runs + (overallStats.wickets * 25) + (overallStats.matches * 10);
     const iplExperience = iplStats.matches;
-    
+
     if (iplExperience > 30 && totalImpact > 4000) return 'Marquee';
     if (role === 'All-Rounder' && overallStats.runs > 1000 && overallStats.wickets > 30) return 'All-Rounder';
     if (role === 'Wicketkeeper') return 'Wicketkeeper';
@@ -609,10 +609,10 @@ function determineTier(overallStats: any, iplStats: any, role: string, playerSta
 function printSummary(players: any[], playersFoundInMatches: Set<string>) {
     console.log('\n' + '='.repeat(80));
     console.log('📋 IPL 2026 PLAYER DATABASE SUMMARY (V3 - ENHANCED NAME MATCHING)\n');
-    
+
     const byNationality: { [key: string]: number } = {};
     const byRole: { [key: string]: number } = {};
-    
+
     players.forEach(p => {
         byNationality[p.nationality] = (byNationality[p.nationality] || 0) + 1;
         byRole[p.role] = (byRole[p.role] || 0) + 1;

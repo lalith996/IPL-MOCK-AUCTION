@@ -94,7 +94,7 @@ const buildNationalityAndTeamMap = () => {
         players.forEach(playerName => {
             const lowerName = playerName.toLowerCase();
             teamLookup.set(lowerName, team);
-            
+
             // Also store short name version (V Kohli for Virat Kohli)
             const parts = playerName.split(' ');
             if (parts.length >= 2) {
@@ -103,19 +103,19 @@ const buildNationalityAndTeamMap = () => {
             }
         });
     }
-    
+
     // Build nationality lookup
     IPL_2026_PLAYERS.forEach(player => {
         // Store by full name
         nationalityLookup.set(player.name.toLowerCase(), player.nationality);
-        
+
         // Store by short name (V Kohli for Virat Kohli)
         const parts = player.name.split(' ');
         if (parts.length >= 2) {
             const shortName = parts[0][0] + ' ' + parts.slice(1).join(' ');
             nationalityLookup.set(shortName.toLowerCase(), player.nationality);
         }
-        
+
         // Store by last name for matching
         const lastName = parts[parts.length - 1];
         if (!nationalityLookup.has(lastName.toLowerCase())) {
@@ -126,44 +126,44 @@ const buildNationalityAndTeamMap = () => {
 
 const guessNationality = (playerName: string): string => {
     const lowerName = playerName.toLowerCase();
-    
+
     // Direct match
     if (nationalityLookup.has(lowerName)) {
         return nationalityLookup.get(lowerName)!;
     }
-    
+
     // Check by last name
     const parts = playerName.split(' ');
     const lastName = parts[parts.length - 1].toLowerCase();
     if (nationalityLookup.has(lastName)) {
         return nationalityLookup.get(lastName)!;
     }
-    
+
     // Default to India for players not in IPL 2026 list
     return 'India';
 };
 
 const isInIPL2026List = (playerName: string): boolean => {
     const lowerName = playerName.toLowerCase();
-    
+
     // Direct match
     if (teamLookup.has(lowerName) || nationalityLookup.has(lowerName)) {
         return true;
     }
-    
+
     // Match: First letter of firstname + Full last name
     const parts = playerName.split(' ');
     if (parts.length >= 2) {
         const cricsheetFirstInitial = parts[0][0].toLowerCase(); // First letter only
         const cricsheetLastName = parts.slice(1).join(' ').toLowerCase(); // Full last name
-        
+
         // Check against all IPL 2026 player names
         for (const player of IPL_2026_PLAYERS) {
             const lookupParts = player.name.toLowerCase().split(' ');
             if (lookupParts.length >= 2) {
                 const lookupFirstInitial = lookupParts[0][0]; // First letter of firstname
                 const lookupLastName = lookupParts.slice(1).join(' '); // Full last name
-                
+
                 // Match only if BOTH first initial AND full last name match exactly
                 if (lookupFirstInitial === cricsheetFirstInitial && lookupLastName === cricsheetLastName) {
                     return true;
@@ -171,31 +171,31 @@ const isInIPL2026List = (playerName: string): boolean => {
             }
         }
     }
-    
+
     return false;
 };
 
 const getTeam = (playerName: string): string | undefined => {
     const lowerName = playerName.toLowerCase();
-    
+
     // Direct match
     if (teamLookup.has(lowerName)) {
         return teamLookup.get(lowerName);
     }
-    
+
     // Match: First letter of firstname + Full last name
     const parts = playerName.split(' ');
     if (parts.length >= 2) {
         const cricsheetFirstInitial = parts[0][0].toLowerCase(); // First letter only
         const cricsheetLastName = parts.slice(1).join(' ').toLowerCase(); // Full last name
-        
+
         // Check all team lookup keys for a match
         for (const [fullOrShortName, team] of teamLookup.entries()) {
             const lookupParts = fullOrShortName.split(' ');
             if (lookupParts.length >= 2) {
                 const lookupFirstInitial = lookupParts[0][0]; // First letter of firstname
                 const lookupLastName = lookupParts.slice(1).join(' '); // Full last name
-                
+
                 // Match only if BOTH first initial AND full last name match exactly
                 if (lookupFirstInitial === cricsheetFirstInitial && lookupLastName === cricsheetLastName) {
                     return team;
@@ -203,7 +203,7 @@ const getTeam = (playerName: string): string | undefined => {
             }
         }
     }
-    
+
     return undefined;
 };
 
@@ -231,7 +231,7 @@ const seedAllPlayers = async () => {
 
         for (const dirInfo of jsonDirs) {
             const jsonDir = path.join(__dirname, '../../../', dirInfo.path);
-            
+
             if (!fs.existsSync(jsonDir)) {
                 console.log(`⚠️  Directory not found: ${dirInfo.path}, skipping...`);
                 continue;
@@ -244,11 +244,11 @@ const seedAllPlayers = async () => {
                 try {
                     const content = fs.readFileSync(path.join(jsonDir, file), 'utf-8');
                     const matchData: CricsheetMatch = JSON.parse(content);
-                    
+
                     processMatch(matchData, playersStatsMap, dirInfo.format, dirInfo.type);
-                    
+
                     totalFilesProcessed++;
-                    
+
                     if (totalFilesProcessed % 1000 === 0) {
                         console.log(`   Processed ${totalFilesProcessed} matches... (${playersStatsMap.size} unique players)`);
                     }
@@ -256,16 +256,16 @@ const seedAllPlayers = async () => {
                     continue;
                 }
             }
-            
+
             console.log(`✅ Completed ${dirInfo.type} - ${playersStatsMap.size} total unique players\n`);
         }
 
         console.log(`✅ Total matches processed: ${totalFilesProcessed}`);
         console.log(`✅ Total unique players found: ${playersStatsMap.size}\n`);
-        
+
         // Filter to keep only players with at least 1 IPL match OR in IPL 2026 list
         const ipl2026Names = new Set(IPL_2026_PLAYERS.map(p => p.name.toLowerCase()));
-        
+
         const players = Array.from(playersStatsMap.values())
             .filter(p => {
                 const hasIplData = p.ipl.matches > 0;
@@ -280,9 +280,9 @@ const seedAllPlayers = async () => {
                 const t20iStats = calculateDetailedStats(playerStats.t20i);
                 const t20Stats = calculateDetailedStats(playerStats.t20);
                 const iplStats = calculateDetailedStats(playerStats.ipl);
-                
+
                 const team = getTeam(playerStats.name);
-                
+
                 return {
                     name: playerStats.name,
                     role: role,
@@ -310,10 +310,10 @@ const seedAllPlayers = async () => {
         // Filter to only include players in IPL_2026_PLAYERS list
         console.log(`\n🔍 Filtering players to match IPL 2026 list...`);
         console.log(`   Found ${players.length} players in match data`);
-        
+
         const filteredPlayers = players.filter(player => isInIPL2026List(player.name));
         console.log(`   Matched ${filteredPlayers.length} players from IPL 2026 list`);
-        
+
         // Remove duplicates by cricsheetId (keep the one with more data)
         const uniquePlayers = new Map<string, any>();
         filteredPlayers.forEach(player => {
@@ -322,7 +322,7 @@ const seedAllPlayers = async () => {
                 uniquePlayers.set(player.cricsheetId, player);
             }
         });
-        
+
         const finalPlayers = Array.from(uniquePlayers.values());
         console.log(`   After deduplication: ${finalPlayers.length} unique players\n`);
 
@@ -331,35 +331,35 @@ const seedAllPlayers = async () => {
         const existingPlayerNames = new Set(
             finalPlayers.map(p => p.name.toLowerCase())
         );
-        
+
         const emptyStats = {
             matches: 0, innings: 0, runs: 0, ballsFaced: 0,
             average: 0, strikeRate: 0, hundreds: 0, fifties: 0,
             fours: 0, sixes: 0, wickets: 0, economy: 0,
             bowlingAverage: 0, bowlingStrikeRate: 0
         };
-        
+
         const missingPlayers: any[] = [];
-        
+
         for (const player of IPL_2026_PLAYERS) {
             const lowerName = player.name.toLowerCase();
-            
+
             // Check if player already exists (by exact name or by matching logic)
             let found = existingPlayerNames.has(lowerName);
-            
+
             if (!found) {
                 // Check with matching logic (first initial + last name)
                 const parts = lowerName.split(' ');
                 if (parts.length >= 2) {
                     const firstInitial = parts[0][0];
                     const lastName = parts.slice(1).join(' ');
-                    
+
                     for (const existingName of existingPlayerNames) {
                         const existingParts = existingName.split(' ');
                         if (existingParts.length >= 2) {
                             const existingInitial = existingParts[0][0];
                             const existingLastName = existingParts.slice(1).join(' ');
-                            
+
                             if (firstInitial === existingInitial && lastName === existingLastName) {
                                 found = true;
                                 break;
@@ -368,7 +368,7 @@ const seedAllPlayers = async () => {
                     }
                 }
             }
-            
+
             if (!found) {
                 const team = getTeam(player.name);
                 missingPlayers.push({
@@ -399,9 +399,9 @@ const seedAllPlayers = async () => {
                 });
             }
         }
-        
+
         console.log(`   Found ${missingPlayers.length} players without stats`);
-        
+
         const allPlayers = [...finalPlayers, ...missingPlayers];
         console.log(`   Total players to insert: ${allPlayers.length}\n`);
 
@@ -409,7 +409,7 @@ const seedAllPlayers = async () => {
         await Player.insertMany(allPlayers);
 
         printSummary(allPlayers);
-        
+
         process.exit(0);
     } catch (error) {
         console.error('❌ Error:', error);
@@ -470,7 +470,7 @@ function processMatch(
                 for (const delivery of over.deliveries || []) {
                     const batterName = delivery.batter;
                     const bowlerName = delivery.bowler;
-                    
+
                     // Track if batter was dismissed
                     if (delivery.wickets?.length) {
                         delivery.wickets.forEach(w => {
@@ -479,19 +479,19 @@ function processMatch(
                             }
                         });
                     }
-                    
+
                     if (playersMap.has(batterName)) {
                         const ps = playersMap.get(batterName)!;
                         const fs = getFormatStats(ps, format);
-                        
+
                         fs.runs += delivery.runs.batter;
                         fs.ballsFaced += 1;
                         ps.overall.runs += delivery.runs.batter;
                         ps.overall.ballsFaced += 1;
-                        
+
                         if (delivery.runs.batter === 4) { fs.fours++; ps.overall.fours++; }
                         if (delivery.runs.batter === 6) { fs.sixes++; ps.overall.sixes++; }
-                        
+
                         if (isT20Format) {
                             if (phase === 'powerplay') {
                                 ps.powerplayBatting.runs += delivery.runs.batter;
@@ -522,12 +522,12 @@ function processMatch(
                     if (playersMap.has(bowlerName)) {
                         const ps = playersMap.get(bowlerName)!;
                         const fs = getFormatStats(ps, format);
-                        
+
                         fs.ballsBowled += 1;
                         fs.runsConceded += delivery.runs.total;
                         ps.overall.ballsBowled += 1;
                         ps.overall.runsConceded += delivery.runs.total;
-                        
+
                         if (delivery.wickets?.length) {
                             fs.wickets += delivery.wickets.length;
                             ps.overall.wickets += delivery.wickets.length;
@@ -564,7 +564,7 @@ function processMatch(
         playersInMatch.forEach(playerName => {
             const ps = playersMap.get(playerName)!;
             const fs = getFormatStats(ps, format);
-            
+
             fs.matches += 1;
             ps.overall.matches += 1;
 
@@ -574,7 +574,7 @@ function processMatch(
                 ps.overall.innings += 1;
                 fs.highestScore = Math.max(fs.highestScore, bs.runs);
                 ps.overall.highestScore = Math.max(ps.overall.highestScore, bs.runs);
-                
+
                 // Track not outs
                 const wasOut = battersOut.has(playerName);
                 if (!wasOut) {
@@ -618,7 +618,7 @@ function determineRole(ps: PlayerStats): 'Batsman' | 'Bowler' | 'All-Rounder' | 
     const hasBatting = ps.overall.runs > 200 || ps.overall.innings > 10;
     const hasBowling = ps.overall.wickets > 10 || ps.overall.ballsBowled > 120;
 
-    const keepers = ['MS Dhoni', 'KL Rahul', 'Rishabh Pant', 'Sanju Samson', 'Ishan Kishan', 
+    const keepers = ['MS Dhoni', 'KL Rahul', 'Rishabh Pant', 'Sanju Samson', 'Ishan Kishan',
                      'Q de Kock', 'Jos Buttler', 'H Klaasen', 'N Pooran', 'RR Gurbaz', 'JKS Sharma',
                      'Dhruv Jurel', 'Abhishek Porel', 'AT Carey', 'PA Patel'];
     if (keepers.some(k => ps.name.includes(k.split(' ')[ps.name.split(' ').length - 1]))) return 'Wicketkeeper';
@@ -707,11 +707,11 @@ function determineTier(os: any, is: any, role: string): string {
 function printSummary(players: any[]) {
     console.log('\n' + '='.repeat(80));
     console.log('📋 IPL PLAYER DATABASE - COMPLETE\n');
-    
+
     const byNat: { [k: string]: number } = {};
     const byRole: { [k: string]: number } = {};
     const byTeam: { [k: string]: number } = {};
-    
+
     players.forEach(p => {
         byNat[p.nationality] = (byNat[p.nationality] || 0) + 1;
         byRole[p.role] = (byRole[p.role] || 0) + 1;

@@ -30,7 +30,7 @@ const clearDatabase = async () => {
         console.log(`   Players removed: ${playersDeleted.deletedCount}`);
         console.log(`   Teams removed: ${teamsDeleted.deletedCount}`);
         console.log(`   Auction rooms removed: ${roomsDeleted.deletedCount}`);
-        
+
         process.exit(0);
     } catch (error) {
         console.error('❌ Error clearing database:', error);

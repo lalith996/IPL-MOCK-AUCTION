@@ -38,11 +38,11 @@ interface PlayerStats {
     name: string;
     nationality: string;
     cricsheetId?: string;
-    
+
     // Overall stats
     matches: number;
     innings: number;
-    
+
     // Batting
     runs: number;
     ballsFaced: number;
@@ -50,22 +50,22 @@ interface PlayerStats {
     sixes: number;
     highestScore: number;
     notOuts: number;
-    
+
     // Bowling
     wickets: number;
     ballsBowled: number;
     runsConceded: number;
     maidens: number;
-    
+
     // Specialist metrics
     powerplayBatting: { runs: number; balls: number; fours: number; sixes: number };
     middleOverBatting: { runs: number; balls: number };
     deathBatting: { runs: number; balls: number; fours: number; sixes: number };
-    
+
     powerplayBowling: { wickets: number; balls: number; runs: number };
     middleOverBowling: { wickets: number; balls: number; runs: number };
     deathBowling: { wickets: number; balls: number; runs: number };
-    
+
     // Recent form (last 10 matches)
     recentMatches: Array<{
         date: string;
@@ -73,10 +73,10 @@ interface PlayerStats {
         wickets: number;
         venue: string;
     }>;
-    
+
     // Venue-specific
     venueStats: Map<string, { matches: number; runs: number; wickets: number }>;
-    
+
     // Match type specific
     t20Stats: { matches: number; runs: number; wickets: number };
     iplStats: { matches: number; runs: number; wickets: number };
@@ -135,7 +135,7 @@ const seedIPL2026Players = async () => {
 
         for (const dirInfo of jsonDirs) {
             const jsonDir = path.join(__dirname, '../../../', dirInfo.path);
-            
+
             if (!fs.existsSync(jsonDir)) {
                 console.log(`⚠️  Directory not found: ${dirInfo.path}, skipping...`);
                 continue;
@@ -148,7 +148,7 @@ const seedIPL2026Players = async () => {
                 try {
                     const content = fs.readFileSync(path.join(jsonDir, file), 'utf-8');
                     const matchData: CricsheetMatch = JSON.parse(content);
-                    
+
                     processMatchForIPLPlayers(
                         matchData,
                         playersStatsMap,
@@ -156,9 +156,9 @@ const seedIPL2026Players = async () => {
                         dirInfo.type,
                         dirInfo.weight
                     );
-                    
+
                     totalFilesProcessed++;
-                    
+
                     if (totalFilesProcessed % 500 === 0) {
                         console.log(`   Processed ${totalFilesProcessed} matches...`);
                     }
@@ -170,14 +170,14 @@ const seedIPL2026Players = async () => {
         }
 
         console.log(`\n✅ Processed ${totalFilesProcessed} match files`);
-        
+
         // Convert to Player documents
         const players = Array.from(playersStatsMap.values())
             .filter(p => p.matches > 0) // Only include players found in matches
             .map(playerStats => {
                 const role = determineRole(playerStats);
                 const calculatedStats = calculateDetailedStats(playerStats);
-                
+
                 return {
                     name: playerStats.name,
                     role: role,
@@ -191,7 +191,7 @@ const seedIPL2026Players = async () => {
                     tier: determineTier(calculatedStats, role, playerStats),
                     nationality: playerStats.nationality,
                     isOverseas: playerStats.nationality !== 'India',
-                    
+
                     // Advanced metrics
                     specialistRatings: {
                         deathBowler: calculateDeathBowlingIndex(playerStats),
@@ -200,7 +200,7 @@ const seedIPL2026Players = async () => {
                         middleOrderAnchor: calculateMiddleOrderIndex(playerStats),
                         finisher: calculateFinisherIndex(playerStats),
                     },
-                    
+
                     recentForm: playerStats.recentMatches.slice(-10),
                 };
             });
@@ -211,10 +211,10 @@ const seedIPL2026Players = async () => {
         // Print summary
         console.log('\n' + '='.repeat(80));
         console.log('📋 IPL 2026 PLAYER DATABASE SUMMARY\n');
-        
+
         const byNationality: { [key: string]: number } = {};
         const byRole: { [key: string]: number } = {};
-        
+
         players.forEach(p => {
             byNationality[p.nationality] = (byNationality[p.nationality] || 0) + 1;
             byRole[p.role] = (byRole[p.role] || 0) + 1;
@@ -250,7 +250,7 @@ const seedIPL2026Players = async () => {
 
         console.log('\n' + '='.repeat(80));
         console.log(`\n✅ Successfully created IPL 2026 player database with ${players.length} players!`);
-        
+
         process.exit(0);
     } catch (error) {
         console.error('❌ Error:', error);
@@ -300,16 +300,16 @@ function processMatchForIPLPlayers(
                 for (const delivery of over.deliveries || []) {
                     const batterName = delivery.batter;
                     const bowlerName = delivery.bowler;
-                    
+
                     // Batting stats
                     if (playersMap.has(batterName)) {
                         const playerStats = playersMap.get(batterName)!;
                         playerStats.runs += delivery.runs.batter;
                         playerStats.ballsFaced += 1;
-                        
+
                         if (delivery.runs.batter === 4) playerStats.fours++;
                         if (delivery.runs.batter === 6) playerStats.sixes++;
-                        
+
                         // Phase-specific batting
                         if (phase === 'powerplay') {
                             playerStats.powerplayBatting.runs += delivery.runs.batter;
@@ -342,7 +342,7 @@ function processMatchForIPLPlayers(
                         const playerStats = playersMap.get(bowlerName)!;
                         playerStats.ballsBowled += 1;
                         playerStats.runsConceded += delivery.runs.total;
-                        
+
                         if (delivery.wickets && delivery.wickets.length > 0) {
                             playerStats.wickets += delivery.wickets.length;
                         }
@@ -436,7 +436,7 @@ function determineRole(playerStats: PlayerStats): 'Batsman' | 'Bowler' | 'All-Ro
     const hasSignificantBowling = playerStats.wickets > 10 || playerStats.ballsBowled > 120;
 
     // Wicketkeeper detection (simplified - would need external data for accuracy)
-    const knownKeepers = ['MS Dhoni', 'KL Rahul', 'Rishabh Pant', 'Sanju Samson', 'Ishan Kishan', 
+    const knownKeepers = ['MS Dhoni', 'KL Rahul', 'Rishabh Pant', 'Sanju Samson', 'Ishan Kishan',
                           'Quinton De Kock', 'Jos Buttler', 'Heinrich Klaasen', 'Nicholas Pooran'];
     if (knownKeepers.includes(playerStats.name)) return 'Wicketkeeper';
 
@@ -472,75 +472,75 @@ function calculateDetailedStats(playerStats: PlayerStats) {
 
 function calculateDeathBowlingIndex(playerStats: PlayerStats): number {
     if (playerStats.deathBowling.balls < 30) return 0;
-    
+
     const economy = (playerStats.deathBowling.runs / playerStats.deathBowling.balls) * 6;
     const wicketsPerMatch = playerStats.matches > 0 ? playerStats.deathBowling.wickets / playerStats.matches : 0;
-    
+
     // Lower economy is better, more wickets is better
     const economyScore = Math.max(0, 100 - (economy * 8)); // 8.5 economy = ~30 score
     const wicketScore = wicketsPerMatch * 50;
-    
+
     return Math.min(100, (economyScore * 0.6 + wicketScore * 0.4));
 }
 
 function calculatePowerplayBattingIndex(playerStats: PlayerStats): number {
     if (playerStats.powerplayBatting.balls < 30) return 0;
-    
+
     const strikeRate = (playerStats.powerplayBatting.runs / playerStats.powerplayBatting.balls) * 100;
     const boundaryPercentage = ((playerStats.powerplayBatting.fours + playerStats.powerplayBatting.sixes) / playerStats.powerplayBatting.balls) * 100;
-    
+
     const srScore = Math.min(100, strikeRate * 0.6); // 140+ SR = 84+ score
     const boundaryScore = boundaryPercentage * 2;
-    
+
     return Math.min(100, (srScore * 0.7 + boundaryScore * 0.3));
 }
 
 function calculatePowerplayBowlingIndex(playerStats: PlayerStats): number {
     if (playerStats.powerplayBowling.balls < 30) return 0;
-    
+
     const economy = (playerStats.powerplayBowling.runs / playerStats.powerplayBowling.balls) * 6;
     const wicketsPerMatch = playerStats.matches > 0 ? playerStats.powerplayBowling.wickets / playerStats.matches : 0;
-    
+
     const economyScore = Math.max(0, 100 - (economy * 10));
     const wicketScore = wicketsPerMatch * 50;
-    
+
     return Math.min(100, (economyScore * 0.6 + wicketScore * 0.4));
 }
 
 function calculateMiddleOrderIndex(playerStats: PlayerStats): number {
     if (playerStats.middleOverBatting.balls < 50) return 0;
-    
+
     const strikeRate = (playerStats.middleOverBatting.runs / playerStats.middleOverBatting.balls) * 100;
     const consistency = playerStats.innings > 5 ? Math.min(100, (playerStats.innings * 10)) : 0;
-    
+
     return Math.min(100, (strikeRate * 0.4 + consistency * 0.6));
 }
 
 function calculateFinisherIndex(playerStats: PlayerStats): number {
     if (playerStats.deathBatting.balls < 30) return 0;
-    
+
     const strikeRate = (playerStats.deathBatting.runs / playerStats.deathBatting.balls) * 100;
     const boundaryPercentage = ((playerStats.deathBatting.fours + playerStats.deathBatting.sixes) / playerStats.deathBatting.balls) * 100;
-    
+
     const srScore = Math.min(100, strikeRate * 0.5); // 160+ SR = 80 score
     const boundaryScore = boundaryPercentage * 2.5;
-    
+
     return Math.min(100, (srScore * 0.7 + boundaryScore * 0.3));
 }
 
 function calculateFormScore(playerStats: PlayerStats): number {
     const last10 = playerStats.recentMatches.slice(-10);
     if (last10.length < 3) return 50;
-    
+
     const totalRuns = last10.reduce((sum, m) => sum + m.runs, 0);
     const totalWickets = last10.reduce((sum, m) => sum + m.wickets, 0);
-    
+
     const avgRuns = totalRuns / last10.length;
     const avgWickets = totalWickets / last10.length;
-    
+
     const runsScore = Math.min(50, avgRuns * 1.5);
     const wicketsScore = Math.min(50, avgWickets * 15);
-    
+
     return Math.round(Math.min(100, runsScore + wicketsScore));
 }
 
@@ -548,11 +548,11 @@ function calculateBuzzScore(playerStats: PlayerStats): number {
     // Based on recent performance and match impact
     const recentRuns = playerStats.recentMatches.slice(-5).reduce((sum, m) => sum + m.runs, 0);
     const recentWickets = playerStats.recentMatches.slice(-5).reduce((sum, m) => sum + m.wickets, 0);
-    
+
     const iplImpact = playerStats.iplStats.matches > 0 ? 20 : 0;
     const recentImpact = Math.min(60, (recentRuns * 0.3) + (recentWickets * 5));
     const experienceBonus = Math.min(20, playerStats.matches * 0.5);
-    
+
     return Math.round(Math.min(100, iplImpact + recentImpact + experienceBonus));
 }
 
@@ -560,36 +560,36 @@ function calculateValueScore(stats: any, role: string): number {
     const runsScore = Math.min(40, stats.runs * 0.01);
     const wicketsScore = Math.min(40, stats.wickets * 0.5);
     const matchesScore = Math.min(20, stats.matches * 0.5);
-    
+
     return Math.round(Math.min(100, runsScore + wicketsScore + matchesScore));
 }
 
 function calculateBasePrice(stats: any, role: string, nationality: string): number {
     let price = 20; // Base 20 lakhs
-    
+
     // Stats contribution
     price += Math.min(stats.runs / 50, 100);
     price += Math.min(stats.wickets * 3, 80);
     price += Math.min(stats.matches * 2, 50);
-    
+
     // Role multiplier
     if (role === 'All-Rounder') price *= 1.3;
     if (role === 'Wicketkeeper') price *= 1.2;
-    
+
     // Overseas multiplier
     if (nationality !== 'India') price *= 1.5;
-    
+
     // Strike rate bonus
     if (stats.strikeRate > 140) price += 50;
     if (stats.economy < 7.5 && stats.wickets > 20) price += 50;
-    
+
     return Math.round(Math.min(price, 2000) * 10) / 10; // Max 20 crore
 }
 
 function determineTier(stats: any, role: string, playerStats: PlayerStats): string {
     const totalImpact = stats.runs + (stats.wickets * 25) + (stats.matches * 10);
     const iplExperience = playerStats.iplStats.matches;
-    
+
     if (iplExperience > 30 && totalImpact > 4000) return 'Marquee';
     if (role === 'All-Rounder' && stats.runs > 1000 && stats.wickets > 30) return 'All-Rounder';
     if (role === 'Wicketkeeper') return 'Wicketkeeper';

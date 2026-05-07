@@ -19,7 +19,7 @@ export const IPL_2026_PLAYERS = [
   { name: "Ayush Mhatre", nationality: "India" },
   { name: "Dewald Brevis", nationality: "South Africa" },
   { name: "Urvil Patel", nationality: "India" },
-  
+
   // Delhi Capitals
   { name: "Abhishek Porel", nationality: "India" },
   { name: "Ajay Mandal", nationality: "India" },
@@ -38,7 +38,7 @@ export const IPL_2026_PLAYERS = [
   { name: "Tripurana Vijay", nationality: "India" },
   { name: "Tristan Stubbs", nationality: "South Africa" },
   { name: "Vipraj Nigam", nationality: "India" },
-  
+
   // Gujarat Titans
   { name: "Anuj Rawat", nationality: "India" },
   { name: "Glenn Phillips", nationality: "New Zealand" },
@@ -60,7 +60,7 @@ export const IPL_2026_PLAYERS = [
   { name: "Shahrukh Khan", nationality: "India" },
   { name: "Shubman Gill", nationality: "India" },
   { name: "Washington Sundar", nationality: "India" },
-  
+
   // Kolkata Knight Riders
   { name: "Ajinkya Rahane", nationality: "India" },
   { name: "Angkrish Raghuvanshi", nationality: "India" },
@@ -74,7 +74,7 @@ export const IPL_2026_PLAYERS = [
   { name: "Umran Malik", nationality: "India" },
   { name: "Vaibhav Arora", nationality: "India" },
   { name: "Varun Chakaravarthy", nationality: "India" },
-  
+
   // Lucknow Super Giants
   { name: "Abdul Samad", nationality: "India" },
   { name: "Aiden Markram", nationality: "South Africa" },
@@ -95,7 +95,7 @@ export const IPL_2026_PLAYERS = [
   { name: "Prince Yadav", nationality: "India" },
   { name: "Rishabh Pant", nationality: "India" },
   { name: "Shahbaz Ahmed", nationality: "India" },
-  
+
   // Mumbai Indians
   { name: "Allah Ghazanfar", nationality: "Afghanistan" },
   { name: "Ashwani Kumar", nationality: "India" },
@@ -117,7 +117,7 @@ export const IPL_2026_PLAYERS = [
   { name: "Tilak Verma", nationality: "India" },
   { name: "Trent Boult", nationality: "New Zealand" },
   { name: "Will Jacks", nationality: "England" },
-  
+
   // Punjab Kings
   { name: "Arshdeep Singh", nationality: "India" },
   { name: "Azmatullah Omarzai", nationality: "Afghanistan" },
@@ -140,7 +140,7 @@ export const IPL_2026_PLAYERS = [
   { name: "Xavier Bartlett", nationality: "Australia" },
   { name: "Yash Thakur", nationality: "India" },
   { name: "Yuzvendra Chahal", nationality: "India" },
-  
+
   // Rajasthan Royals
   { name: "Dhruv Jurel", nationality: "India" },
   { name: "Donovan Ferreira", nationality: "South Africa" },
@@ -158,7 +158,7 @@ export const IPL_2026_PLAYERS = [
   { name: "Vaibhav Suryavanshi", nationality: "India" },
   { name: "Yashaswi Jaiswal", nationality: "India" },
   { name: "Yudhvir Charak", nationality: "India" },
-  
+
   // Royal Challengers Bangalore
   { name: "Abhinandan Singh", nationality: "India" },
   { name: "Bhuvneshwar Kumar", nationality: "India" },
@@ -177,7 +177,7 @@ export const IPL_2026_PLAYERS = [
   { name: "Tim David", nationality: "Australia" },
   { name: "Virat Kohli", nationality: "India" },
   { name: "Yash Dayal", nationality: "India" },
-  
+
   // Sunrisers Hyderabad
   { name: "Abhishek Sharma", nationality: "India" },
   { name: "Aniket Verma", nationality: "India" },
@@ -194,7 +194,7 @@ export const IPL_2026_PLAYERS = [
   { name: "Smaran Ravichandaran", nationality: "India" },
   { name: "Travis Head", nationality: "Australia" },
   { name: "Zeeshan Ansari", nationality: "India" },
-  
+
   // Uncapped/Additional Players
   { name: "Aaqib Khan", nationality: "India" },
   { name: "Aaron Varghese", nationality: "India" },
