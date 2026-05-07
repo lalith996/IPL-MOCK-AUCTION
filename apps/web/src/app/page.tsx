@@ -102,7 +102,7 @@ export default function Home() {
 
     void fetchSessions();
     const t = setInterval(() => { void fetchSessions(); }, 10_000);
-    return () => clearInterval(t);
+    return () => { clearInterval(t); };
   }, []);
 
 

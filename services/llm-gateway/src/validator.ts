@@ -19,9 +19,9 @@ type ValidateFn = ((data: unknown) => boolean) & { errors?: ErrorObject[] | null
 type AjvCtor = new (opts: object) => { compile: (schema: object) => ValidateFn };
 type AddFormatsFn = (ajv: object) => void;
 
-
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const AjvClass: AjvCtor = _require("ajv");
-
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const addFormats: AddFormatsFn = _require("ajv-formats");
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

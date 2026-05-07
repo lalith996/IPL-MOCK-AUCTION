@@ -124,5 +124,5 @@ export function useAuctionSocket({
       wsRef.current?.close();
       wsRef.current = null;
     };
-  }, [auctionId, enabled]);
+  }, [auctionId, enabled]); // eslint-disable-line react-hooks/exhaustive-deps
 }

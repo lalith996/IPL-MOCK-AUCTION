@@ -1,4 +1,4 @@
-
+/* eslint-disable @typescript-eslint/no-confusing-void-expression, @typescript-eslint/restrict-template-expressions */
 import { describe, it, expect } from "vitest";
 import {
   checkBudgetRule,

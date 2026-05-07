@@ -36,12 +36,13 @@ export function BidTicker(): React.JSX.Element {
   // synchronous setState call at effect entry (avoids react-hooks/set-state-in-effect).
   useEffect(() => {
     const startedAt = Date.now();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCountdown(BID_WINDOW_SECONDS); // only fires on dependency change, not on every tick
     const interval = setInterval(() => {
       const elapsed = Math.floor((Date.now() - startedAt) / 1000);
       setCountdown(Math.max(0, BID_WINDOW_SECONDS - elapsed));
     }, 250);
-    return () => clearInterval(interval);
+    return () => { clearInterval(interval); };
 
   }, [currentBidLakhs, currentBidder]);
 

@@ -6,13 +6,13 @@
 "use client";
 import React from "react";
 
-import { useAuctionStore, type AgentId, type ScoreBreakdown } from "../store/auctionStore.js";
+import { useAuctionStore, type AgentId } from "../store/auctionStore.js";
 
 interface RationalePanelProps {
   agentId: AgentId;
 }
 
-const SCORE_FIELDS: Array<{ key: keyof ScoreBreakdown; label: string }> = [
+const SCORE_FIELDS: Array<{ key: keyof import("../store/auctionStore.js").ScoreBreakdown; label: string }> = [
   { key: "formScore",        label: "Form" },
   { key: "valueScore",       label: "Value" },
   { key: "roleFit",          label: "Role Fit" },

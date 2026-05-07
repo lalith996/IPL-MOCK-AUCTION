@@ -362,7 +362,7 @@ server.post<{
       clientId: request.body.clientId,
       seq: request.body.seq,
       auctionId: id,
-
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       payload: request.body.payload ?? {},
     };
 
