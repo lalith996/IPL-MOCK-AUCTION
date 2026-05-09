@@ -312,6 +312,7 @@ function ReplayViewer({ auctionId, token, onClose }: ReplayViewerProps): React.J
         </div>
         <button
           onClick={onClose}
+          aria-label="Close replay"
           className="text-gray-400 hover:text-white text-xl px-2"
         >
           ✕
