@@ -62,12 +62,12 @@ export function initTelemetry(opts: TelemetryOptions): void {
   _sdk = new NodeSDK({
     resource,
     traceExporter,
-    metricReaders: [
+    metricReader:
       new PeriodicExportingMetricReader({
         exporter: metricExporter,
         exportIntervalMillis: 15_000,
       }),
-    ],
+
   });
 
   // W3C trace context + baggage for cross-service propagation

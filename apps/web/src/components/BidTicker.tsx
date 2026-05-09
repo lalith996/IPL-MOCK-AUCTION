@@ -24,7 +24,7 @@ const TEAM_COLORS: Record<AgentId, string> = {
 
 const BID_WINDOW_SECONDS = 8;
 
-export function BidTicker(): React.JSX.Element {
+export const BidTicker = React.memo(function BidTicker(): React.JSX.Element {
   const currentBidLakhs = useAuctionStore((s) => s.currentBidLakhs);
   const currentBidder = useAuctionStore((s) => s.currentBidder);
   const phase = useAuctionStore((s) => s.phase);
@@ -93,4 +93,4 @@ export function BidTicker(): React.JSX.Element {
       )}
     </div>
   );
-}
+});

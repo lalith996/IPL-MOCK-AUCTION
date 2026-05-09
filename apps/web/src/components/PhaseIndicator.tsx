@@ -29,7 +29,7 @@ const PHASE_COLORS: Record<AuctionPhase, string> = {
   complete:     "bg-indigo-700 text-white",
 };
 
-export function PhaseIndicator(): React.JSX.Element {
+export const PhaseIndicator = React.memo(function PhaseIndicator(): React.JSX.Element {
   const phase = useAuctionStore((s) => s.phase);
   const connectionState = useAuctionStore((s) => s.connectionState);
 
@@ -41,7 +41,7 @@ export function PhaseIndicator(): React.JSX.Element {
       <ConnectionDot state={connectionState} />
     </div>
   );
-}
+});
 
 function ConnectionDot({
   state,
