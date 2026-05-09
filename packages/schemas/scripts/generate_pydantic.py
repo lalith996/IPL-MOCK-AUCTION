@@ -27,7 +27,7 @@ def generate_model(schema_file: Path) -> None:
     out_file = OUT_DIR / f"{name}.py"
     result = subprocess.run(
         [
-            "datamodel-codegen",
+            "uv", "run", "datamodel-codegen",
             "--input", str(schema_file),
             "--input-file-type", "jsonschema",
             "--output", str(out_file),
