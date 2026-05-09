@@ -1,3 +1,9 @@
+# ── Secrets & Environment (NEVER commit) ──────────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.secret
+
 # JavaScript dependencies
 node_modules/
 **/node_modules/

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { AdminErrorBoundary } from '../components/admin-error-boundary';
 
 export const metadata: Metadata = {
   title: 'IPL 2026 Auction — Admin Console',
@@ -8,7 +9,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AdminErrorBoundary>{children}</AdminErrorBoundary>
+      </body>
     </html>
   );
 }
