@@ -247,8 +247,9 @@ function ReplayViewer({ auctionId, token, onClose }: ReplayViewerProps): React.J
   const [filteredType, setFilteredType] = useState<string | null>(null);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [streamLatencyMs, setStreamLatencyMs] = useState(0);
+  const [bytesLoaded, setBytesLoaded] = useState(0);
   const bottomRef = useRef<HTMLDivElement>(null);
-  const startTimeRef = useRef<number>(Date.now());
+  const startTimeRef = useRef<number>(0);
   const bytesRef = useRef<number>(0);
 
   // Memoized stats calculation (O(n) on event list)
@@ -271,8 +272,8 @@ function ReplayViewer({ auctionId, token, onClose }: ReplayViewerProps): React.J
       totalSold: sold,
       eventTypes: typeCount,
       durationMs: events.length > 0
-        ? new Date(events[events.length - 1].timestamp).getTime() -
-          new Date(events[0].timestamp).getTime()
+        ? new Date(events[events.length - 1]?.timestamp ?? 0).getTime() -
+          new Date(events[0]?.timestamp ?? 0).getTime()
         : 0,
       avgBidsPerNomination: nominations > 0 ? bids / nominations : 0,
     };
@@ -366,6 +367,7 @@ function ReplayViewer({ auctionId, token, onClose }: ReplayViewerProps): React.J
             : 0;
 
           setStreamLatencyMs(Math.round(throughputMBps * 1000));
+          setBytesLoaded(bytesRef.current);
 
           buffer += decoder.decode(value, { stream: true });
           const lines = buffer.split("\n");
@@ -544,10 +546,10 @@ function ReplayViewer({ auctionId, token, onClose }: ReplayViewerProps): React.J
 
           {/* Performance Metrics */}
           <div className="ml-auto text-gray-500 text-xs">
-            {bytesRef.current > 0 && (
+            {bytesLoaded > 0 && (
               <span>
-                {(bytesRef.current / 1024).toFixed(1)} KB
-                {streamLatencyMs > 0 && ` • ${streamLatencyMs.toFixed(1)} MB/s`}
+                {(bytesLoaded / 1024).toFixed(1)} KB
+                {streamLatencyMs > 0 && ` • ${(streamLatencyMs / 1000).toFixed(1)} MB/s`}
               </span>
             )}
           </div>
@@ -603,11 +605,10 @@ function ReplayViewer({ auctionId, token, onClose }: ReplayViewerProps): React.J
                   <span className="text-gray-600 font-mono w-8 shrink-0">#{evt.seq}</span>
                   <span className="text-blue-300 font-mono truncate flex-1">{evt.type}</span>
                   <span className="text-gray-600 text-xs shrink-0">
-                    {new Date(evt.timestamp).toLocaleTimeString([], {
+                    {new Date(evt.timestamp ?? 0).toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
                       second: "2-digit",
-                      fractionalSecondDigits: 0,
                     })}
                   </span>
                 </div>

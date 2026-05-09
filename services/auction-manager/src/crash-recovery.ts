@@ -6,8 +6,8 @@
  */
 
 import { EventEmitter } from "events";
-import { Pool } from "pg";
-import { createClient } from "redis";
+import type { Pool } from "pg";
+import type { createClient } from "redis";
 
 export interface AuctionSnapshot {
   auctionId: string;
@@ -58,7 +58,7 @@ export class CrashRecoveryManager extends EventEmitter {
   async createSnapshot(state: Record<string, unknown>, seq: number): Promise<void> {
     const snapshot: AuctionSnapshot = {
       auctionId: this.auctionId,
-      phase: state.phase as string,
+      phase: state["phase"] as string,
       seq,
       timestamp: Date.now(),
       state,
@@ -173,8 +173,9 @@ export class CrashRecoveryManager extends EventEmitter {
         return null;
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       return result.rows[0].snapshot_data as AuctionSnapshot;
-    } catch (err) {
+    } catch (err: unknown) {
       console.error("Postgres snapshot load failed:", err);
       return null;
     }
@@ -193,7 +194,7 @@ export class CrashRecoveryManager extends EventEmitter {
 
     // In a real implementation, this would rebuild state by applying each event
     // This is a simplified version that just counts the events
-    console.log(`Replayed ${result.rows.length} events since snapshot`);
+    console.log(`Replayed ${String(result.rows.length)} events since snapshot`);
 
     return result.rows.length;
   }
@@ -205,21 +206,27 @@ export class CrashRecoveryManager extends EventEmitter {
     const signals = ["SIGTERM", "SIGINT"];
 
     for (const signal of signals) {
-      process.on(signal, () => {
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      process.on(signal, async () => {
         console.log(`Received ${signal}, starting graceful shutdown`);
-        this.gracefulShutdown().catch((err) => {
+        try {
+          await this.gracefulShutdown();
+        } catch (err: unknown) {
           console.error("Graceful shutdown failed:", err);
           process.exit(1);
-        });
+        }
       });
     }
 
-    process.on("uncaughtException", (err) => {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    process.on("uncaughtException", async (err) => {
       console.error("Uncaught exception:", err);
-      this.gracefulShutdown().catch((e) => {
+      try {
+        await this.gracefulShutdown();
+      } catch (e: unknown) {
         console.error("Graceful shutdown failed:", e);
         process.exit(1);
-      });
+      }
     });
   }
 
@@ -243,13 +250,13 @@ export class CrashRecoveryManager extends EventEmitter {
     const startWait = Date.now();
 
     while (this.activeTransactions > 0 && Date.now() - startWait < maxWait) {
-      console.log(`Waiting for ${this.activeTransactions} active transaction(s)`);
+      console.log(`Waiting for ${String(this.activeTransactions)} active transaction(s)`);
       await new Promise((r) => setTimeout(r, 1000));
     }
 
     if (this.activeTransactions > 0) {
       console.warn(
-        `Forced shutdown with ${this.activeTransactions} active transaction(s)`,
+        `Forced shutdown with ${String(this.activeTransactions)} active transaction(s)`,
       );
     }
 
@@ -273,6 +280,7 @@ export class CrashRecoveryManager extends EventEmitter {
   /**
    * Health check — monitor snapshot staleness
    */
+  // eslint-disable-next-line @typescript-eslint/require-await
   async healthCheck(): Promise<{
     status: "healthy" | "degraded" | "unhealthy";
     lastSnapshotAge: number;
@@ -300,7 +308,7 @@ export class CrashRecoveryManager extends EventEmitter {
 export class AuctionManagerHA {
   private isLeader = false;
   private leadershipTTL = 5000; // 5 seconds
-  private renewalInterval: NodeJS.Timer | null = null;
+  private renewalInterval: NodeJS.Timeout | null = null;
 
   constructor(
     private instanceId: string,
@@ -339,6 +347,7 @@ export class AuctionManagerHA {
    * Renew leadership periodically
    */
   private startLeadershipRenewal(): void {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this.renewalInterval = setInterval(async () => {
       const key = `auction:leader:${this.auctionId}`;
 

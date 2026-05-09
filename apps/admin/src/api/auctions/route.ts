@@ -49,7 +49,7 @@ function verifyToken(authHeader: string | null): { operatorId: string } | null {
     const parts = token.split('.');
     if (parts.length !== 3) return null;
     
-    const decoded = JSON.parse(Buffer.from(parts[1], 'base64').toString());
+    const decoded = JSON.parse(Buffer.from(parts[1] as string, 'base64').toString());
     if (decoded.exp && decoded.exp < Date.now() / 1000) return null;
     
     return { operatorId: decoded.operatorId };
@@ -230,7 +230,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     // Validate seed parameter
-    let seed = body.seed ?? Math.floor(Math.random() * 1000000);
+    const seed = body.seed ?? Math.floor(Math.random() * 1000000);
     if (typeof seed !== 'number' || seed < 0 || !Number.isInteger(seed)) {
       return NextResponse.json(
         {

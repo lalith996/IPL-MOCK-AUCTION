@@ -32,7 +32,7 @@ interface AuthResponse {
 // ============================================================================
 
 // In production: Load from environment
-const _envSecret = process.env.JWT_SECRET;
+const _envSecret = process.env["JWT_SECRET"];
 if (!_envSecret && process.env.NODE_ENV === "production") {
   throw new Error("CRITICAL: JWT_SECRET must be set in production");
 }
@@ -126,7 +126,8 @@ function safeCompare(a: string, b: string): boolean {
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const requestId = generateRequestId();
-  const clientIp = request.headers.get('x-forwarded-for') || request.ip || 'unknown';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+  const clientIp = request.headers.get('x-forwarded-for') || (request as any).ip || 'unknown';
 
   try {
     // Validate request content type

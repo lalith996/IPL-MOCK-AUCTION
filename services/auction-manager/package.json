@@ -12,22 +12,26 @@
     "test:unit": "vitest run"
   },
   "dependencies": {
-    "fastify": "^5.1.0",
     "@fastify/cors": "^10.0.0",
     "@fastify/helmet": "^12.0.0",
-    "ioredis": "^5.4.0",
-    "postgres": "^3.4.0",
     "@ipl/schemas": "workspace:*",
     "@ipl/shared": "workspace:*",
     "@opentelemetry/api": "^1.9.0",
-    "@opentelemetry/sdk-node": "^0.57.0",
     "@opentelemetry/auto-instrumentations-node": "^0.52.0",
-    "pino": "^9.4.0"
+    "@opentelemetry/sdk-node": "^0.57.0",
+    "fastify": "^5.1.0",
+    "ioredis": "^5.4.0",
+    "pg": "^8.20.0",
+    "pino": "^9.4.0",
+    "postgres": "^3.4.0",
+    "redis": "^5.12.1"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "typescript": "^5.5.0",
+    "@types/pg": "^8.20.0",
+    "@types/redis": "^4.0.11",
     "tsx": "^4.19.0",
+    "typescript": "^5.5.0",
     "vitest": "^2.0.0"
   }
 }
