@@ -81,7 +81,6 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     async function fetchSessions() {
       try {
@@ -104,7 +103,6 @@ export default function Home() {
     const t = setInterval(() => { void fetchSessions(); }, 10_000);
     return () => clearInterval(t);
   }, []);
-  /* eslint-enable react-hooks/set-state-in-effect */
 
   const live = sessions.filter(
     (s) => s.status === "active" || s.status === "paused",
@@ -127,7 +125,7 @@ export default function Home() {
           <a
             href="http://localhost:3001"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-600 hover:border-gray-300 hover:text-gray-900"
           >
             Admin Console ↗
@@ -210,7 +208,7 @@ export default function Home() {
                   <a
                     href="http://localhost:3001"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="text-indigo-600 hover:underline"
                   >
                     Admin Console

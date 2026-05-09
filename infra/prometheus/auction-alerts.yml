@@ -1,0 +1,466 @@
+# Prometheus Alert Rules for IPL 2026 Auction MVP
+# 
+# Critical alerts that trigger immediate on-call response
+# These enforce the non-negotiable invariants and operational SLAs
+
+groups:
+  - name: isolation_security
+    interval: 30s
+    rules:
+      - alert: CrossAgentStateLeak
+        expr: increase(auction_isolation_probes_failed_total[5m]) > 0
+        for: 1m
+        severity: critical
+        annotations:
+          summary: "⚠️ CRITICAL: Cross-agent state leak detected"
+          description: |
+            Isolation adversarial probe detected cross-agent state leakage.
+            This violates the non-negotiable isolation invariant.
+            
+            Action: PAGE ON-CALL IMMEDIATELY
+            1. Kill all running auctions
+            2. Review agent orchestrator logs
+            3. Check for prompt builder vulnerabilities
+            4. Rollback to last known good version
+          
+          runbook: "docs/runbooks/ISOLATION_BREACH.md"
+          dashboard: "http://grafana/d/auction-security"
+
+      - alert: UnauthorizedAgentAPIAccess
+        expr: rate(auction_api_auth_failures_total[5m]) > 10
+        for: 2m
+        severity: critical
+        annotations:
+          summary: "⚠️ CRITICAL: Unauthorized API access attempts"
+          description: |
+            High rate of authentication failures detected.
+            Possible security breach or misconfiguration.
+            
+            Action: PAGE ON-CALL IMMEDIATELY
+            1. Review recent API calls in audit log
+            2. Check JWT validation logic
+            3. Rotate JWT_SECRET if breach suspected
+            4. Block suspicious IPs
+          
+          runbook: "docs/runbooks/SECURITY_BREACH.md"
+          dashboard: "http://grafana/d/auction-security"
+
+  - name: llm_availability
+    interval: 30s
+    rules:
+      - alert: PrimaryLLMProviderDown
+        expr: |
+          max(rate(llm_gateway_model_errors_total{severity="fatal"}[2m])) > 0.5
+          or
+          max(llm_gateway_model_circuit_breaker_state{status="open"}) == 1
+        for: 2m
+        severity: critical
+        annotations:
+          summary: "⚠️ CRITICAL: Primary LLM model unavailable (>50% failures)"
+          description: |
+            Primary LLM model is failing >50% of requests or circuit breaker open.
+            Fallback cascade will be activated automatically.
+            
+            Action: NOTIFY ON-CALL (auto-mitigated)
+            1. Monitor fallback cascade activation
+            2. Verify decision latency p95 still < 4s
+            3. Check fallback model health
+            4. If fallback also failing, pause new auctions
+          
+            Status: {{ $value }} failures/min
+            Model: {{ $labels.model }}
+          
+          runbook: "docs/runbooks/LLM_PROVIDER_FAILURE.md"
+          dashboard: "http://grafana/d/llm-health"
+
+      - alert: AllLLMModelsDown
+        expr: |
+          (count(llm_gateway_model_circuit_breaker_state{status="open"}) == count(llm_gateway_model_circuit_breaker_state))
+          and count(llm_gateway_model_circuit_breaker_state) > 0
+        for: 1m
+        severity: critical
+        annotations:
+          summary: "⚠️ CRITICAL: ALL LLM models unavailable"
+          description: |
+            All LLM models are in circuit-breaker open state.
+            Auctions cannot proceed.
+            
+            Action: PAGE ON-CALL IMMEDIATELY
+            1. Verify OpenRouter API status: https://status.openrouter.ai
+            2. Check network connectivity from LLM Gateway
+            3. Verify API keys are valid
+            4. Check LLM Gateway service logs for errors
+            5. Escalate to OpenRouter support
+            6. Pause all auctions until resolved
+          
+          runbook: "docs/runbooks/LLM_COMPLETE_OUTAGE.md"
+          dashboard: "http://grafana/d/llm-health"
+
+      - alert: LLMCostBudgetExceeded
+        expr: |
+          auction_llm_cost_spent_dollars / auction_llm_cost_budget_dollars > 0.95
+        for: 5m
+        severity: high
+        annotations:
+          summary: "⚠️ HIGH: LLM cost budget >95% consumed"
+          description: |
+            Current auction has consumed >95% of LLM cost budget.
+            Hard stop will trigger at 100%, blocking future agent calls.
+            
+            Action: NOTIFY ON-CALL
+            1. Review LLM cost dashboard
+            2. Check for cost anomalies (repeated failed calls)
+            3. Verify agent models are correct per TeamModel table
+            4. Consider auction completion soon
+          
+            Spent: {{ $value | humanize }}
+            Budget: {{ auction_llm_cost_budget_dollars | humanize }}
+          
+          runbook: "docs/runbooks/COST_CONTROL.md"
+          dashboard: "http://grafana/d/llm-health"
+
+  - name: sag_data_freshness
+    interval: 30s
+    rules:
+      - alert: SAGSourceStale
+        expr: |
+          (time() - sag_source_last_update_timestamp_seconds) > (sag_source_ttl_seconds * 3)
+        for: 5m
+        severity: high
+        annotations:
+          summary: "⚠️ HIGH: SAG source data stale (>3x TTL)"
+          description: |
+            SAG source data is >3x its configured TTL.
+            Agent decision quality may be degraded.
+            
+            Action: NOTIFY ON-CALL
+            1. Check external source status (Cricsheet, injury feed, social API)
+            2. Review SAG service logs for connection errors
+            3. Verify fallback stale-if-error is active
+            4. Check confidence penalty is applied to stale data
+            5. Consider pausing new nominations if freshness critical
+          
+            Source: {{ $labels.source }}
+            Age: {{ (time() - sag_source_last_update_timestamp_seconds) / 3600 }} hours
+            TTL: {{ sag_source_ttl_seconds / 3600 }} hours
+          
+          runbook: "docs/runbooks/DATA_STALENESS.md"
+          dashboard: "http://grafana/d/data-freshness"
+
+      - alert: SAGSourceCompletelyDown
+        expr: |
+          rate(sag_source_requests_failed_total[5m]) == 1
+          and sag_source_is_required == 1
+        for: 2m
+        severity: high
+        annotations:
+          summary: "⚠️ HIGH: Required SAG source completely down"
+          description: |
+            A required SAG source is 100% failing requests.
+            Auction quality degradation or halt may occur.
+            
+            Action: NOTIFY ON-CALL
+            1. Check external service status
+            2. Verify network connectivity and API keys
+            3. Check fallback mechanism is active
+            4. Review agent confidence degradation
+            5. Escalate to source provider if prolonged
+          
+            Source: {{ $labels.source }}
+            Status: All requests failing
+          
+          runbook: "docs/runbooks/SAG_SOURCE_DOWN.md"
+          dashboard: "http://grafana/d/data-freshness"
+
+  - name: auction_manager_ha
+    interval: 30s
+    rules:
+      - alert: AuctionManagerLeaderFlap
+        expr: |
+          rate(auction_manager_leader_election_changes_total[5m]) > 2
+        for: 1m
+        severity: high
+        annotations:
+          summary: "⚠️ HIGH: Auction Manager leader flapping"
+          description: |
+            Auction Manager leader is changing >2 times in 5 minutes.
+            Indicates instability in leader election or pod crashes.
+            
+            Action: NOTIFY ON-CALL
+            1. Check Auction Manager pod logs for crashes/restarts
+            2. Verify Redis Streams health
+            3. Check leader lease health
+            4. Review network connectivity between pods
+            5. Check for resource constraints (memory, CPU)
+          
+            Change Rate: {{ $value | humanize }}/min
+            Duration: 5m
+          
+          runbook: "docs/runbooks/LEADER_ELECTION_ISSUE.md"
+          dashboard: "http://grafana/d/auction-health"
+
+      - alert: AuctionManagerDown
+        expr: |
+          count(up{job="auction-manager"}) == 0
+        for: 2m
+        severity: critical
+        annotations:
+          summary: "⚠️ CRITICAL: Auction Manager unavailable"
+          description: |
+            Auction Manager service is not responding to health checks.
+            No auctions can proceed.
+            
+            Action: PAGE ON-CALL IMMEDIATELY
+            1. Check Auction Manager service status: kubectl get pods
+            2. Review logs: kubectl logs -f deployment/auction-manager
+            3. Check Database connectivity: psql $DATABASE_URL
+            4. Check Redis connectivity: redis-cli -u $REDIS_URL ping
+            5. Attempt pod restart: kubectl delete pod <pod-name>
+            6. If restart fails, escalate to infrastructure team
+          
+            runbook: "docs/runbooks/AUCTION_MANAGER_DOWN.md"
+          dashboard: "http://grafana/d/auction-health"
+
+  - name: event_consistency
+    interval: 1m
+    rules:
+      - alert: EventLogGap
+        expr: |
+          (auction_events_last_seq - auction_events_snapshot_last_seq) > 1000
+          and rate(auction_events_written_total[5m]) == 0
+        for: 5m
+        severity: high
+        annotations:
+          summary: "⚠️ HIGH: Large event log gap with no recent writes"
+          description: |
+            Event log has large gap between current and snapshot.
+            Suggests stalled auction or event writer issue.
+            
+            Action: NOTIFY ON-CALL
+            1. Check Auction Manager logs for stalls
+            2. Verify Database writes: SELECT COUNT(*) FROM auction_events
+            3. Check PostgreSQL query logs for slow queries
+            4. Verify no long-running transactions
+            5. Review auction state in dashboard
+          
+            Gap Size: {{ $value }} events
+            Last Write: {{ auction_events_last_write_timestamp_seconds | humanizeDuration }} ago
+          
+          runbook: "docs/runbooks/EVENT_LOG_STALL.md"
+          dashboard: "http://grafana/d/auction-health"
+
+      - alert: SnapshotCreationFailure
+        expr: |
+          rate(auction_manager_snapshot_errors_total[10m]) > 0
+        for: 5m
+        severity: medium
+        annotations:
+          summary: "⚠️ MEDIUM: Auction Manager snapshot creation failing"
+          description: |
+            Snapshots are failing to create (needed for crash recovery).
+            
+            Action: NOTIFY ON-CALL
+            1. Check PostgreSQL storage and connection
+            2. Verify schema for snapshot table exists
+            3. Check Auction Manager logs
+            4. Monitor if snapshots eventually succeed
+          
+            Failure Rate: {{ $value | humanize }}/min
+          
+          runbook: "docs/runbooks/SNAPSHOT_FAILURE.md"
+          dashboard: "http://grafana/d/auction-health"
+
+  - name: spectator_experience
+    interval: 30s
+    rules:
+      - alert: WebSocketHighLatency
+        expr: |
+          histogram_quantile(0.95, rate(broadcaster_websocket_latency_ms[5m])) > 500
+        for: 2m
+        severity: medium
+        annotations:
+          summary: "⚠️ MEDIUM: WebSocket latency p95 > 500ms"
+          description: |
+            WebSocket delivery latency exceeding SLA target.
+            Spectators may see delayed updates.
+            
+            Action: NOTIFY ON-CALL
+            1. Check broadcaster pod load and logs
+            2. Verify Redis Streams consumer lag
+            3. Check network latency
+            4. Verify frontend WebSocket connection quality
+            5. Check for slow clients blocking others
+          
+            P95 Latency: {{ $value | humanize }}ms
+            SLA Target: 500ms
+          
+          runbook: "docs/runbooks/SPECTATOR_LATENCY.md"
+          dashboard: "http://grafana/d/spectator-experience"
+
+      - alert: HeadshotImageErrors
+        expr: |
+          rate(broadcaster_headshot_errors_total[5m]) > 0.05
+        for: 3m
+        severity: medium
+        annotations:
+          summary: "⚠️ MEDIUM: Headshot delivery >5% error rate"
+          description: |
+            Headshot images failing to load >5% of the time.
+            Spectator experience degraded (fallback to avatar working).
+            
+            Action: NOTIFY ON-CALL
+            1. Check CDN status (Cloudflare)
+            2. Verify R2 bucket accessibility
+            3. Check image asset generation pipeline
+            4. Review frontend error logs for specific failures
+            5. Verify fallback avatar rendering working
+          
+            Error Rate: {{ $value | humanizePercentage }}
+          
+          runbook: "docs/runbooks/IMAGE_DELIVERY.md"
+          dashboard: "http://grafana/d/spectator-experience"
+
+      - alert: ReconnectFailureRate
+        expr: |
+          rate(broadcaster_client_reconnect_failures_total[5m]) / rate(broadcaster_client_reconnect_attempts_total[5m]) > 0.1
+        for: 2m
+        severity: medium
+        annotations:
+          summary: "⚠️ MEDIUM: Client reconnect failure rate >10%"
+          description: |
+            WebSocket reconnections failing >10% of the time.
+            Clients may miss auction events.
+            
+            Action: NOTIFY ON-CALL
+            1. Check broadcaster service logs
+            2. Verify snapshot + delta protocol correctness
+            3. Check Redis Streams for event loss
+            4. Verify event offset tracking
+            5. Review frontend reconnect logic
+          
+            Failure Rate: {{ $value | humanizePercentage }}
+          
+          runbook: "docs/runbooks/RECONNECT_FAILURE.md"
+          dashboard: "http://grafana/d/spectator-experience"
+
+  - name: infrastructure_health
+    interval: 1m
+    rules:
+      - alert: DatabaseConnPoolExhausted
+        expr: |
+          pg_stat_database_numbackends / pg_settings_max_connections > 0.8
+        for: 5m
+        severity: high
+        annotations:
+          summary: "⚠️ HIGH: Database connection pool >80% utilized"
+          description: |
+            Database connection pool is highly utilized.
+            Risk of connection pool exhaustion.
+            
+            Action: NOTIFY ON-CALL
+            1. Review active connections: SELECT usename, COUNT(*) FROM pg_stat_activity GROUP BY usename
+            2. Identify and kill long-running queries if any
+            3. Check for connection leaks in service logs
+            4. Consider increasing max_connections if sustainable load
+            5. Monitor trend
+          
+            Utilization: {{ $value | humanizePercentage }}
+            Max: {{ pg_settings_max_connections }}
+          
+          runbook: "docs/runbooks/DATABASE_POOL.md"
+          dashboard: "http://grafana/d/database-health"
+
+      - alert: RedisMemoryHigh
+        expr: |
+          redis_memory_used_bytes / redis_memory_max_bytes > 0.8
+        for: 5m
+        severity: high
+        annotations:
+          summary: "⚠️ HIGH: Redis memory >80% utilized"
+          description: |
+            Redis memory usage critically high.
+            Risk of eviction or out-of-memory errors.
+            
+            Action: NOTIFY ON-CALL
+            1. Review Redis memory usage by key: redis-cli --bigkeys
+            2. Check Streams consumer lag
+            3. Verify cache TTLs are appropriate
+            4. Consider increasing Redis memory or scaling
+            5. Check for memory leaks
+          
+            Utilization: {{ $value | humanizePercentage }}
+          
+          runbook: "docs/runbooks/REDIS_MEMORY.md"
+          dashboard: "http://grafana/d/redis-health"
+
+  - name: slo_compliance
+    interval: 5m
+    rules:
+      - alert: SLOAvailabilityBreach
+        expr: |
+          rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.001
+        for: 10m
+        severity: high
+        annotations:
+          summary: "⚠️ HIGH: Availability SLO breach (>0.1% error rate)"
+          description: |
+            Error rate exceeding SLO target (99.9% availability = 0.1% errors).
+            
+            Action: NOTIFY ON-CALL
+            1. Check service-level error rates by endpoint
+            2. Identify root cause of errors (see below by status)
+            3. Implement corrective action
+            4. Monitor error rate trend
+          
+            Error Rate: {{ $value | humanizePercentage }}
+            SLO: 0.1%
+          
+          runbook: "docs/runbooks/SLO_BREACH.md"
+          dashboard: "http://grafana/d/slo-compliance"
+
+      - alert: DecisionLatencySLOBreach
+        expr: |
+          histogram_quantile(0.95, rate(auction_decision_latency_ms_bucket[5m])) > 4000
+        for: 5m
+        severity: high
+        annotations:
+          summary: "⚠️ HIGH: Decision latency p95 > 4s SLA"
+          description: |
+            Agent decision latency exceeding 4s SLA target.
+            Auction experience degraded.
+            
+            Action: NOTIFY ON-CALL
+            1. Check LLM gateway latency (may be primary cause)
+            2. Check SAG lookup latency
+            3. Profile agent orchestrator performance
+            4. Verify no resource constraints on Auction Manager
+            5. Check for network issues
+          
+            P95 Latency: {{ $value | humanize }}ms
+            SLA Target: 4000ms
+          
+          runbook: "docs/runbooks/LATENCY_SLA.md"
+          dashboard: "http://grafana/d/slo-compliance"
+
+# Recording rules for pre-computed metrics
+# These improve query performance for dashboards
+  - name: recording_rules
+    interval: 30s
+    rules:
+      - record: 'auction:nominations_per_minute:rate5m'
+        expr: 'rate(auction_nominations_total[5m])'
+
+      - record: 'auction:bids_per_minute:rate5m'
+        expr: 'rate(auction_bids_placed_total[5m])'
+
+      - record: 'auction:spend_rate:rate5m'
+        expr: 'rate(auction_spend_total_rupees[5m])'
+
+      - record: 'llm:errors_per_minute:rate5m'
+        expr: 'rate(llm_gateway_model_errors_total[5m])'
+
+      - record: 'sag:latency:p95:5m'
+        expr: 'histogram_quantile(0.95, rate(sag_lookup_latency_ms_bucket[5m]))'
+
+      - record: 'broadcaster:clients:current'
+        expr: 'broadcaster_websocket_clients_connected'
