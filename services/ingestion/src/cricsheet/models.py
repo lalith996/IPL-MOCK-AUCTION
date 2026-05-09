@@ -3,17 +3,17 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 
 
-class PlayerRole(str, Enum):
+class PlayerRole(StrEnum):
     BATTER = "batter"
     BOWLER = "bowler"
     ALL_ROUNDER = "all-rounder"
     KEEPER = "keeper"
 
 
-class PlayerRoleSubtype(str, Enum):
+class PlayerRoleSubtype(StrEnum):
     OPENER = "opener"
     ANCHOR = "anchor"
     FINISHER = "finisher"
@@ -23,7 +23,7 @@ class PlayerRoleSubtype(str, Enum):
     KEEPER = "keeper"
 
 
-class Phase(str, Enum):
+class Phase(StrEnum):
     POWERPLAY = "powerplay"
     MIDDLE = "middle"
     DEATH = "death"

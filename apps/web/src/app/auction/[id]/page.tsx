@@ -58,15 +58,40 @@ function ConnectionToast() {
 // Page
 // ---------------------------------------------------------------------------
 
+function ScreenReaderAnnouncer(): React.JSX.Element | null {
+  const currentBidLakhs = useAuctionStore((s) => s.currentBidLakhs);
+  const currentBidder = useAuctionStore((s) => s.currentBidder);
+
+  return (
+    <div aria-live="assertive" aria-atomic="true" className="sr-only">
+      {currentBidder && currentBidLakhs > 0
+        ? `${currentBidder} bids ₹${currentBidLakhs} lakhs`
+        : ""}
+    </div>
+  );
+}
+
+function PlayerArea(): React.JSX.Element {
+  const nominatedPlayer = useAuctionStore((s) => s.nominatedPlayer);
+
+  return nominatedPlayer ? (
+    <PlayerCard player={nominatedPlayer} />
+  ) : (
+    <div
+      className="flex h-64 items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-white text-gray-400"
+      role="status"
+      aria-label="Waiting for nomination"
+    >
+      <span className="animate-pulse">Waiting for nomination…</span>
+    </div>
+  );
+}
+
 export default function AuctionRoomPage({ params }: Props): React.JSX.Element {
   const { id: auctionId } = use(params);
 
   // Connect to live event stream
   useAuctionSocket({ auctionId });
-
-  const nominatedPlayer = useAuctionStore((s) => s.nominatedPlayer);
-  const currentBidLakhs = useAuctionStore((s) => s.currentBidLakhs);
-  const currentBidder = useAuctionStore((s) => s.currentBidder);
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -88,11 +113,7 @@ export default function AuctionRoomPage({ params }: Props): React.JSX.Element {
       </header>
 
       {/* ── Screen reader live region for bids ──────────────────────────── */}
-      <div aria-live="assertive" aria-atomic="true" className="sr-only">
-        {currentBidder && currentBidLakhs > 0
-          ? `${currentBidder} bids ₹${currentBidLakhs} lakhs`
-          : ""}
-      </div>
+      <ScreenReaderAnnouncer />
 
       {/* ── Main grid ───────────────────────────────────────────────────── */}
       <div className="mx-auto max-w-screen-2xl p-3 sm:p-4">
@@ -100,17 +121,7 @@ export default function AuctionRoomPage({ params }: Props): React.JSX.Element {
 
           {/* Left — Current player + bid ticker */}
           <div className="space-y-4">
-            {nominatedPlayer ? (
-              <PlayerCard player={nominatedPlayer} />
-            ) : (
-              <div
-                className="flex h-64 items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-white text-gray-400"
-                role="status"
-                aria-label="Waiting for nomination"
-              >
-                <span className="animate-pulse">Waiting for nomination…</span>
-              </div>
-            )}
+            <PlayerArea />
             <BidTicker />
           </div>
 

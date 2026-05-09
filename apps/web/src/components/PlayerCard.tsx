@@ -16,7 +16,7 @@ interface PlayerCardProps {
   player: NominatedPlayer;
 }
 
-export function PlayerCard({ player }: PlayerCardProps): React.JSX.Element {
+export const PlayerCard = React.memo(function PlayerCard({ player }: PlayerCardProps): React.JSX.Element {
   const [imageError, setImageError] = useState(false);
   const [retried, setRetried] = useState(false);
 
@@ -78,7 +78,7 @@ export function PlayerCard({ player }: PlayerCardProps): React.JSX.Element {
       </div>
     </div>
   );
-}
+});
 
 // ---------------------------------------------------------------------------
 // Initials avatar (fallback)

@@ -26,7 +26,7 @@ const TEAM_DISPLAY: Record<AgentId, { name: string; color: string }> = {
   GT:   { name: "Gujarat Titans",         color: "#3730A3" },
 };
 
-export function RosterPanel({ agentId }: RosterPanelProps): React.JSX.Element {
+export const RosterPanel = React.memo(function RosterPanel({ agentId }: RosterPanelProps): React.JSX.Element {
   const team = useAuctionStore((s) => s.teams[agentId]);
   const info = TEAM_DISPLAY[agentId];
 
@@ -80,4 +80,4 @@ export function RosterPanel({ agentId }: RosterPanelProps): React.JSX.Element {
       )}
     </div>
   );
-}
+});

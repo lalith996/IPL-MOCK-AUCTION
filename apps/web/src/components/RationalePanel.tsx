@@ -22,7 +22,7 @@ const SCORE_FIELDS: Array<{ key: keyof import("../store/auctionStore.js").ScoreB
   { key: "personalityBonus", label: "Personality Bonus" },
 ];
 
-export function RationalePanel({ agentId }: RationalePanelProps): React.JSX.Element {
+export const RationalePanel = React.memo(function RationalePanel({ agentId }: RationalePanelProps): React.JSX.Element {
   const event = useAuctionStore((s) => s.latestBidEvents[agentId]);
 
   if (!event) {
@@ -99,4 +99,4 @@ export function RationalePanel({ agentId }: RationalePanelProps): React.JSX.Elem
       </div>
     </div>
   );
-}
+});
