@@ -12,7 +12,11 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { signOperatorToken } from "../../../../lib/auth.js";
 
-const OPERATOR_PASSWORD = process.env["OPERATOR_PASSWORD"] ?? "dev-password";
+const _envPassword = process.env["OPERATOR_PASSWORD"];
+if (!_envPassword && process.env["NODE_ENV"] === "production") {
+  throw new Error("CRITICAL: OPERATOR_PASSWORD must be set in production");
+}
+const OPERATOR_PASSWORD = _envPassword ?? "dev-password";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   const body = (await req.json()) as { operatorId?: string; password?: string };
