@@ -7,7 +7,13 @@
 
 import { SignJWT, jwtVerify, type JWTPayload } from "jose";
 
-const SECRET_RAW = process.env["JWT_SECRET"] ?? "CHANGE_ME_IN_PRODUCTION_32_CHARS";
+const SECRET_RAW = (() => {
+  const secret = process.env["JWT_SECRET"];
+  if (!secret && process.env["NODE_ENV"] === "production") {
+    throw new Error("CRITICAL: JWT_SECRET is not set in production environment.");
+  }
+  return secret ?? "CHANGE_ME_IN_PRODUCTION_32_CHARS";
+})();
 const JWT_EXPIRY = "2h"; // short-lived operator session
 
 // Encode the secret as Uint8Array once

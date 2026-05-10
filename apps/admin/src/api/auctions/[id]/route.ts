@@ -34,7 +34,13 @@ interface AuctionState {
 }
 
 // In production, use @t3-oss/env-nextjs for env validation
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret';
+const JWT_SECRET = (() => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret && process.env.NODE_ENV === "production") {
+    throw new Error("CRITICAL: JWT_SECRET is not set in production environment.");
+  }
+  return secret || 'dev-secret';
+})();
 const API_RATE_LIMIT = 100; // requests per minute per operator
 
 // Rate limit store (in production: Redis)

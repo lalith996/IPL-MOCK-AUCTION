@@ -1,0 +1,2 @@
+## Sentinel Journal
+## 2026-05-10 - Hardcoded Secrets in Production Environments\n**Vulnerability:** Found hardcoded fallback secrets like `JWT_SECRET` and `OPERATOR_PASSWORD` that would be silently used if environment variables are missing.\n**Learning:** This is a CRITICAL security vulnerability as the app could fail-open with known weak credentials.\n**Prevention:** Must explicitly check `process.env["NODE_ENV"] === "production"` and throw a fatal error if secrets are missing in production. Do not use fallbacks in production.
