@@ -7,7 +7,10 @@
 
 import { SignJWT, jwtVerify, type JWTPayload } from "jose";
 
-const SECRET_RAW = process.env["JWT_SECRET"] ?? "CHANGE_ME_IN_PRODUCTION_32_CHARS";
+if (!process.env["JWT_SECRET"]) {
+  throw new Error('JWT_SECRET environment variable is missing');
+}
+const SECRET_RAW = process.env["JWT_SECRET"];
 const JWT_EXPIRY = "2h"; // short-lived operator session
 
 // Encode the secret as Uint8Array once
