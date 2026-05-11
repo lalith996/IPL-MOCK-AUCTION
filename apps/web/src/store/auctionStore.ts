@@ -68,6 +68,20 @@ export interface AgentBidEvent {
   timestamp: string;
 }
 
+export interface HumanBidWindow {
+  /** Team the human controls */
+  team: AgentId;
+  /** ms remaining when window opened */
+  windowMs: number;
+  /** When the window opened (for countdown) */
+  openedAt: number;
+  /** Current bid in the room at window-open time */
+  currentBidLakhs: number;
+  /** Player being bid on */
+  playerId: string;
+  playerNationality: "indian" | "overseas";
+}
+
 export interface AuctionState {
   auctionId: string | null;
   phase: AuctionPhase;
@@ -81,6 +95,10 @@ export interface AuctionState {
   seenEventIds: Set<string>;
   connectionState: "disconnected" | "connecting" | "connected" | "reconnecting";
   lastStreamId: string;
+  /** Human player team (from sessionStorage, null = spectator) */
+  humanTeam: AgentId | null;
+  /** Active bid window for the human player */
+  humanBidWindow: HumanBidWindow | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -92,6 +110,8 @@ export interface AuctionActions {
   applyEvent: (eventId: string, event: unknown) => void;
   setConnectionState: (state: AuctionState["connectionState"]) => void;
   setLastStreamId: (id: string) => void;
+  setHumanTeam: (team: AgentId | null) => void;
+  clearHumanBidWindow: () => void;
   reset: () => void;
 }
 
@@ -107,6 +127,8 @@ const INITIAL_STATE: AuctionState = {
   currentBidder: null,
   teams: {},
   latestBidEvents: {},
+  humanTeam: null,
+  humanBidWindow: null,
   seenEventIds: new Set(),
   connectionState: "disconnected",
   lastStreamId: "0-0",
@@ -179,10 +201,12 @@ export const useAuctionStore = create<AuctionState & AuctionActions>((set, get) 
           const payload = ev["payload"] as Record<string, unknown>;
           next.phase = "sold";
           next.currentBidder = (payload["agentId"] as AgentId) ?? s.currentBidder;
+          next.humanBidWindow = null;
           break;
         }
         case "player.unsold":
           next.phase = "unsold";
+          next.humanBidWindow = null;
           break;
         case "auction.started":
           next.phase = "nominating";
@@ -190,6 +214,18 @@ export const useAuctionStore = create<AuctionState & AuctionActions>((set, get) 
         case "auction.complete":
           next.phase = "complete";
           break;
+        case "human.bid_window_open": {
+          const payload = ev["payload"] as Record<string, unknown>;
+          next.humanBidWindow = {
+            team: payload["humanTeam"] as AgentId,
+            windowMs: (payload["windowMs"] as number) ?? 30_000,
+            openedAt: Date.now(),
+            currentBidLakhs: (payload["currentBidLakhs"] as number) ?? s.currentBidLakhs,
+            playerId: payload["playerId"] as string,
+            playerNationality: (payload["playerNationality"] as "indian" | "overseas") ?? "indian",
+          };
+          break;
+        }
       }
 
       return next;
@@ -198,5 +234,7 @@ export const useAuctionStore = create<AuctionState & AuctionActions>((set, get) 
 
   setConnectionState: (connectionState) => set({ connectionState }),
   setLastStreamId: (lastStreamId) => set({ lastStreamId }),
+  setHumanTeam: (humanTeam) => set({ humanTeam }),
+  clearHumanBidWindow: () => set({ humanBidWindow: null }),
   reset: () => set({ ...INITIAL_STATE, seenEventIds: new Set() }),
 }));

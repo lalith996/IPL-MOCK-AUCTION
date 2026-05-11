@@ -106,6 +106,18 @@ export class AuctionFSM {
     this._transition("opening_bid");
     const event = this._makeEvent("player.nominated", null, { playerId, role });
     await this._persist(event);
+
+    // Start an opening-bid timeout: if no bid arrives in CLOSING_TIMEOUT_MS,
+    // close the player as unsold automatically.
+    this._clearClosingTimer();
+    this._closingTimer = setTimeout(() => {
+      void (async () => {
+        if (this._state.phase === "opening_bid") {
+          await this._closeUnsold();
+        }
+      })();
+    }, CLOSING_TIMEOUT_MS);
+
     return event;
   }
 

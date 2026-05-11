@@ -104,7 +104,7 @@ interface PlayerRow {
   canonical_name: string;
   role: string;
   nationality: "indian" | "overseas";
-  data_coverage_score: number;
+  data_coverage_score: number | string; // postgres returns numeric as string
   strike_rate: number;
   batting_average: number;
   economy_rate: number;
@@ -130,6 +130,10 @@ export interface NominationLoopDeps {
   redis: Redis;
   orchestratorUrl: string;
   sagUrl: string;
+  /** Team ID controlled by a human player; null/undefined = fully automated */
+  humanTeam?: AgentId | null;
+  /** Injected from main.ts — awaits human bid or auto-drops after timeoutMs */
+  waitForHumanBid?: (timeoutMs: number) => Promise<{ action: "bid" | "drop"; bidLakhs?: number }>;
   isPaused: () => boolean;
   onComplete: () => void;
 }
@@ -143,8 +147,11 @@ export async function runNominationLoop(deps: NominationLoopDeps): Promise<void>
     auctionId,
     fsm,
     sql,
+    redis,
     orchestratorUrl,
     sagUrl,
+    humanTeam = null,
+    waitForHumanBid,
     isPaused,
     onComplete,
   } = deps;
@@ -202,13 +209,13 @@ export async function runNominationLoop(deps: NominationLoopDeps): Promise<void>
         canonical_name: player.canonical_name,
         role: player.role,
         player_summary: sag?.player_summary ?? "",
-        confidence: sag?.confidence ?? player.data_coverage_score,
-        is_cold_start: player.data_coverage_score < 0.5,
+        confidence: sag?.confidence ?? Number(player.data_coverage_score),
+        is_cold_start: Number(player.data_coverage_score) < 0.5,
         strike_rate: player.strike_rate,
         average: player.batting_average,
         economy: player.economy_rate,
         wickets: player.wickets,
-        data_coverage_score: player.data_coverage_score,
+        data_coverage_score: Number(player.data_coverage_score),
         // headshot metadata (optional — omit key entirely when absent)
         ...(headshot?.primary_url !== undefined ? { headshot_url: headshot.primary_url } : {}),
         ...(headshot?.blurhash !== undefined ? { blurhash: headshot.blurhash } : {}),
@@ -232,61 +239,114 @@ export async function runNominationLoop(deps: NominationLoopDeps): Promise<void>
         team_states: teamStates,
       };
 
-      // ── 2e. Call orchestrator ─────────────────────────────────────────────
+      // ── 2e. Call orchestrator for LLM-controlled teams ───────────────────
+      // If there's a human team, build team_states without it (9 teams only)
+      // so the orchestrator doesn't produce a bid on the human's behalf.
+      const evalReqFiltered = humanTeam
+        ? {
+            ...evalReq,
+            team_states: Object.fromEntries(
+              Object.entries(evalReq.team_states).filter(([k]) => k !== humanTeam),
+            ) as Record<AgentId, TeamState>,
+          }
+        : evalReq;
+
       let agentOutputs: AgentOutput[] = [];
       try {
-        agentOutputs = await _callOrchestrator(orchestratorUrl, evalReq);
+        agentOutputs = await _callOrchestrator(orchestratorUrl, evalReqFiltered);
       } catch (err) {
         console.error(`[nomination-loop] ${auctionId}: orchestrator call failed for ${playerId}:`, err);
-        // Skip to next player on orchestrator failure
-        await _removeFromPool(sql, auctionId, playerId);
-        continue;
+        // On orchestrator failure, still wait for human bid if applicable
+        agentOutputs = [];
       }
 
-      // ── 2f. Dispatch agent outputs as FSM commands ────────────────────────
-      // Bidders first (sorted by bid amount descending), then drops
-      const bidders = agentOutputs
+      // ── 2f. Dispatch PlaceBid commands from LLM agent outputs ────────────
+      const { randomUUID } = await import("node:crypto");
+      const llmBidders = agentOutputs
         .filter((o) => o.action === "bid" && o.bid_amount_lakhs !== null && o.bid_amount_lakhs > 0)
         .sort((a, b) => (b.bid_amount_lakhs ?? 0) - (a.bid_amount_lakhs ?? 0));
 
-      const droppers = agentOutputs.filter((o) => o.action !== "bid");
-
-      for (const output of [...bidders, ...droppers]) {
-        // Re-check pause between commands
+      for (const output of llmBidders) {
         while (isPaused()) await _sleep(500);
-
-        // ✅ BUG FIX #7: Use proper UUID-based seq to avoid idempotency collisions
-        const { randomUUID } = await import("node:crypto");
         const seq = parseInt(randomUUID().replace(/-/g, "").slice(0, 15), 16);
-
-        if (output.action === "bid" && output.bid_amount_lakhs !== null && output.bid_amount_lakhs > 0) {
-          const result = await fsm.handleCommand({
-            type: "PlaceBid",
-            clientId: output.agent_id,
-            seq,
-            auctionId,
-            payload: {
-              agentId: output.agent_id,
-              bidLakhs: output.bid_amount_lakhs,
-              playerNationality: player.nationality,
-            },
-          });
-          if ("ruleId" in result) {
-            // Rule violation — not fatal, log and continue
-            console.warn(`[nomination-loop] ${auctionId}: rule violation for ${output.agent_id}: ${result.message}`);
-          }
-        } else {
-          await fsm.handleCommand({
-            type: "DropBid",
-            clientId: output.agent_id,
-            seq,
-            auctionId,
-            payload: { agentId: output.agent_id },
-          });
+        const result = await fsm.handleCommand({
+          type: "PlaceBid",
+          clientId: output.agent_id,
+          seq,
+          auctionId,
+          payload: {
+            agentId: output.agent_id,
+            bidLakhs: output.bid_amount_lakhs!,
+            playerNationality: player.nationality === "overseas" ? "overseas" : "indian",
+          },
+        });
+        if ("ruleId" in result) {
+          console.warn(`[nomination-loop] ${auctionId}: LLM rule violation for ${output.agent_id}: ${result.message}`);
         }
       }
 
-      // ── 2g. Wait for FSM closing timer to resolve player ─────────────────
+      // ── 2g. Wait for human bid (if this session has a human player) ───────
+      // The human has 30s to bid or drop. If they don't act, auto-drop.
+      // This window runs CONCURRENTLY with the LLM bids — human can still
+      // outbid after LLM bids are submitted.
+      if (humanTeam && waitForHumanBid) {
+        const HUMAN_BID_WINDOW_MS = 30_000;
+        console.log(`[nomination-loop] ${auctionId}: waiting for human bid from ${humanTeam} (${HUMAN_BID_WINDOW_MS / 1000}s)`);
+
+        // Publish a special event so the frontend knows it's the human's turn
+        try {
+          const { randomUUID: uuid } = await import("node:crypto");
+          // We use the broadcaster stream directly — publish a meta event
+          await redis.xadd(
+            `auction:events:${auctionId}`,
+            "*",
+            "data",
+            JSON.stringify({
+              eventId: uuid(),
+              auctionId,
+              seq: fsm.state.seq,
+              type: "human.bid_window_open",
+              agentId: humanTeam,
+              payload: {
+                humanTeam,
+                currentBidLakhs: fsm.state.currentBidLakhs,
+                windowMs: HUMAN_BID_WINDOW_MS,
+                playerId,
+                playerNationality: player.nationality,
+              },
+              timestamp: new Date().toISOString(),
+            }),
+          );
+        } catch {
+          // Non-fatal — frontend will figure it out from phase
+        }
+
+        const humanSignal = await waitForHumanBid(HUMAN_BID_WINDOW_MS);
+
+        if (humanSignal.action === "bid" && humanSignal.bidLakhs && humanSignal.bidLakhs > 0) {
+          const seq = parseInt((await import("node:crypto")).randomUUID().replace(/-/g, "").slice(0, 15), 16);
+          const result = await fsm.handleCommand({
+            type: "PlaceBid",
+            clientId: humanTeam,
+            seq,
+            auctionId,
+            payload: {
+              agentId: humanTeam,
+              bidLakhs: humanSignal.bidLakhs,
+              playerNationality: player.nationality === "overseas" ? "overseas" : "indian",
+            },
+          });
+          if ("ruleId" in result) {
+            console.warn(`[nomination-loop] ${auctionId}: human bid rejected (${humanTeam}): ${result.message}`);
+          } else {
+            console.log(`[nomination-loop] ${auctionId}: human ${humanTeam} bids ₹${humanSignal.bidLakhs}L`);
+          }
+        } else {
+          console.log(`[nomination-loop] ${auctionId}: human ${humanTeam} dropped/timed out`);
+        }
+      }
+
+      // ── 2h. Wait for FSM closing timer to resolve player ─────────────────
       await _waitForResolution(fsm, 20_000);
 
       // ── 2h. Remove from pool in Postgres ──────────────────────────────────
@@ -310,20 +370,22 @@ async function _fetchPlayer(
   sql: ReturnType<typeof postgres>,
   playerId: string,
 ): Promise<PlayerRow | null> {
+  // Query uses the actual player_features schema columns:
+  //   feature_version, canonical_name, career_stats (JSONB), form_score, value_score
   const rows = await sql<PlayerRow[]>`
     SELECT
       player_id,
       canonical_name,
       role,
-      nationality,
+      CASE WHEN is_overseas THEN 'overseas' ELSE 'indian' END AS nationality,
       data_coverage_score,
-      COALESCE((features->>'strike_rate')::float, 0)   AS strike_rate,
-      COALESCE((features->>'batting_average')::float, 0) AS batting_average,
-      COALESCE((features->>'economy_rate')::float, 0)  AS economy_rate,
-      COALESCE((features->>'wickets')::float, 0)       AS wickets
+      COALESCE((career_stats->>'strike_rate')::float, 0)    AS strike_rate,
+      COALESCE((career_stats->>'batting_average')::float, 0) AS batting_average,
+      COALESCE((career_stats->>'economy_rate')::float, 0)   AS economy_rate,
+      COALESCE((career_stats->>'wickets')::float, 0)        AS wickets
     FROM player_features
     WHERE player_id = ${playerId}
-      AND version = 'feature_v1'
+      AND feature_version = 'feature_v1'
     LIMIT 1
   `;
   return rows[0] ?? null;

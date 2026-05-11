@@ -63,14 +63,51 @@ const sql = postgres(DATABASE_URL);
 // In-memory registry of running auction FSMs
 // ---------------------------------------------------------------------------
 
+interface HumanBidSignal {
+  action: "bid" | "drop";
+  bidLakhs?: number;
+}
+
+interface PendingHumanBid {
+  resolve: (signal: HumanBidSignal) => void;
+  timer: ReturnType<typeof setTimeout>;
+}
+
 interface AuctionEntry {
   fsm: AuctionFSM;
   store: PublishingEventStore;
   election: LeaderElection;
   paused: boolean;
+  /** Team ID controlled by a human player; null = fully LLM-automated */
+  humanTeam: AgentId | null;
+  /** Pending promise resolver for the human player's current bid turn */
+  pendingHumanBid: PendingHumanBid | null;
 }
 
 const _auctions = new Map<string, AuctionEntry>();
+
+/** Register a pending human-bid promise and return it. Resolves after
+ *  POST /auctions/:id/human-bid or after timeoutMs (auto-drop). */
+export function waitForHumanBid(
+  auctionId: string,
+  timeoutMs: number,
+): Promise<HumanBidSignal> {
+  return new Promise<HumanBidSignal>((resolve) => {
+    const timer = setTimeout(() => {
+      const entry = _auctions.get(auctionId);
+      if (entry) entry.pendingHumanBid = null;
+      resolve({ action: "drop" }); // auto-drop on timeout
+    }, timeoutMs);
+
+    const entry = _auctions.get(auctionId);
+    if (entry) {
+      entry.pendingHumanBid = { resolve, timer };
+    } else {
+      clearTimeout(timer);
+      resolve({ action: "drop" });
+    }
+  });
+}
 
 // ---------------------------------------------------------------------------
 // Fastify server
@@ -86,7 +123,7 @@ await server.register(helmet, { contentSecurityPolicy: false });
 // ---------------------------------------------------------------------------
 
 server.post<{
-  Body: { seed?: number; playerPool?: string[] };
+  Body: { seed?: number; playerPool?: string[]; humanTeam?: string };
 }>(
   "/auctions",
   {
@@ -96,18 +133,42 @@ server.post<{
         properties: {
           seed: { type: "number" },
           playerPool: { type: "array", items: { type: "string" } },
+          humanTeam: { type: "string" },
         },
       },
     },
   },
   async (request, reply) => {
     const seed = request.body.seed ?? Math.floor(Math.random() * 1_000_000);
-    const playerPool: string[] = request.body.playerPool ?? [];
+    const humanTeam = (request.body.humanTeam ?? null) as AgentId | null;
+    let playerPool: string[] = request.body.playerPool ?? [];
+
+    // Auto-populate player pool from player_features if none provided
+    if (playerPool.length === 0) {
+      try {
+        const countRows = await sql<Array<{ cnt: string }>>`
+          SELECT COUNT(DISTINCT player_id)::text as cnt FROM player_features WHERE feature_version = 'feature_v1'
+        `;
+        const total = parseInt(countRows[0]?.cnt ?? "0", 10);
+        if (total > 0) {
+          const limit = Math.min(30, total);
+          const offset = seed % Math.max(1, total - limit);
+          const playerRows = await sql<Array<{ player_id: string }>>`
+            SELECT DISTINCT player_id FROM player_features
+            WHERE feature_version = 'feature_v1'
+            LIMIT ${limit} OFFSET ${offset}
+          `;
+          playerPool = playerRows.map((r) => r.player_id);
+        }
+      } catch (err) {
+        server.log.warn({ err }, "Could not auto-populate player pool (non-fatal)");
+      }
+    }
 
     // Insert into Postgres
     const rows = await sql<Array<{ id: string; created_at: string }>>`
-      INSERT INTO auction_sessions (seed, status, player_pool)
-      VALUES (${seed}, 'prep', ${sql.array(playerPool)})
+      INSERT INTO auction_sessions (seed, status, player_pool, human_team)
+      VALUES (${seed}, 'prep', ${sql.array(playerPool)}, ${humanTeam})
       RETURNING id, created_at
     `;
     const row = rows[0];
@@ -122,7 +183,7 @@ server.post<{
     const election = new LeaderElection(redis, auctionId, INSTANCE_ID);
     await election.tryAcquire();
 
-    _auctions.set(auctionId, { fsm, store, election, paused: false });
+    _auctions.set(auctionId, { fsm, store, election, paused: false, humanTeam, pendingHumanBid: null });
 
     // Notify broadcaster to start consuming this auction's Redis Stream
     await redis.publish("broadcaster:register_auction", auctionId);
@@ -141,6 +202,7 @@ server.post<{
     return reply.code(201).send({
       id: auctionId,
       seed,
+      humanTeam,
       status: "prep",
       createdAt: row.created_at,
       playerPool,
@@ -206,6 +268,8 @@ server.post<{ Params: { id: string } }>(
       redis,
       orchestratorUrl: ORCHESTRATOR_URL,
       sagUrl: SAG_URL,
+      humanTeam: entry.humanTeam,
+      waitForHumanBid: (timeoutMs: number) => waitForHumanBid(id, timeoutMs),
       isPaused: () => entry.paused,
       onComplete: () => {
         server.log.info({ auctionId: id }, "Nomination loop completed");
@@ -377,6 +441,119 @@ server.post<{
 );
 
 // ---------------------------------------------------------------------------
+// POST /auctions/:id/human-bid — human player submits a bid or drop
+// ---------------------------------------------------------------------------
+
+server.post<{
+  Params: { id: string };
+  Body: { action: "bid" | "drop"; bidLakhs?: number };
+}>(
+  "/auctions/:id/human-bid",
+  async (request, reply) => {
+    const { id } = request.params;
+    const { action, bidLakhs } = request.body ?? {};
+    const entry = _auctions.get(id);
+
+    if (!entry) return reply.code(404).send({ error: "Auction not found" });
+    if (!entry.humanTeam) return reply.code(400).send({ error: "This session has no human player" });
+    if (!entry.pendingHumanBid) {
+      return reply.code(409).send({ error: "No pending bid window for human player right now" });
+    }
+
+    const pending = entry.pendingHumanBid;
+    clearTimeout(pending.timer);
+    entry.pendingHumanBid = null;
+    pending.resolve({ action, ...(bidLakhs !== undefined ? { bidLakhs } : {}) });
+
+    return reply.send({ ok: true, action, bidLakhs });
+  },
+);
+
+// ---------------------------------------------------------------------------
+// GET /auctions/:id/human-team — return which team the human controls
+// ---------------------------------------------------------------------------
+
+server.get<{ Params: { id: string } }>(
+  "/auctions/:id/human-team",
+  async (request, reply) => {
+    const { id } = request.params;
+    // Check in-memory first, then DB
+    const entry = _auctions.get(id);
+    if (entry) return reply.send({ humanTeam: entry.humanTeam });
+
+    try {
+      const rows = await sql<Array<{ human_team: string | null }>>`
+        SELECT human_team FROM auction_sessions WHERE id = ${id}
+      `;
+      return reply.send({ humanTeam: rows[0]?.human_team ?? null });
+    } catch {
+      return reply.code(404).send({ error: "Session not found" });
+    }
+  },
+);
+
+// ---------------------------------------------------------------------------
+// POST /auctions/:id/approve — persist operator approvals
+// ---------------------------------------------------------------------------
+
+server.post<{
+  Params: { id: string };
+  Body: { missingPlayers?: boolean; headshots?: boolean; approvedBy?: string };
+}>(
+  "/auctions/:id/approve",
+  async (request, reply) => {
+    const { id } = request.params;
+    const { missingPlayers = true, headshots = true, approvedBy = "operator" } = request.body ?? {};
+    const now = new Date().toISOString();
+    try {
+      await sql`
+        INSERT INTO auction_approvals (auction_id, missing_players_approved, headshots_approved, approved_by, approved_at)
+        VALUES (${id}, ${missingPlayers}, ${headshots}, ${approvedBy}, ${now})
+        ON CONFLICT (auction_id) DO UPDATE SET
+          missing_players_approved = ${missingPlayers},
+          headshots_approved       = ${headshots},
+          approved_by              = ${approvedBy},
+          approved_at              = ${now}
+      `;
+      return reply.send({ ok: true, approvals: { missing_players_approved: missingPlayers, headshots_approved: headshots } });
+    } catch (err) {
+      server.log.warn({ err }, "Approval upsert failed (non-fatal)");
+      return reply.send({ ok: true }); // non-fatal — don't block start
+    }
+  },
+);
+
+// ---------------------------------------------------------------------------
+// GET /players — return player IDs for seeding a session's player_pool
+// ---------------------------------------------------------------------------
+
+server.get<{ Querystring: { limit?: string; seed?: string } }>(
+  "/players",
+  async (request, reply) => {
+    const limit = Math.min(parseInt(request.query.limit ?? "30", 10), 200);
+    const seedVal = parseInt(request.query.seed ?? "42", 10);
+    try {
+      // Use a seeded-offset approach: pick limit players offset by seed mod count
+      const countRows = await sql<Array<{ cnt: string }>>`
+        SELECT COUNT(DISTINCT player_id)::text as cnt FROM player_features WHERE feature_version = 'feature_v1'
+      `;
+      const total = parseInt(countRows[0]?.cnt ?? "0", 10);
+      if (total === 0) return reply.send([]);
+      const offset = seedVal % Math.max(1, total - limit);
+      const rows = await sql<Array<{ player_id: string }>>`
+        SELECT DISTINCT player_id FROM player_features
+        WHERE feature_version = 'feature_v1'
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      return reply.send(rows.map((r) => r.player_id));
+    } catch (err) {
+      server.log.warn({ err }, "Failed to fetch players from DB");
+      return reply.send([]);
+    }
+  },
+);
+
+// ---------------------------------------------------------------------------
 // GET /healthz
 // ---------------------------------------------------------------------------
 
@@ -402,7 +579,7 @@ process.on("SIGTERM", () => {
 });
 
 // ---------------------------------------------------------------------------
-// Start
+// Start + recover in-flight sessions from DB
 // ---------------------------------------------------------------------------
 
 try {
@@ -410,6 +587,69 @@ try {
 } catch (err) {
   server.log.error(err);
   process.exit(1);
+}
+
+// Recover any sessions that were active when the server last restarted.
+// Reload their FSM state from the latest snapshot, register with broadcaster,
+// and restart the nomination loop so auctions continue after hot-reload.
+try {
+  const activeSessions = await sql<Array<{ id: string; seed: string; human_team: string | null }>>`
+    SELECT id, seed, human_team FROM auction_sessions WHERE status = 'active'
+  `;
+  for (const session of activeSessions) {
+    if (_auctions.has(session.id)) continue; // already registered
+    try {
+      const store = new PublishingEventStore(sql, redis);
+      let state = await store.getLatestSnapshot(session.id);
+      if (!state) {
+        state = createInitialState(session.id, session.seed);
+      }
+      const fsm = new AuctionFSM(store, state);
+
+      // If FSM is still in prep after recovery (snapshot before start), re-start it
+      if (fsm.state.phase === "prep") {
+        await fsm.handleCommand({
+          type: "StartAuction",
+          clientId: "recovery",
+          seq: Date.now(),
+          auctionId: session.id,
+          payload: {},
+        }).catch(() => { /* already started or wrong phase — ignore */ });
+      }
+
+      const election = new LeaderElection(redis, session.id, INSTANCE_ID);
+      await election.tryAcquire();
+      const humanTeam = (session.human_team ?? null) as AgentId | null;
+      _auctions.set(session.id, { fsm, store, election, paused: false, humanTeam, pendingHumanBid: null });
+      await redis.publish("broadcaster:register_auction", session.id);
+
+      // Restart nomination loop for recovered sessions
+      void runNominationLoop({
+        auctionId: session.id,
+        fsm,
+        store,
+        sql,
+        redis,
+        orchestratorUrl: ORCHESTRATOR_URL,
+        sagUrl: SAG_URL,
+        humanTeam,
+        waitForHumanBid: (timeoutMs: number) => waitForHumanBid(session.id, timeoutMs),
+        isPaused: () => _auctions.get(session.id)?.paused ?? false,
+        onComplete: () => {
+          server.log.info({ auctionId: session.id }, "Nomination loop completed (recovered)");
+        },
+      });
+
+      server.log.info({ auctionId: session.id }, "Recovered active session from DB");
+    } catch (err) {
+      server.log.warn({ err, auctionId: session.id }, "Failed to recover session (skipping)");
+    }
+  }
+  if (activeSessions.length > 0) {
+    server.log.info(`Recovered ${activeSessions.length} active session(s) from DB`);
+  }
+} catch (err) {
+  server.log.warn({ err }, "Session recovery failed (non-fatal)");
 }
 
 // ---------------------------------------------------------------------------

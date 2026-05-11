@@ -18,3 +18,21 @@ pdf_env/
 
 # OS/editor artifacts
 .DS_Store
+
+# Next.js build output
+apps/**/.next/
+# AI planning docs (not part of codebase)
+ACTION_PLAN.md
+AUDIT_CHECKLIST.md
+AUDIT_REPORT.md
+BUG_PREVENTION_GUIDE.md
+DISCOVERED_ISSUES.md
+IMPLEMENTATION_ROADMAP.md
+LLM_INTEGRATION_GUIDE.md
+MVP_DEPLOYMENT_CHECKLIST.md
+NEXT_STEPS.md
+PRODUCTION_READINESS.md
+PRODUCTION_SPRINT_SUMMARY.md
+SCALABILITY_AND_REVENUE_GUIDE.md
+STARTUP_STRATEGY.md
+missing_players_report.json
