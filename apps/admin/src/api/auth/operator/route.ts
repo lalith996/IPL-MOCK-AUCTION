@@ -32,7 +32,10 @@ interface AuthResponse {
 // ============================================================================
 
 // In production: Load from environment
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-key';
+if (!process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is missing');
+}
+const JWT_SECRET = process.env.JWT_SECRET;
 const TOKEN_EXPIRY_MINUTES = 480; // 8 hours
 
 // In production: Use a proper credential store

@@ -34,7 +34,10 @@ interface AuctionState {
 }
 
 // In production, use @t3-oss/env-nextjs for env validation
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret';
+if (!process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is missing');
+}
+const JWT_SECRET = process.env.JWT_SECRET;
 const API_RATE_LIMIT = 100; // requests per minute per operator
 
 // Rate limit store (in production: Redis)
