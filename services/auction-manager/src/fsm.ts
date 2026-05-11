@@ -45,7 +45,14 @@ export class AuctionFSM {
   }
 
   get state(): Readonly<AuctionState> {
-    return this._state;
+    return {
+      ...this._state,
+      teams: Object.fromEntries(
+        Object.entries(this._state.teams).map(([k, v]) => [k, { ...v, squad: [...v.squad] }])
+      ) as AuctionState["teams"],
+      activeBidders: [...this._state.activeBidders] as AuctionState["activeBidders"],
+      standbyQueue: [...this._state.standbyQueue],
+    };
   }
 
   // ---------------------------------------------------------------------------
