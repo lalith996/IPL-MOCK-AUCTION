@@ -9,18 +9,17 @@ Tests:
 """
 
 import pytest
+
 from tests.conftest import (
     AuctionFactory,
-    TeamFactory,
-    PlayerFactory,
-    BidFactory,
-    AuctionAssertions,
-    TeamAssertions,
-    BidAssertions,
     AuctionScenarioGenerator,
+    BidAssertions,
+    BidFactory,
     PerformanceProfiler,
+    PlayerFactory,
+    TeamAssertions,
+    TeamFactory,
 )
-
 
 # ============================================================================
 # Fixtures
@@ -261,7 +260,7 @@ class TestPerformance:
         def lookup_team(team_id):
             return teams.get(team_id)
 
-        for team_id in teams.keys():
+        for team_id in teams:
             profiler.measure(lookup_team, team_id)
 
         metrics = profiler.get_metrics()

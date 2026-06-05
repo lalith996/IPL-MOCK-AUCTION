@@ -14,8 +14,8 @@ interface AdminErrorBoundaryState {
 
 interface ClientErrorReport {
   message: string;
-  stack?: string;
-  componentStack?: string;
+  stack?: string | undefined;
+  componentStack?: string | undefined;
   source: string;
   url: string;
   userAgent: string;
@@ -78,14 +78,14 @@ function MonitoringBootstrap(): React.JSX.Element {
     };
   }, []);
 
-  return null;
+  return <></>;
 }
 
 export class AdminErrorBoundary extends React.Component<
   AdminErrorBoundaryProps,
   AdminErrorBoundaryState
 > {
-  public state: AdminErrorBoundaryState = {
+  public override state: AdminErrorBoundaryState = {
     hasError: false,
     errorMessage: null,
     errorId: null,
@@ -99,9 +99,9 @@ export class AdminErrorBoundary extends React.Component<
     };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
+  override componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
     sendErrorReport(
-      buildErrorReport(error, "react.error-boundary", errorInfo.componentStack),
+      buildErrorReport(error, "react.error-boundary", errorInfo.componentStack ?? undefined),
     );
     console.error("Admin UI error boundary captured an error", {
       errorId: this.state.errorId,
@@ -118,7 +118,7 @@ export class AdminErrorBoundary extends React.Component<
     window.location.reload();
   };
 
-  render(): React.ReactNode {
+  override render(): React.ReactNode {
     if (this.state.hasError) {
       return (
         <div className="min-h-screen bg-gray-950 flex items-center justify-center px-4">

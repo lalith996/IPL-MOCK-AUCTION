@@ -9,14 +9,12 @@ Provides:
 - Test data generators
 """
 
-import json
-import os
-import uuid
-from datetime import datetime, timedelta
-from typing import Any, Callable, Dict, List, Optional, TypeVar
-from dataclasses import dataclass, asdict
 import time
-
+import uuid
+from collections.abc import Callable
+from dataclasses import asdict, dataclass
+from datetime import datetime
+from typing import Any, TypeVar
 
 # ============================================================================
 # Types
@@ -33,8 +31,8 @@ class TestAuction:
     status: str = 'prep'
     seed: int = 42
     created_at: str = None
-    started_at: Optional[str] = None
-    completed_at: Optional[str] = None
+    started_at: str | None = None
+    completed_at: str | None = None
 
     def __post_init__(self):
         if self.created_at is None:
@@ -48,7 +46,7 @@ class TestTeam:
     name: str
     budget: int = 10_000_000
     spent: int = 0
-    squad: List[str] = None
+    squad: list[str] = None
 
     def __post_init__(self):
         if self.squad is None:
@@ -93,7 +91,7 @@ class AuctionFactory:
 
     @staticmethod
     def create(
-        id: Optional[str] = None,
+        id: str | None = None,
         phase: str = 'prep',
         seed: int = 42,
         **kwargs,
@@ -126,7 +124,7 @@ class TeamFactory:
 
     @staticmethod
     def create(
-        id: Optional[str] = None,
+        id: str | None = None,
         budget: int = 10_000_000,
         spent: int = 0,
         **kwargs,
@@ -142,7 +140,7 @@ class TeamFactory:
         )
 
     @staticmethod
-    def create_all() -> Dict[str, TestTeam]:
+    def create_all() -> dict[str, TestTeam]:
         """Create all 10 IPL teams"""
         return {code: TeamFactory.create(id=code) for code in TeamFactory.IATA_CODES}
 
@@ -154,7 +152,7 @@ class PlayerFactory:
 
     @staticmethod
     def create(
-        id: Optional[str] = None,
+        id: str | None = None,
         role: str = 'batsman',
         is_cold_start: bool = False,
         **kwargs,
@@ -170,7 +168,7 @@ class PlayerFactory:
         )
 
     @staticmethod
-    def create_squad(count: int = 25, roles: Optional[List[str]] = None) -> List[TestPlayer]:
+    def create_squad(count: int = 25, roles: list[str] | None = None) -> list[TestPlayer]:
         """Create a squad of players with balanced roles"""
         if roles is None:
             roles = ['batsman'] * 8 + ['bowler'] * 5 + ['all-rounder'] * 8 + ['wicket-keeper'] * 4
@@ -186,10 +184,10 @@ class BidFactory:
 
     @staticmethod
     def create(
-        auction_id: Optional[str] = None,
-        player_id: Optional[str] = None,
-        team_id: Optional[str] = None,
-        amount: Optional[int] = None,
+        auction_id: str | None = None,
+        player_id: str | None = None,
+        team_id: str | None = None,
+        amount: int | None = None,
         **kwargs,
     ) -> TestBid:
         """Create a test bid"""
@@ -222,7 +220,7 @@ class AuctionAssertions:
     def assert_phase_transition(
         current: str,
         target: str,
-        valid_transitions: Dict[str, List[str]],
+        valid_transitions: dict[str, list[str]],
     ) -> None:
         """Assert that phase transition is valid"""
         allowed = valid_transitions.get(current, [])
@@ -269,7 +267,7 @@ class BidAssertions:
         assert (team_spent + bid.amount) <= team_budget, 'Bid exceeds team budget'
 
     @staticmethod
-    def assert_bid_order(bids: List[TestBid]) -> None:
+    def assert_bid_order(bids: list[TestBid]) -> None:
         """Assert bids are in correct sequence order"""
         for i, bid in enumerate(bids[:-1]):
             next_bid = bids[i + 1]
@@ -295,8 +293,8 @@ class PerformanceProfiler:
 
     def __init__(self, name: str = 'operation'):
         self.name = name
-        self.latencies: List[float] = []
-        self.start_time: Optional[float] = None
+        self.latencies: list[float] = []
+        self.start_time: float | None = None
 
     def __enter__(self):
         self.start_time = time.perf_counter()
@@ -312,7 +310,7 @@ class PerformanceProfiler:
         with self:
             return func(*args, **kwargs)
 
-    def get_metrics(self) -> Dict[str, Any]:
+    def get_metrics(self) -> dict[str, Any]:
         """Get performance statistics"""
         if not self.latencies:
             return {}
@@ -355,7 +353,7 @@ class AuctionScenarioGenerator:
     """Generate realistic auction scenarios for testing"""
 
     @staticmethod
-    def complete_50_nomination_auction() -> Dict[str, Any]:
+    def complete_50_nomination_auction() -> dict[str, Any]:
         """Generate a realistic 50-nomination auction"""
         auction = AuctionFactory.create()
         teams = {
@@ -371,7 +369,7 @@ class AuctionScenarioGenerator:
             )
         players = PlayerFactory.create_squad(count=50)
 
-        bids: List[TestBid] = []
+        bids: list[TestBid] = []
         seq = 1
 
         for i, player in enumerate(players):
@@ -410,7 +408,7 @@ class AuctionScenarioGenerator:
         }
 
     @staticmethod
-    def stress_test_scenario(num_nominations: int = 100) -> Dict[str, Any]:
+    def stress_test_scenario(num_nominations: int = 100) -> dict[str, Any]:
         """Generate stress test scenario with many nominations"""
         auction = AuctionFactory.in_phase('open_bidding')
         teams = TeamFactory.create_all()
@@ -435,12 +433,12 @@ class AuctionScenarioGenerator:
 class MockSAG:
     """Mock SAG service for testing"""
 
-    def __init__(self, players: Optional[Dict[str, TestPlayer]] = None):
+    def __init__(self, players: dict[str, TestPlayer] | None = None):
         self.players = players or {}
         self.call_count = 0
         self.latencies = []
 
-    def lookup(self, player_id: str) -> Optional[TestPlayer]:
+    def lookup(self, player_id: str) -> TestPlayer | None:
         """Simulate player lookup"""
         self.call_count += 1
 
@@ -449,7 +447,7 @@ class MockSAG:
 
         return self.players[player_id]
 
-    def lookup_batch(self, player_ids: List[str]) -> Dict[str, TestPlayer]:
+    def lookup_batch(self, player_ids: list[str]) -> dict[str, TestPlayer]:
         """Batch lookup"""
         return {pid: player for pid in player_ids if (player := self.lookup(pid))}
 
@@ -461,9 +459,9 @@ class MockLLMGateway:
         self.model = model
         self.call_count = 0
         self.latencies = []
-        self.fail_after_n_calls: Optional[int] = None
+        self.fail_after_n_calls: int | None = None
 
-    def call_model(self, prompt: str) -> Dict[str, Any]:
+    def call_model(self, prompt: str) -> dict[str, Any]:
         """Simulate LLM call"""
         self.call_count += 1
 

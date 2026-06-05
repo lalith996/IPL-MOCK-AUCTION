@@ -10,10 +10,9 @@ This module provides validators and sanitizers for all user inputs to prevent:
 """
 
 import re
-import uuid
-from typing import Any, Callable, Dict, List, Optional, Union
+from collections.abc import Callable
 from datetime import datetime
-from decimal import Decimal
+from typing import Any
 
 # Constraints
 MAX_STRING_LENGTH = 1000
@@ -100,7 +99,7 @@ def validate_string(
     field_name: str,
     min_length: int = 1,
     max_length: int = MAX_STRING_LENGTH,
-    pattern: Optional[re.Pattern[str]] = None,
+    pattern: re.Pattern[str] | None = None,
 ) -> str:
     """Validate string input."""
     if not isinstance(value, str):
@@ -121,8 +120,8 @@ def validate_string(
 def validate_integer(
     value: Any,
     field_name: str,
-    min_value: Optional[int] = None,
-    max_value: Optional[int] = None,
+    min_value: int | None = None,
+    max_value: int | None = None,
 ) -> int:
     """Validate integer input."""
     if not isinstance(value, int) or isinstance(value, bool):
@@ -140,8 +139,8 @@ def validate_integer(
 def validate_float(
     value: Any,
     field_name: str,
-    min_value: Optional[float] = None,
-    max_value: Optional[float] = None,
+    min_value: float | None = None,
+    max_value: float | None = None,
 ) -> float:
     """Validate float input."""
     if not isinstance(value, (int, float)) or isinstance(value, bool):
@@ -167,7 +166,7 @@ def validate_boolean(value: Any, field_name: str = "value") -> bool:
 
 
 def validate_enum(
-    value: Any, allowed_values: List[str], field_name: str = "value"
+    value: Any, allowed_values: list[str], field_name: str = "value"
 ) -> str:
     """Validate enum value."""
     if not isinstance(value, str):
@@ -218,7 +217,7 @@ def validate_bid_amount(value: Any) -> int:
 def validate_array(
     value: Any,
     field_name: str,
-    item_validator: Optional[Callable[[Any], Any]] = None,
+    item_validator: Callable[[Any], Any] | None = None,
     min_items: int = 0,
     max_items: int = MAX_ARRAY_LENGTH,
 ) -> list:
@@ -249,8 +248,8 @@ def validate_datetime(value: Any, field_name: str = "timestamp") -> datetime:
     try:
         # Parse ISO 8601 format
         return datetime.fromisoformat(value.replace("Z", "+00:00"))
-    except ValueError:
-        raise ValidationError(field_name, "Invalid ISO 8601 datetime format")
+    except ValueError as err:
+        raise ValidationError(field_name, "Invalid ISO 8601 datetime format") from err
 
 
 # ============================================================================
@@ -316,7 +315,7 @@ class BidValidator:
     """Validator for auction bid submissions."""
 
     @staticmethod
-    def validate(data: Dict[str, Any]) -> Dict[str, Any]:
+    def validate(data: dict[str, Any]) -> dict[str, Any]:
         """Validate bid submission."""
         return {
             "auction_id": validate_auction_id(data.get("auction_id")),
@@ -333,7 +332,7 @@ class PlayerValidator:
     """Validator for player data."""
 
     @staticmethod
-    def validate(data: Dict[str, Any]) -> Dict[str, Any]:
+    def validate(data: dict[str, Any]) -> dict[str, Any]:
         """Validate player record."""
         return {
             "player_id": validate_player_id(data.get("player_id")),
@@ -356,7 +355,7 @@ class AuctionSessionValidator:
     """Validator for auction session creation."""
 
     @staticmethod
-    def validate(data: Dict[str, Any]) -> Dict[str, Any]:
+    def validate(data: dict[str, Any]) -> dict[str, Any]:
         """Validate auction session data."""
         return {
             "title": validate_string(data.get("title"), "title", max_length=200),
@@ -386,4 +385,5 @@ if __name__ == "__main__":
     except ValidationError as e:
         print(f"✅ Validation error caught: {e}")
 
-    print(f"✅ Sanitized: {sanitize_string('<script>alert(\"xss\")</script>')}")
+    test_str = '<script>alert("xss")</script>'
+    print(f"✅ Sanitized: {sanitize_string(test_str)}")

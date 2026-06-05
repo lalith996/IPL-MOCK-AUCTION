@@ -34,7 +34,12 @@ interface AuctionState {
 }
 
 // In production, use @t3-oss/env-nextjs for env validation
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret';
+const _envSecret = process.env["JWT_SECRET"];
+if (!_envSecret && process.env.NODE_ENV === "production") {
+  throw new Error("CRITICAL: JWT_SECRET must be set in production");
+}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const JWT_SECRET = _envSecret || 'dev-secret';
 const API_RATE_LIMIT = 100; // requests per minute per operator
 
 // Rate limit store (in production: Redis)
@@ -68,7 +73,7 @@ function verifyToken(authHeader: string | null): AuthPayload | null {
     const parts = token.split('.');
     if (parts.length !== 3) return null;
 
-    const decoded = JSON.parse(Buffer.from(parts[1], 'base64').toString());
+    const decoded = JSON.parse(Buffer.from(parts[1] as string, 'base64').toString());
     
     // Verify expiration
     if (decoded.exp && decoded.exp < Date.now() / 1000) {
@@ -209,8 +214,10 @@ export async function POST(
       status: action === 'start' ? 'running' : action === 'pause' ? 'paused' : 'running',
       seed: Math.floor(Math.random() * 1000),
       createdAt: new Date().toISOString(),
-      startedAt: action === 'start' ? new Date().toISOString() : undefined,
     };
+    if (action === 'start') {
+      auction.startedAt = new Date().toISOString();
+    }
 
     console.log(createLog(requestId, auth.operatorId, 'auction_action_success', 'info', {
       auctionId,

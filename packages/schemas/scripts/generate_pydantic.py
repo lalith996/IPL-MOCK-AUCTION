@@ -37,6 +37,7 @@ def generate_model(schema_file: Path) -> None:
             "--strict-nullable",
             "--target-python-version", "3.11",
             "--use-double-quotes",
+            "--disable-timestamp",
         ],
         capture_output=True,
         text=True,

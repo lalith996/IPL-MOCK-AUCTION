@@ -16,12 +16,12 @@ function isClientErrorReport(value: unknown): value is ClientErrorReport {
 
   const record = value as Record<string, unknown>;
   return (
-    typeof record.message === "string" &&
-    typeof record.source === "string" &&
-    typeof record.url === "string" &&
-    typeof record.userAgent === "string" &&
-    typeof record.timestamp === "string" &&
-    typeof record.errorId === "string"
+    typeof record["message"] === "string" &&
+    typeof record["source"] === "string" &&
+    typeof record["url"] === "string" &&
+    typeof record["userAgent"] === "string" &&
+    typeof record["timestamp"] === "string" &&
+    typeof record["errorId"] === "string"
   );
 }
 
