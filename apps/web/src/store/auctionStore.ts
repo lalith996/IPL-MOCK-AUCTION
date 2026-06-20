@@ -159,10 +159,12 @@ export const useAuctionStore = create<AuctionState & AuctionActions>((set, get) 
     // to prevent unbounded memory growth on long auctions
     const MAX_DEDUP_SIZE = 1000;
     if (newSeenIds.size > MAX_DEDUP_SIZE) {
-      const arr = Array.from(newSeenIds);
-      arr.shift(); // remove oldest (first)
-      newSeenIds.clear();
-      arr.forEach((id) => newSeenIds.add(id));
+      // ⚡ Bolt: O(1) removal of oldest item instead of O(n) array conversion
+      // JS Sets preserve insertion order, so the first key is the oldest
+      const oldestId = newSeenIds.keys().next().value;
+      if (oldestId !== undefined) {
+        newSeenIds.delete(oldestId);
+      }
     }
 
     const ev = event as Record<string, unknown>;
