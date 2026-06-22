@@ -12,9 +12,14 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { signOperatorToken } from "../../../../lib/auth.js";
 
-const OPERATOR_PASSWORD = process.env["OPERATOR_PASSWORD"] ?? "dev-password";
-
 export async function POST(req: NextRequest): Promise<NextResponse> {
+  const OPERATOR_PASSWORD = process.env["OPERATOR_PASSWORD"];
+
+  if (!OPERATOR_PASSWORD) {
+    console.error("CRITICAL SECURITY ERROR: OPERATOR_PASSWORD environment variable is missing.");
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+
   const body = (await req.json()) as { operatorId?: string; password?: string };
 
   if (!body.operatorId || !body.password) {
