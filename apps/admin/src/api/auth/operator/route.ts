@@ -32,7 +32,13 @@ interface AuthResponse {
 // ============================================================================
 
 // In production: Load from environment
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-key';
+const JWT_SECRET = (() => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret && process.env.NODE_ENV === "production") {
+    throw new Error("CRITICAL: JWT_SECRET is not set in production environment.");
+  }
+  return secret || 'dev-secret-key';
+})();
 const TOKEN_EXPIRY_MINUTES = 480; // 8 hours
 
 // In production: Use a proper credential store
